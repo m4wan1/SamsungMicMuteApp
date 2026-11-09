@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        CRITICAL PERMISSION NOTES FOR ANDROID 14-16 (One UI 6-9):
+
+        1. RECORD_AUDIO is EXPLICITLY NOT USED - We use AudioManager.AudioRecordingCallback
+           which does NOT require RECORD_AUDIO permission (added in Android 11/API 30).
+
+        2. FOREGROUND_SERVICE_MICROPHONE is REMOVED - Android 14+ throws SecurityException
+           if foregroundServiceType="microphone" is used without RECORD_AUDIO permission.
+
+        3. We use FOREGROUND_SERVICE_SPECIAL_USE with PROPERTY_SPECIAL_USE_FGS_SUBTYPE
+           as the secondary FGS mechanism (Android 14+).
+
+        4. NotificationListenerService is the PRIMARY background host - it runs persistently
+           and does not require foreground service microphone type.
+    -->
+
+    <!-- Required for AudioManager.setStreamVolume (STREAM_NOTIFICATION) -->
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <!-- Required for Settings.System.putInt (SEM_VIBRATION_NOTIFICATION_INTENSITY) -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <!-- Required for foreground service (Android 14+) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- SPECIAL_USE type for Android 14+ (replaces MICROPHONE type) -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+
+    <!-- Required for boot recovery -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- Required for NotificationListenerService fallback (vibration suppression) -->
+    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" />
+
+    <!-- Required for POST_NOTIFICATIONS (Android 13+) to show service notification -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Required for requesting exemption from battery optimization on Samsung One UI -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <!--
+        EXPLICITLY NOT REQUESTING RECORD_AUDIO - This is a core constraint.
+        AudioRecordingCallback works without it since Android 11 (API 30).
+    -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO"
+        tools:node="remove" />
+
+    <application
+        android:name=".SuppressionApplication"
+        android:allowBackup="true"
+        android:backupAgent=".SuppressionBackupAgent"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.SamsungMicMuteApp"
+        tools:targetApi="31">
+
+        <!-- Main Activity -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.SamsungMicMuteApp.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+            PRIMARY BACKGROUND HOST: NotificationListenerService
+            This runs persistently without needing FOREGROUND_SERVICE_MICROPHONE.
+            It receives all notifications and can cancel vibration per-notification.
+        -->
+        <service
+            android:name=".service.SuppressionNotificationListener"
+            android:exported="true"
+            android:label="@string/notification_listener_label"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <!--
+            SECONDARY FGS MECHANISM: Foreground Service with SPECIAL_USE type
+            Used for AudioRecordingCallback registration and active suppression management.
+            Android 14+ requires FOREGROUND_SERVICE_SPECIAL_USE permission and
+            PROPERTY_SPECIAL_USE_FGS_SUBTYPE in manifest.
+
+            NOTE: foregroundServiceType="microphone" is REMOVED because it throws
+            SecurityException on Android 14+ without RECORD_AUDIO permission.
+        -->
+        <service
+            android:name=".service.SuppressionForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse"
+            android:enabled="true">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="audio_recording_detection" />
+        </service>
+
+        <!-- Boot/Update Recovery Receiver -->
+        <receiver
+            android:name=".receiver.BootRecoveryReceiver"
+            android:exported="true"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <!-- Backup Agent for cross-device restore -->
+        <meta-data
+            android:name="android.app.backup"
+            android:resource="@xml/backup_rules" />
+
+    </application>
+
+</manifest>

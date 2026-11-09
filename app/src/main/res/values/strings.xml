@@ -1,0 +1,74 @@
+<resources>
+    <string name="app_name">Samsung Mic Mute</string>
+    <string name="notification_listener_label">Notification Vibration Suppressor</string>
+
+    <!-- Main UI -->
+    <string name="title_monitoring_status">Live Monitoring Status</string>
+    <string name="status_idle">IDLE - Monitoring</string>
+    <string name="status_active">ACTIVE - Mic in Use (Muted)</string>
+    <string name="status_error">Error - Check permissions</string>
+
+    <string name="card_title_status">Live Monitoring Status</string>
+    <string name="card_title_snapshot">Audio &amp; Vibration Snapshot</string>
+    <string name="card_title_permissions">Required Permissions &amp; Battery Setup</string>
+    <string name="card_title_actions">Quick Actions</string>
+
+    <string name="label_active_recordings">Active Recordings</string>
+    <string name="label_no_active_recordings">No active microphone recordings detected</string>
+    <string name="label_microphone_detected">Microphone in use by: %s</string>
+
+    <string name="label_volume_snapshot">Notification Volume (STREAM_NOTIFICATION)</string>
+    <string name="label_vibration_snapshot">Notification Vibration (SEM_VIBRATION)</string>
+
+    <string name="button_request_write_settings">Write System Settings</string>
+    <string name="button_request_notification_listener">Notification Listener Access</string>
+    <string name="button_request_battery">Ignore Battery Optimization (Unrestricted)</string>
+    <string name="button_restart_service">Restart Monitor</string>
+    <string name="button_force_restore">Force Restore</string>
+    <string name="button_test_suppression">Test Suppression</string>
+
+    <string name="status_granted">Granted</string>
+    <string name="status_not_granted">Not Granted</string>
+    <string name="status_unrestricted">Unrestricted</string>
+    <string name="status_restricted">Optimized (Restricted)</string>
+
+    <string name="permission_write_settings_explanation">Required to set Samsung vibration intensity and volume in system settings.</string>
+    <string name="permission_notification_listener_explanation">Required as fallback to intercept and cancel notification vibration.</string>
+    <string name="permission_battery_explanation">Required to prevent Samsung One UI from delaying background microphone callbacks.</string>
+
+    <string name="toast_write_settings_granted">Write Settings permission granted</string>
+    <string name="toast_write_settings_denied">Write Settings permission denied</string>
+    <string name="toast_notification_listener_granted">Notification listener enabled</string>
+    <string name="toast_notification_listener_denied">Notification listener not enabled</string>
+    <string name="toast_battery_unrestricted">Battery optimization is already disabled</string>
+    <string name="toast_service_restarted">Suppression monitor service restarted</string>
+    <string name="toast_suppression_applied">Notification suppression activated</string>
+    <string name="toast_suppression_restored">Notification sound and vibration restored</string>
+    <string name="toast_error_applying_suppression">Failed to apply suppression</string>
+
+    <!-- Health Status -->
+    <string name="health_audio_controller">Audio Controller</string>
+    <string name="health_vibration_controller">Vibration Controller</string>
+    <string name="health_write_settings">Write Settings</string>
+    <string name="health_notification_listener">Notification Listener</string>
+    <string name="health_service_running">Service Running</string>
+    <string name="health_persisted_state">Persisted State</string>
+    <string name="health_active_recordings">Active Recordings</string>
+
+    <string name="health_status_supported">Supported</string>
+    <string name="health_status_not_supported">Not Supported</string>
+    <string name="health_status_granted">Granted</string>
+    <string name="health_status_not_granted">Not Granted</string>
+    <string name="health_status_running">Running</string>
+    <string name="health_status_stopped">Stopped</string>
+    <string name="health_status_present">Present</string>
+    <string name="health_status_none">None</string>
+
+    <!-- Fallback chain info -->
+    <string name="fallback_chain_audio">Audio: STREAM_NOTIFICATION → Notification Channels</string>
+    <string name="fallback_chain_vibration">Vibration: SEM_VIBRATION → NotificationListener → ADB Secure</string>
+
+    <!-- Settings keys -->
+    <string name="pref_key_write_settings_granted">write_settings_granted</string>
+    <string name="pref_key_notification_listener_granted">notification_listener_granted</string>
+</resources>
