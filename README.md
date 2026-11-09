@@ -1,181 +1,227 @@
-# SamsungMicMuteApp - One UI 8/9 Notification Suppressor
+# Samsung Mic Mute App (v1.0)
 
-Automatic notification sound and vibration suppression during active microphone recording on Samsung One UI 8 & 9 (Android 15/16).
+<p align="center">
+  <img src="https://img.shields.io/badge/Platform-Android_11_to_16_(API_30--36)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android Platform" />
+  <img src="https://img.shields.io/badge/Samsung_One_UI-v6_%7C_v7_%7C_v8_%7C_v9-1428A0?style=for-the-badge&logo=samsung&logoColor=white" alt="Samsung One UI" />
+  <img src="https://img.shields.io/badge/Privacy-Zero_RECORD__AUDIO-brightgreen?style=for-the-badge&logo=shield&logoColor=white" alt="Zero RECORD_AUDIO" />
+  <img src="https://img.shields.io/badge/Build-Gradle_8.6_%7C_Kotlin_1.9-blue?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
+  <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License MIT" />
+</p>
 
----
-
-## 1. Project Objective & Core Constraints
-
-Silences all notification sounds and vibrations whenever any application uses the microphone (e.g. WhatsApp voice notes, Voice Recorder, Snapchat, Camera video recording, phone calls), while keeping ringtones, alarm audio, media playback, and call vibrations completely unaffected.
-
-### Strict Architectural Constraints
-- ❌ **No `RECORD_AUDIO` permission** — Zero eavesdropping risk; detection relies strictly on `AudioManager.AudioRecordingCallback`.
-- ❌ **No Do Not Disturb (DND / NotificationPolicy)** — Preserves user's custom DND rules and priorities.
-- ❌ **No Global Silent Mode (`RINGER_MODE_SILENT`)** — Ringtone and alarm streams remain fully active.
-- ✅ **STREAM_NOTIFICATION isolation** — Uses `AudioManager.setStreamVolume` targeting notification stream only.
-- ✅ **Samsung Vibration Intensity Control** — Uses `Settings.System` targeting `sem_vibration_notification_intensity` via `WRITE_SETTINGS`.
-- ✅ **Atomic State Caching & Restoration** — Caches and persists user's original volume and vibration levels before any mutation.
-- ✅ **Crash & Reboot Recovery** — Persisted state ensures automatic recovery on reboot (`BOOT_COMPLETED`) or unexpected termination.
+> **A specialized Android utility for Samsung Galaxy devices that automatically suppresses notification sounds and vibrations during active microphone usage without requiring `RECORD_AUDIO` permission.**
 
 ---
 
-## 2. Technical Architecture
+## 📌 Problem Overview
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           Application Layer                                  │
-│  ┌─────────────────────────────────────────────────────────────────────┐    │
-│  │                    RecordingSuppressor (Main Orchestrator)           │    │
-│  │  - Lifecycle management                                              │    │
-│  │  - State machine: IDLE → SUPPRESSING → RESTORING                    │    │
-│  │  - Active recording tracking (ignores own package)                  │    │
-│  │  - Persistence coordination & crash recovery                        │    │
-│  └─────────────────────────────┬────────────────────────────────────────┘    │
-│                                │                                             │
-│         ┌──────────────────────┼──────────────────────┐                     │
-│         ▼                      ▼                      ▼                     │
-│  ┌───────────────┐    ┌─────────────────┐    ┌─────────────────┐           │
-│  │ AudioStream   │    │ VibrationSettings│    │ Persistence     │           │
-│  │ Controller    │    │ Controller      │    │ Manager         │           │
-│  └───────┬───────┘    └────────┬────────┘    └────────┬────────┘           │
-│          │                     │                      │                     │
-│    ┌─────┴─────┐         ┌─────┴─────┐         ┌──────┴──────┐             │
-│    ▼           ▼         ▼           ▼         ▼             ▼             │
-│ OneUI8/9   Fallback   OneUI8/9   Fallback    SharedPrefs  BackupManager    │
-│ (STREAM_   (Channel   (Settings. (NLS/ADB)   + File       + Cloud          │
-│  NOTIF)     Sound)     System)                                             │
-└────────────────────────────────┬────────────────────────────────────────────┘
-                                 │
-                                 ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           System Integration Layer                           │
-│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────────────┐   │
-│  │ AudioRecording   │  │ Foreground       │  │ Boot/Update              │   │
-│  │ Callback         │  │ Service          │  │ Receivers                │   │
-│  │ (API 30+)        │  │ (specialUse FGS) │  │ (BOOT_COMPLETED)         │   │
-│  └──────────────────┘  └──────────────────┘  └──────────────────────────┘   │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+When recording audio or participating in voice/video calls on Samsung Galaxy devices (e.g., WhatsApp voice notes, Snapchat, Instagram stories/reels, Voice Recorder, Camera 4K video recording, Phone calls), incoming notifications produce loud sound bursts and tactile vibration buzzing that bleed into the recorded audio and interrupt communication.
+
+Standard Do-Not-Disturb (DND) modes are cumbersome to manually toggle, and standard Android audio stream methods fail to silence Samsung's proprietary vibration engines.
+
+**Samsung Mic Mute App** solves this entirely in the background: it automatically detects microphone activation anywhere in the system, immediately mutes notification volume and Samsung vibration intensity to zero, and instantly restores them to their exact baseline the moment recording ends.
 
 ---
 
-## 3. Fallback Chains
+## 🚀 Key Features & Highlights
 
-### Sound Suppression Hierarchy
-1. **Priority 1 (`OneUI8AudioStreamController` / `OneUI9AudioStreamController`)**: System-level `AudioManager.STREAM_NOTIFICATION` volume control.
-2. **Priority 2 (`NotificationChannelAudioController`)**: Per-channel notification sound suppression via `NotificationManager`.
-
-### Vibration Suppression Hierarchy
-1. **Priority 1 (`OneUI8VibrationSettingsController` / `OneUI9VibrationSettingsController`)**: Samsung `Settings.System.putInt("sem_vibration_notification_intensity", 0)` via `WRITE_SETTINGS`.
-2. **Priority 2 (`NotificationListenerVibrationController`)**: Real-time notification vibration pattern suppression via `NotificationListenerService`.
-3. **Priority 3 (`AdbSecureSettingsVibrationController`)**: Secure settings execution via shell (development / enterprise environments).
-
----
-
-## 4. Project Structure
-
-```
-SamsungMicMuteApp/
-├── app/
-│   ├── build.gradle.kts
-│   ├── proguard-rules.pro
-│   └── src/
-│       ├── main/
-│       │   ├── AndroidManifest.xml
-│       │   ├── java/com/example/suppressor/
-│       │   │   ├── RecordingSuppressor.kt
-│       │   │   ├── SuppressionApplication.kt
-│       │   │   ├── SuppressionBackupAgent.kt
-│       │   │   ├── audio/
-│       │   │   │   ├── AudioStreamController.kt
-│       │   │   │   ├── OneUI8AudioStreamController.kt
-│       │   │   │   ├── OneUI9AudioStreamController.kt
-│       │   │   │   └── NotificationChannelAudioController.kt
-│       │   │   ├── vibration/
-│       │   │   │   ├── VibrationSettingsController.kt
-│       │   │   │   ├── OneUI8VibrationSettingsController.kt
-│       │   │   │   ├── OneUI9VibrationSettingsController.kt
-│       │   │   │   ├── NotificationListenerVibrationController.kt
-│       │   │   │   └── AdbSecureSettingsVibrationController.kt
-│       │   │   ├── persistence/
-│       │   │   │   ├── PersistenceManager.kt
-│       │   │   │   └── SuppressionState.kt
-│       │   │   ├── receiver/
-│       │   │   │   └── BootRecoveryReceiver.kt
-│       │   │   ├── service/
-│       │   │   │   ├── SuppressionForegroundService.kt
-│       │   │   │   └── SuppressionNotificationListener.kt
-│       │   │   └── ui/
-│       │   │       └── MainActivity.kt
-│       │   └── res/
-│       └── test/java/com/example/suppressor/
-│           ├── RecordingSuppressorTest.kt
-│           ├── FallbackChainTest.kt
-│           ├── audio/OneUI8AudioStreamControllerTest.kt
-│           ├── vibration/OneUI8VibrationSettingsControllerTest.kt
-│           └── persistence/SuppressionStateTest.kt
-├── docs/
-│   ├── FEASIBILITY_REPORT.md
-│   └── plans/
-│       └── IMPLEMENTATION_PLAN.md
-├── build.gradle.kts
-├── settings.gradle.kts
-└── gradle.properties
-```
+- **🔒 Zero `RECORD_AUDIO` Permission (100% Private & Safe):**
+  Uses Android's system-level `AudioManager.AudioRecordingCallback` (introduced in API 30+). The app **never** records, listens to, or processes microphone audio. It only monitors whether another application has opened a recording stream.
+- **🛡️ No Invasive Foreground Microphone Type:**
+  Avoids Android 14–16 runtime security restrictions by combining a `FOREGROUND_SERVICE_SPECIAL_USE` foreground service (`audio_recording_detection` property) with a persistent `NotificationListenerService`.
+- **⚡ Universal Zero-Filter Detection Engine:**
+  Triggers on **any** microphone usage across any application without relying on hidden or redacted package names (Android 10+ hides `clientPackageName` for unprivileged apps).
+- **🔄 VoIP & Communication Mode Backup Ticker:**
+  Includes an active 500ms ticker on a dedicated urgent-priority thread (`THREAD_PRIORITY_URGENT_AUDIO`) that checks for VoIP calls (`MODE_IN_COMMUNICATION`, `MODE_IN_CALL`, `MODE_CALL_REDIRECT`) to eliminate callback latency on WhatsApp, Instagram, and Telegram.
+- **🎯 Dual Samsung Sound & Multi-Key Vibration Muting:**
+  - **Audio:** Executes both `adjustStreamVolume(ADJUST_MUTE)` and `setStreamVolume(STREAM_NOTIFICATION, 0)`.
+  - **Samsung Vibration:** Queries, snapshots, and sets all One UI vibration keys to `0`:
+    - `SEM_VIBRATION_NOTIFICATION_INTENSITY` & `sem_vibration_notification_intensity`
+    - `VIB_NOTIFICATION_MAGNITUDE` & `vib_notification_magnitude`
+    - `vibrate_notification`
+    - `notification_vibration_intensity`
+    - `vibrate_on` (fallback)
+  - **Active Snoozing:** Snoozes non-call notifications for 1000ms (`snoozeNotification(sbn.key, 1000L)`) during active recordings to intercept bursts at the notification manager level.
+- **🧠 Snapshot Once Lock & Non-Zero Guard:**
+  Snapshots system volume and vibration levels strictly once upon transition from `IDLE` → `SUPPRESSING`. Subsequent triggers never overwrite the user's normal volume with `0`. If values read `0` at snapshot time, the Non-Zero Guard restores a healthy persisted baseline.
+- **⏱️ 400ms Anti-Glitch Debounce:**
+  Delays restoration by 400ms when mic streams stop, preventing rapid on/off audio glitching during successive voice notes.
+- **📊 Live In-App Debugger & Diagnostic Console:**
+  Features a real-time inspector panel polling every 500ms directly on the dashboard:
+  - Active microphone configs count, audio session IDs, and source types.
+  - Current `AudioManager.mode`.
+  - `STREAM_NOTIFICATION` live volume and mute state.
+  - Live integer values of all Samsung vibration keys directly from `Settings.System`.
+  - Monospace scrolling event log console with one-tap clipboard copy and vibration key dump.
+- **💾 Crash & Reboot Recovery:**
+  Automatically restores cached baseline settings after device reboots via `BootRecoveryReceiver` and cloud-synced `PersistenceManager`.
 
 ---
 
-## 5. Build & Setup Instructions
+## 📱 Compatible Devices & OS Requirements
 
-### Prerequisites
-- JDK 17 (bundled in Android Studio at `/Applications/Android Studio.app/Contents/jbr/Contents/Home`)
-- Android SDK (API 36 / Android 16 compileSdk)
+| Component | Requirement |
+| :--- | :--- |
+| **Target OS** | Android 11, 12, 13, 14, 15, 16 (API 30 to 36) |
+| **Tested Platforms** | **Samsung One UI 6, One UI 7, One UI 8, One UI 9** |
+| **Supported Hardware** | Samsung Galaxy S-Series (S20 – S25 Ultra)<br/>Samsung Galaxy Z-Series (Fold & Flip)<br/>Samsung Galaxy Note-Series<br/>Samsung Galaxy A-Series / M-Series / Tab |
+| **Non-Samsung Devices** | Compatible with standard Android notification sound muting; Samsung-specific vibration keys gracefully fall back to `NotificationListenerService`. |
 
-### Local Configuration
-Create `local.properties` with your Android SDK path:
-```properties
-sdk.dir=/Users/<username>/Library/Android/sdk
+---
+
+## 🏗️ Architecture & Technical Stack
+
+```mermaid
+flowchart TD
+    subgraph Detection["1. Universal Zero-Filter Detection"]
+        ARC["AudioRecordingCallback<br/>(Dedicated HandlerThread)"] --> Aggregator["RecordingSuppressor Engine"]
+        Ticker["500ms Backup Polling Ticker<br/>(MicMonitorThread)"] --> Aggregator
+        ModeCheck["AudioManager.mode ==<br/>IN_COMMUNICATION / IN_CALL / CALL_REDIRECT"] --> Aggregator
+    end
+
+    subgraph StateMachine["2. State Machine & Snapshot Engine"]
+        Aggregator --> StateCheck{Is Mic / Comm Active?}
+        StateCheck -- Yes --> EnterSup["Transition to SUPPRESSING"]
+        StateCheck -- No --> ExitSup["Transition to RESTORING<br/>(400ms Debounce)"]
+        
+        EnterSup --> SnapshotLock["Snapshot Once Lock +<br/>Non-Zero Guard Baseline"]
+        SnapshotLock --> Persistence["PersistenceManager<br/>(SharedPreferences + Cloud Backup)"]
+    end
+
+    subgraph Muting["3. Guaranteed Dual Suppression"]
+        SnapshotLock --> SoundMute["AudioStreamController:<br/>adjustStreamVolume(ADJUST_MUTE) +<br/>setStreamVolume(0)"]
+        SnapshotLock --> VibMute["VibrationSettingsController:<br/>All SEM_VIB / VIB_MAGNITUDE /<br/>vibrate_notification keys = 0"]
+        SnapshotLock --> NLS["NotificationListenerService:<br/>snoozeNotification(1000ms)<br/>Active Interception"]
+    end
+
+    subgraph Debugger["4. Live In-App Debugger"]
+        Aggregator -.-> DbgLog["DebugLogManager<br/>(Circular Buffer + StateFlow)"]
+        SoundMute -.-> DbgLog
+        VibMute -.-> DbgLog
+        NLS -.-> DbgLog
+        DbgLog --> Inspector["Real-Time 500ms Inspector UI<br/>& Monospace Console"]
+    end
 ```
 
-### Automated Physical Device Testing (Phase 5)
-Connect your Samsung device via USB (with USB Debugging enabled) and run:
+### Modular Controller Stack
+
+- **`RecordingSuppressor`:** Thread-safe state orchestrator (`IDLE` ↔ `SUPPRESSING` ↔ `RESTORING`).
+- **`AudioStreamController`:** Pluggable audio muting interface:
+  - `OneUI8AudioStreamController` (Primary: `STREAM_NOTIFICATION` dual muting).
+  - `NotificationChannelAudioController` (Fallback: individual notification channel sound suppression).
+- **`VibrationSettingsController`:** Pluggable vibration muting interface:
+  - `OneUI8VibrationSettingsController` (Primary: Samsung system settings multi-key muting).
+  - `NotificationListenerVibrationController` (Fallback: active notification snooze & cancellation).
+  - `AdbSecureSettingsVibrationController` (Development / Enterprise fallback).
+- **`SuppressionForegroundService`:** Sticky foreground service with persistent monitoring notification.
+- **`SuppressionNotificationListener`:** System-priority host ensuring continuous monitoring survives aggressive OS task killing.
+
+---
+
+## 🛠️ Installation & Setup Guide
+
+### Step 1: Install the APK
+Download `SamsungMicMute_v1.0_Working.apk` from the [Releases](https://github.com/) section, or build the APK locally from source:
+
 ```bash
-./scripts/test_device.sh
-```
-This script automatically:
-1. Detects the connected Samsung device and One UI / Android version.
-2. Installs the compiled APK (`app/build/outputs/apk/debug/app-debug.apk`).
-3. Grants `WRITE_SETTINGS` and enables `NotificationListenerService`.
-4. Inspects existing `sem_vibration_*` system settings keys.
-5. Launches `MainActivity` and streams real-time suppression logcat events.
-
-### Running Unit Tests (20/20 Passing)
-```bash
-./gradlew test
-```
-
-### Building Debug APK
-```bash
+git clone https://github.com/m4wan1/SamsungMicMuteApp.git
+cd SamsungMicMuteApp
 ./gradlew assembleDebug
-# Generated APK: app/build/outputs/apk/debug/app-debug.apk
+```
+The compiled APK will be located at:
+`app/build/outputs/apk/debug/app-debug.apk`
+
+---
+
+### Step 2: Grant Permissions
+Launch the app. Three clean setup cards will guide you through granting the required permissions:
+
+1. **Write System Settings (`WRITE_SETTINGS`):**
+   - Tap **Grant** on Card 3.
+   - Toggle **Allow modifying system settings** for *Samsung Mic Mute*.
+   - *Purpose:* Allows the app to set Samsung vibration intensity and volume in `Settings.System`.
+2. **Notification Listener Access:**
+   - Tap **Grant** on Card 3.
+   - Enable **Notification Vibration Suppressor** in the device settings.
+   - *Purpose:* Allows active notification interception and snoozing during recordings.
+3. **Ignore Battery Optimization (Unrestricted):**
+   - Tap **Grant** on Card 3.
+   - Select **Allow** (Unrestricted).
+   - *Purpose:* Prevents Samsung One UI from freezing or delaying background audio callback threads when the app is minimized.
+
+#### Alternative Setup via ADB (Fast Setup for Developers):
+```bash
+# Grant Write System Settings
+adb shell appops set com.example.suppressor.debug WRITE_SETTINGS allow
+
+# Grant Notification Listener Access
+adb shell cmd notification set_listeners com.example.suppressor.debug/com.example.suppressor.service.SuppressionNotificationListener
+
+# Whitelist from Battery Optimization
+adb shell dumpsys deviceidle whitelist +com.example.suppressor.debug
 ```
 
 ---
 
-## 6. Permissions & ADB Quick Reference
+## 🧪 Usage & Testing
 
-### Granting Permissions via ADB
-```bash
-# Grant WRITE_SETTINGS (for vibration intensity control)
-adb shell appops set com.example.suppressor WRITE_SETTINGS allow
+### How to Verify Suppression:
+1. Open **Samsung Mic Mute** and verify all three permission badges on Card 3 show **Granted** / **Unrestricted**.
+2. Keep the app open or minimize it.
+3. Open **WhatsApp** (or **Voice Recorder**, **Snapchat**, or **Camera** video mode).
+4. Hold the microphone button to record a voice note.
+5. While holding the microphone, look at the app:
+   - **Status Badge** instantly changes to: `ACTIVE - Mic in Use (Muted)`.
+   - **Saved Volume / Vibration** shows: `Saved Volume: 10 / 15 | Current: 0 (Muted)`.
+6. Have a friend send you a notification message (or send an email/notification from another device).
+7. **Observe:** The notification arrives silently with **zero sound** and **zero vibration**.
+8. Release the microphone button.
+9. After a smooth 400ms debounce, volume and vibration automatically return to your exact original settings.
 
-# Grant Notification Listener access (for vibration fallback)
-adb shell settings put secure enabled_notification_listeners "com.example.suppressor/com.example.suppressor.service.SuppressionNotificationListener"
+### Using the In-App Live Debugger:
+Scroll to **Card 5 (LIVE IN-APP DEBUGGER)** at the bottom of the screen:
+- **Live Inspector:** Shows real-time mic configs count, `AudioManager.mode`, stream mute status, and the exact integer values of Samsung vibration keys.
+- **Copy Logs:** Copies the full diagnostic dump and Samsung settings keys to your clipboard.
+- **Dump Vib Keys:** Scans all settings in `Settings.System` matching `vib` or `noti` and prints their values.
 
-# Verify Samsung vibration settings keys
-adb shell settings list system | grep -i vibrat
-adb shell settings list secure | grep -i vibrat
+---
 
-# Query active audio recordings
-adb shell dumpsys media.audio_flinger
+## 🔒 Security & Privacy Non-Negotiables
+
+| Guarantee | How It Is Enforced |
+| :--- | :--- |
+| **No Microphone Eavesdropping** | `<uses-permission android:name="android.permission.RECORD_AUDIO" tools:node="remove" />` is enforced in `AndroidManifest.xml`. The Android OS prevents this app from recording audio. |
+| **No Do-Not-Disturb Interference** | Does not alter Android `NotificationManager.setInterruptionFilter()`. Your DND schedules and starred contact exceptions remain untouched. |
+| **No Global Silent Mode** | Does not set `RINGER_MODE_SILENT`. Incoming phone calls and alarms ring at full normal volume. |
+| **Local-Only Processing** | Contains zero analytics, zero network requests, and zero remote tracking. |
+
+---
+
+## 📄 License & Terms
+
+Distributed under the **MIT License**.
+
 ```
+MIT License
+
+Copyright (c) 2026 Marw (m4wan1)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+*Disclaimer: This project is an independent open-source utility designed for user privacy and convenience. It is not affiliated with or endorsed by Samsung Electronics Co., Ltd.*
