@@ -1,4 +1,4 @@
-# Samsung Mic Mute App (v1.0)
+# Samsung Mic Mute App 
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android_11_to_16_(API_30--36)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android Platform" />
