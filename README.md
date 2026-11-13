@@ -1,3 +1,17 @@
+<p align="center">
+  <b>English</b> ·
+  <a href="README.ar.md">العربية</a> ·
+  <a href="README.es.md">Español</a> ·
+  <a href="README.fr.md">Français</a> ·
+  <a href="README.de.md">Deutsch</a> ·
+  <a href="README.ru.md">Русский</a> ·
+  <a href="README.pt-BR.md">Português (Brasil)</a> ·
+  <a href="README.tr.md">Türkçe</a> ·
+  <a href="README.ko.md">한국어</a> ·
+  <a href="README.ja.md">日本語</a> ·
+  <a href="README.zh-CN.md">简体中文</a>
+</p>
+
 # Samsung Mic Mute App (v3.0)
 
 <p align="center">
@@ -139,7 +153,7 @@ flowchart TD
 ## 🛠️ Installation & Setup Guide
 
 ### Step 1: Install the APK
-Download `SamsungMicMute_V2.apk` from the [Releases](https://github.com/) section, or build the APK locally from source:
+Download `SamsungMicMute_V2.apk` from the [Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases) section, or build the APK locally from source:
 
 ```bash
 git clone https://github.com/m4wan1/SamsungMicMuteApp.git
