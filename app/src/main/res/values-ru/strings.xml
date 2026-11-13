@@ -1,0 +1,99 @@
+<resources>
+    <string name="app_name">Samsung Mic Mute</string>
+    <string name="notification_listener_label">Подавитель вибрации уведомлений</string>
+
+    <!-- Main UI -->
+    <string name="title_monitoring_status">Статус мониторинга</string>
+    <string name="status_idle">ОЖИДАНИЕ - Мониторинг</string>
+    <string name="status_active">АКТИВНО - Микрофон используется (Заглушено)</string>
+    <string name="status_error">Ошибка - Проверьте разрешения</string>
+
+    <string name="card_title_status">Статус мониторинга</string>
+    <string name="card_title_snapshot">Снимок звука и вибрации</string>
+    <string name="card_title_permissions">Необходимые разрешения и батарея</string>
+    <string name="card_title_actions">Быстрые действия</string>
+
+    <string name="label_active_recordings">Активные записи</string>
+    <string name="label_no_active_recordings">Активные записи микрофона не обнаружены</string>
+    <string name="label_microphone_detected">Микрофон используется: %s</string>
+
+    <string name="label_volume_snapshot">Громкость уведомлений (STREAM_NOTIFICATION)</string>
+    <string name="label_vibration_snapshot">Вибрация уведомлений (SEM_VIBRATION)</string>
+
+    <string name="button_request_write_settings">Изменение настроек системы</string>
+    <string name="button_request_notification_listener">Доступ к уведомлениям</string>
+    <string name="button_request_battery">Отключить оптимизацию батареи (Без ограничений)</string>
+    <string name="button_restart_service">Перезапустить службу</string>
+    <string name="button_force_restore">Принудительно восстановить</string>
+    <string name="button_test_suppression">Тест заглушения</string>
+
+    <string name="status_granted">Предоставлено</string>
+    <string name="status_not_granted">Не предоставлено</string>
+    <string name="button_grant">Разрешить</string>
+    <string name="status_unrestricted">Без ограничений</string>
+    <string name="status_restricted">Оптимизировано (Ограничено)</string>
+
+    <string name="permission_write_settings_explanation">Требуется для управления интенсивностью вибрации и громкостью One UI.</string>
+    <string name="permission_notification_listener_explanation">Требуется для приоритетного мониторинга звука и подавления вибрации уведомлений.</string>
+    <string name="permission_battery_explanation">Требуется, чтобы One UI не задерживала фоновые события микрофона.</string>
+
+    <!-- V2 Custom In-App Vibration Warning -->
+    <string name="card_title_disclaimer">ВАЖНОЕ ПРИМЕЧАНИЕ</string>
+    <string name="disclaimer_custom_vibrations">⚠️ Важное примечание: Это приложение глушит звуки и вибрацию на уровне системы. Однако оно не может отключить внутреннюю вибрацию приложений (например, настройки вибрации внутри WhatsApp или Telegram). Отключите вибрацию в этих приложениях вручную для полной тишины.</string>
+
+    <!-- Support / Buy Me a Coffee -->
+    <string name="card_title_support">Поддержать проект</string>
+    <string name="support_description">Если приложение помогает записывать чистые голосовые сообщения и видео без помех, угостите меня кофе для поддержки разработки!</string>
+    <string name="button_buy_coffee">Купить мне кофе ☕</string>
+    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
+    <string name="toast_opening_coffee">Открытие страницы поддержки…</string>
+
+    <!-- Language Selector -->
+    <string name="title_select_language">Выберите язык</string>
+    <string name="toast_language_changed">Язык обновлен</string>
+
+    <!-- Debug UI -->
+    <string name="card_title_debugger">ОТЛАДЧИК В РЕАЛЬНОМ ВРЕМЕНИ</string>
+    <string name="button_copy_logs">Копировать логи</string>
+    <string name="button_clear_logs">Очистить</string>
+    <string name="button_dump_vib_keys">Дамп ключей вибро</string>
+    <string name="toast_logs_copied">Логи скопированы в буфер обмена</string>
+    <string name="toast_vib_keys_dumped">Ключи вибрации выгружены в лог</string>
+
+    <!-- Toasts -->
+    <string name="toast_write_settings_granted">Разрешение на изменение настроек предоставлено</string>
+    <string name="toast_write_settings_denied">Разрешение на изменение настроек отклонено</string>
+    <string name="toast_notification_listener_granted">Доступ к уведомлениям включен</string>
+    <string name="toast_notification_listener_denied">Доступ к уведомлениям не включен</string>
+    <string name="toast_battery_unrestricted">Оптимизация батареи уже отключена</string>
+    <string name="toast_service_restarted">Служба мониторинга перезапущена</string>
+    <string name="toast_suppression_applied">Подавление уведомлений включено</string>
+    <string name="toast_suppression_restored">Звук и вибрация уведомлений восстановлены</string>
+    <string name="toast_error_applying_suppression">Не удалось применить подавление</string>
+
+    <!-- Health Status -->
+    <string name="health_audio_controller">Аудиоконтроллер</string>
+    <string name="health_vibration_controller">Контроллер вибрации</string>
+    <string name="health_write_settings">Настройки системы</string>
+    <string name="health_notification_listener">Слушатель уведомлений</string>
+    <string name="health_service_running">Служба работает</string>
+    <string name="health_persisted_state">Сохраненное состояние</string>
+    <string name="health_active_recordings">Активные записи</string>
+
+    <string name="health_status_supported">Поддерживается</string>
+    <string name="health_status_not_supported">Не поддерживается</string>
+    <string name="health_status_granted">Предоставлено</string>
+    <string name="health_status_not_granted">Не предоставлено</string>
+    <string name="health_status_running">Работает</string>
+    <string name="health_status_stopped">Остановлено</string>
+    <string name="health_status_present">Присутствует</string>
+    <string name="health_status_none">Нет</string>
+
+    <!-- Fallback chain info -->
+    <string name="fallback_chain_audio">Аудио: STREAM_NOTIFICATION → Каналы уведомлений</string>
+    <string name="fallback_chain_vibration">Вибрация: SEM_VIBRATION → NotificationListener → Защищенный ADB</string>
+
+    <!-- Settings keys -->
+    <string name="pref_key_write_settings_granted">write_settings_granted</string>
+    <string name="pref_key_notification_listener_granted">notification_listener_granted</string>
+</resources>

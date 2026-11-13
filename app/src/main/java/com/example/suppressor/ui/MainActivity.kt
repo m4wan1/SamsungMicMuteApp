@@ -19,8 +19,11 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.os.LocaleListCompat
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
 import com.example.suppressor.R
@@ -36,9 +39,10 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 /**
- * Main Activity with Live In-App Debugger Console.
+ * Main Activity with Live In-App Debugger Console (Version 2).
  *
  * Card 1: Live Status Banner (IDLE vs ACTIVE Mic Muted)
+ * Warning Card: Custom In-App Vibration Disclaimer
  * Card 2: Saved Audio & Vibration Snapshot
  * Card 3: Required Permissions & Battery Setup
  * Card 4: Quick Actions (Restart Monitor, Force Restore)
@@ -57,6 +61,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvActiveRecordings: TextView
     private lateinit var tvActivePackages: TextView
 
+    // Warning Card: In-App Vibration Disclaimer
+    private lateinit var tvDisclaimer: TextView
+
     // Card 2: Snapshot
     private lateinit var tvVolumeSnapshot: TextView
     private lateinit var tvVibrationSnapshot: TextView
@@ -72,6 +79,10 @@ class MainActivity : AppCompatActivity() {
     // Card 4: Quick Actions
     private lateinit var btnRestartService: Button
     private lateinit var btnForceRestore: Button
+
+    // Support Developer & Language
+    private lateinit var btnBuyCoffee: Button
+    private lateinit var btnChangeLanguage: View
 
     // Card 5: Live In-App Debugger
     private lateinit var tvDebugInspector: TextView
@@ -152,6 +163,10 @@ class MainActivity : AppCompatActivity() {
         tvActiveRecordings = findViewById(R.id.tv_active_recordings)
         tvActivePackages = findViewById(R.id.tv_active_packages)
 
+        // Warning Card: In-App Vibration Disclaimer
+        tvDisclaimer = findViewById(R.id.tv_disclaimer)
+        tvDisclaimer.text = getString(R.string.disclaimer_custom_vibrations)
+
         // Card 2
         tvVolumeSnapshot = findViewById(R.id.tv_volume_snapshot)
         tvVibrationSnapshot = findViewById(R.id.tv_vibration_snapshot)
@@ -167,6 +182,10 @@ class MainActivity : AppCompatActivity() {
         // Card 4
         btnRestartService = findViewById(R.id.btn_restart_service)
         btnForceRestore = findViewById(R.id.btn_force_restore)
+
+        // Support Developer & Language
+        btnBuyCoffee = findViewById(R.id.btn_buy_coffee)
+        btnChangeLanguage = findViewById(R.id.btn_change_language)
 
         // Card 5: Debugger
         tvDebugInspector = findViewById(R.id.tv_debug_inspector)
@@ -187,6 +206,9 @@ class MainActivity : AppCompatActivity() {
         btnBatteryOptimization.setOnClickListener { requestBatteryOptimizationExemption() }
         btnRestartService.setOnClickListener { restartMonitorService() }
         btnForceRestore.setOnClickListener { forceRestore() }
+
+        btnBuyCoffee.setOnClickListener { openBuyMeACoffee() }
+        btnChangeLanguage.setOnClickListener { showLanguagePickerDialog() }
 
         btnCopyDebugLogs.setOnClickListener { copyDebugLogsToClipboard() }
         btnClearDebugLogs.setOnClickListener { DebugLogManager.clear() }
@@ -343,19 +365,19 @@ class MainActivity : AppCompatActivity() {
         tvStatusWriteSettings.text = if (hasWriteSettings) getString(R.string.status_granted) else getString(R.string.status_not_granted)
         tvStatusWriteSettings.setTextColor(ContextCompat.getColor(this, if (hasWriteSettings) R.color.status_active else R.color.status_error))
         btnWriteSettings.isEnabled = !hasWriteSettings
-        btnWriteSettings.text = if (hasWriteSettings) "Granted" else "Grant"
+        btnWriteSettings.text = if (hasWriteSettings) getString(R.string.status_granted) else getString(R.string.button_grant)
 
         val hasNotificationListener = SuppressionNotificationListener.isNotificationListenerEnabled(this)
         tvStatusNotificationListener.text = if (hasNotificationListener) getString(R.string.status_granted) else getString(R.string.status_not_granted)
         tvStatusNotificationListener.setTextColor(ContextCompat.getColor(this, if (hasNotificationListener) R.color.status_active else R.color.status_error))
         btnNotificationListener.isEnabled = !hasNotificationListener
-        btnNotificationListener.text = if (hasNotificationListener) "Granted" else "Grant"
+        btnNotificationListener.text = if (hasNotificationListener) getString(R.string.status_granted) else getString(R.string.button_grant)
 
         val isUnrestricted = isBatteryOptimizationIgnored()
         tvStatusBatteryOptimization.text = if (isUnrestricted) getString(R.string.status_unrestricted) else getString(R.string.status_restricted)
         tvStatusBatteryOptimization.setTextColor(ContextCompat.getColor(this, if (isUnrestricted) R.color.status_active else R.color.status_error))
         btnBatteryOptimization.isEnabled = !isUnrestricted
-        btnBatteryOptimization.text = if (isUnrestricted) "Granted" else "Grant"
+        btnBatteryOptimization.text = if (isUnrestricted) getString(R.string.status_granted) else getString(R.string.button_grant)
     }
 
     /**
@@ -553,5 +575,57 @@ class MainActivity : AppCompatActivity() {
 
         Toast.makeText(this, R.string.toast_suppression_restored, Toast.LENGTH_SHORT).show()
         updateUI()
+    }
+
+    /**
+     * Opens the developer's Buy Me a Coffee / Support page.
+     */
+    private fun openBuyMeACoffee() {
+        val coffeeUrl = getString(R.string.buy_coffee_url)
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(coffeeUrl))
+            startActivity(intent)
+            Toast.makeText(this, R.string.toast_opening_coffee, Toast.LENGTH_SHORT).show()
+            DebugLogManager.log(TAG, "Opened support / coffee URL: $coffeeUrl")
+        } catch (e: Exception) {
+            DebugLogManager.log(TAG, "Failed to open URL, copying to clipboard: ${e.message}")
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            clipboard.setPrimaryClip(ClipData.newPlainText("Support URL", coffeeUrl))
+            Toast.makeText(this, "$coffeeUrl copied to clipboard", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    /**
+     * Shows a dialog allowing the user to select their preferred language from 11 options.
+     * Uses AndroidX AppCompatDelegate to immediately apply the chosen locale.
+     */
+    private fun showLanguagePickerDialog() {
+        val languages = arrayOf(
+            "🇸🇦 العربية (Arabic)",
+            "🇺🇸 English",
+            "🇪🇸 Español (Spanish)",
+            "🇫🇷 Français (French)",
+            "🇩🇪 Deutsch (German)",
+            "🇷🇺 Русский (Russian)",
+            "🇧🇷 Português (Portuguese)",
+            "🇹🇷 Türkçe (Turkish)",
+            "🇰🇷 한국어 (Korean)",
+            "🇯🇵 日本語 (Japanese)",
+            "🇨🇳 简体中文 (Chinese)"
+        )
+        val languageTags = arrayOf("ar", "en", "es", "fr", "de", "ru", "pt", "tr", "ko", "ja", "zh")
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.title_select_language)
+            .setItems(languages) { _, which ->
+                val selectedTag = languageTags[which]
+                AppCompatDelegate.setApplicationLocales(
+                    LocaleListCompat.forLanguageTags(selectedTag)
+                )
+                Toast.makeText(this, R.string.toast_language_changed, Toast.LENGTH_SHORT).show()
+                DebugLogManager.log(TAG, "Language switched to: $selectedTag")
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 }

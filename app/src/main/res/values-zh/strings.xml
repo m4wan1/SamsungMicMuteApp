@@ -1,0 +1,99 @@
+<resources>
+    <string name="app_name">三星麦克风静音</string>
+    <string name="notification_listener_label">通知振动抑制服务</string>
+
+    <!-- Main UI -->
+    <string name="title_monitoring_status">实时监控状态</string>
+    <string name="status_idle">待机 - 正在监控</string>
+    <string name="status_active">生效中 - 麦克风正在使用 (已静音)</string>
+    <string name="status_error">错误 - 请检查权限</string>
+
+    <string name="card_title_status">实时监控状态</string>
+    <string name="card_title_snapshot">音频与振动快照</string>
+    <string name="card_title_permissions">所需权限与电池优化</string>
+    <string name="card_title_actions">快捷操作</string>
+
+    <string name="label_active_recordings">活动录音</string>
+    <string name="label_no_active_recordings">未检测到活动的麦克风录音</string>
+    <string name="label_microphone_detected">麦克风正在被使用: %s</string>
+
+    <string name="label_volume_snapshot">通知音量 (STREAM_NOTIFICATION)</string>
+    <string name="label_vibration_snapshot">通知振动强度 (SEM_VIBRATION)</string>
+
+    <string name="button_request_write_settings">修改系统设置权限</string>
+    <string name="button_request_notification_listener">通知使用权</string>
+    <string name="button_request_battery">忽略电池优化 (无限制)</string>
+    <string name="button_restart_service">重启监控服务</string>
+    <string name="button_force_restore">强制恢复音量</string>
+    <string name="button_test_suppression">测试静音</string>
+
+    <string name="status_granted">已授予</string>
+    <string name="status_not_granted">未授予</string>
+    <string name="button_grant">去授权</string>
+    <string name="status_unrestricted">无限制</string>
+    <string name="status_restricted">已优化 (受限制)</string>
+
+    <string name="permission_write_settings_explanation">用于在系统设置中调整并恢复三星 One UI 的通知音量及振动强度。</string>
+    <string name="permission_notification_listener_explanation">用于高优先级后台音频监控及拦截通知振动。</string>
+    <string name="permission_battery_explanation">防止 One UI 延迟后台麦克风回调。</string>
+
+    <!-- V2 Custom In-App Vibration Warning -->
+    <string name="card_title_disclaimer">重要提示</string>
+    <string name="disclaimer_custom_vibrations">⚠️ 重要提示：此工具仅静音系统级通知声音和振动。它无法拦截第三方应用内置的自定义振动（例如微信、WhatsApp、Telegram应用内的振动设置）。如需完全静音，请在相应应用内手动关闭振动。</string>
+
+    <!-- Support / Buy Me a Coffee -->
+    <string name="card_title_support">支持项目开发</string>
+    <string name="support_description">如果此应用帮助您在发送语音和录像时远离噪音干扰，欢迎请我喝杯咖啡以支持后续持续更新！</string>
+    <string name="button_buy_coffee">请我喝杯咖啡 ☕</string>
+    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
+    <string name="toast_opening_coffee">正在打开支持链接…</string>
+
+    <!-- Language Selector -->
+    <string name="title_select_language">选择语言</string>
+    <string name="toast_language_changed">语言已更新</string>
+
+    <!-- Debug UI -->
+    <string name="card_title_debugger">实时调试器</string>
+    <string name="button_copy_logs">复制日志</string>
+    <string name="button_clear_logs">清除</string>
+    <string name="button_dump_vib_keys">导出振动键</string>
+    <string name="toast_logs_copied">调试日志已复制到剪贴板</string>
+    <string name="toast_vib_keys_dumped">三星振动配置键已转储至日志</string>
+
+    <!-- Toasts -->
+    <string name="toast_write_settings_granted">已授予修改系统设置权限</string>
+    <string name="toast_write_settings_denied">修改系统设置权限被拒绝</string>
+    <string name="toast_notification_listener_granted">通知使用权已启用</string>
+    <string name="toast_notification_listener_denied">通知使用权未启用</string>
+    <string name="toast_battery_unrestricted">电池优化已处于禁用状态</string>
+    <string name="toast_service_restarted">监控服务已重启</string>
+    <string name="toast_suppression_applied">通知静音与抑制已激活</string>
+    <string name="toast_suppression_restored">通知声音与振动已恢复</string>
+    <string name="toast_error_applying_suppression">应用静音抑制失败</string>
+
+    <!-- Health Status -->
+    <string name="health_audio_controller">音频控制器</string>
+    <string name="health_vibration_controller">振动控制器</string>
+    <string name="health_write_settings">系统设置</string>
+    <string name="health_notification_listener">通知侦听器</string>
+    <string name="health_service_running">服务运行状态</string>
+    <string name="health_persisted_state">持久化状态</string>
+    <string name="health_active_recordings">活动录音</string>
+
+    <string name="health_status_supported">已支持</string>
+    <string name="health_status_not_supported">不支持</string>
+    <string name="health_status_granted">已授予</string>
+    <string name="health_status_not_granted">未授予</string>
+    <string name="health_status_running">正在运行</string>
+    <string name="health_status_stopped">已停止</string>
+    <string name="health_status_present">存在</string>
+    <string name="health_status_none">无</string>
+
+    <!-- Fallback chain info -->
+    <string name="fallback_chain_audio">音频: STREAM_NOTIFICATION → 通知渠道</string>
+    <string name="fallback_chain_vibration">振动: SEM_VIBRATION → NotificationListener → 安全ADB</string>
+
+    <!-- Settings keys -->
+    <string name="pref_key_write_settings_granted">write_settings_granted</string>
+    <string name="pref_key_notification_listener_granted">notification_listener_granted</string>
+</resources>

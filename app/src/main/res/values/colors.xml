@@ -27,4 +27,17 @@
     <color name="text_primary">#FF212121</color>
     <color name="text_secondary">#FF757575</color>
     <color name="divider_color">#FFEEF2F6</color>
+
+    <!-- Warning card colors -->
+    <color name="warning_card_bg">#FFFDF5</color>
+    <color name="warning_card_stroke">#FBBF24</color>
+    <color name="warning_card_title">#B45309</color>
+    <color name="warning_card_text">#78350F</color>
+
+    <!-- Support / Coffee colors -->
+    <color name="coffee_yellow">#FFDD00</color>
+    <color name="coffee_card_bg">#FFFDF0</color>
+    <color name="coffee_card_stroke">#F6C90E</color>
+    <color name="coffee_title">#7A4B00</color>
+    <color name="coffee_text">#4A3728</color>
 </resources>

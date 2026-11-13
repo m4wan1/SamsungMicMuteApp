@@ -29,13 +29,38 @@
 
     <string name="status_granted">Granted</string>
     <string name="status_not_granted">Not Granted</string>
+    <string name="button_grant">Grant</string>
     <string name="status_unrestricted">Unrestricted</string>
     <string name="status_restricted">Optimized (Restricted)</string>
 
     <string name="permission_write_settings_explanation">Required to set Samsung vibration intensity and volume in system settings.</string>
-    <string name="permission_notification_listener_explanation">Required as fallback to intercept and cancel notification vibration.</string>
+    <string name="permission_notification_listener_explanation">Required for high-priority background audio monitoring and notification vibration suppression.</string>
     <string name="permission_battery_explanation">Required to prevent Samsung One UI from delaying background microphone callbacks.</string>
 
+    <!-- V2 Custom In-App Vibration Warning -->
+    <string name="card_title_disclaimer">IMPORTANT NOTICE</string>
+    <string name="disclaimer_custom_vibrations">⚠️ Important Note: This tool mutes system-level notification sounds and vibrations. However, it cannot block custom in-app vibrations (e.g., custom vibration settings inside WhatsApp, Telegram, etc.). You must manually disable in-app vibrations inside those specific apps for a completely silent experience.</string>
+
+    <!-- Support / Buy Me a Coffee -->
+    <string name="card_title_support">Support the Project</string>
+    <string name="support_description">If this app helps keep your voice notes and recordings silent and clear, consider buying me a coffee to support continuous updates!</string>
+    <string name="button_buy_coffee">Buy Me a Coffee ☕</string>
+    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
+    <string name="toast_opening_coffee">Opening Buy Me a Coffee link…</string>
+
+    <!-- Language Selector -->
+    <string name="title_select_language">Select Language</string>
+    <string name="toast_language_changed">Language updated</string>
+
+    <!-- Debug UI -->
+    <string name="card_title_debugger">LIVE IN-APP DEBUGGER</string>
+    <string name="button_copy_logs">Copy Logs</string>
+    <string name="button_clear_logs">Clear</string>
+    <string name="button_dump_vib_keys">Dump Vib Keys</string>
+    <string name="toast_logs_copied">Debug logs copied to clipboard</string>
+    <string name="toast_vib_keys_dumped">Vibration keys dumped to log</string>
+
+    <!-- Toasts -->
     <string name="toast_write_settings_granted">Write Settings permission granted</string>
     <string name="toast_write_settings_denied">Write Settings permission denied</string>
     <string name="toast_notification_listener_granted">Notification listener enabled</string>

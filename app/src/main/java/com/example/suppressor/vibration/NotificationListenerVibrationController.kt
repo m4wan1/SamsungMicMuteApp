@@ -107,19 +107,9 @@ class NotificationListenerVibrationController : VibrationSettingsController {
             modified = true
         }
 
-        // Note: We cannot directly modify the posted notification.
-        // The vibration cancellation happens because we return true from
-        // onNotificationPosted to indicate we've handled it, but the system
-        // still vibrates. To truly cancel, we need to use the NLS APIs.
-
-        // For API 26+, we can use NotificationListenerService.cancelNotification()
-        // but that dismisses the entire notification, which is not desired.
-        // Instead, we rely on the notification's vibration being cleared before posting.
-        // However, since we receive the notification AFTER it's posted, we can't
-        // prevent the vibration this way on most Android versions.
-
-        // Alternative: Use setVibrationPattern on the notification channel (requires NLS + API 26+)
-        // But channel modifications affect all future notifications, not the current one.
+        // Note: In V2, notifications must NEVER be snoozed, canceled, or delayed.
+        // We do not call cancelNotification(), cancelAllNotifications(), or snoozeNotification().
+        // Notifications are posted in real-time; silent delivery is handled at the system level.
 
         // Best effort: log and return
         if (modified) {

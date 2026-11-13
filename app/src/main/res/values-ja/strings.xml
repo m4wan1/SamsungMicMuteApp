@@ -1,0 +1,99 @@
+<resources>
+    <string name="app_name">Samsung Mic Mute</string>
+    <string name="notification_listener_label">通知バイブレーション抑制サービス</string>
+
+    <!-- Main UI -->
+    <string name="title_monitoring_status">リアルタイム監視ステータス</string>
+    <string name="status_idle">待機中 - 監視中</string>
+    <string name="status_active">アクティブ - マイク使用中（ミュート中）</string>
+    <string name="status_error">エラー - 権限を確認してください</string>
+
+    <string name="card_title_status">リアルタイム監視ステータス</string>
+    <string name="card_title_snapshot">オーディオとバイブレーションのスナップショット</string>
+    <string name="card_title_permissions">必要な権限とバッテリー設定</string>
+    <string name="card_title_actions">クイックアクション</string>
+
+    <string name="label_active_recordings">アクティブな録音</string>
+    <string name="label_no_active_recordings">アクティブなマイク録音は検出されていません</string>
+    <string name="label_microphone_detected">マイク使用中のアプリ: %s</string>
+
+    <string name="label_volume_snapshot">通知音量 (STREAM_NOTIFICATION)</string>
+    <string name="label_vibration_snapshot">通知バイブレーション強度 (SEM_VIBRATION)</string>
+
+    <string name="button_request_write_settings">システム設定の変更</string>
+    <string name="button_request_notification_listener">通知へのアクセス</string>
+    <string name="button_request_battery">バッテリーの最適化を無視（無制限）</string>
+    <string name="button_restart_service">監視サービスを再起動</string>
+    <string name="button_force_restore">強制復元</string>
+    <string name="button_test_suppression">ミュートテスト</string>
+
+    <string name="status_granted">許可済み</string>
+    <string name="status_not_granted">未許可</string>
+    <string name="button_grant">許可する</string>
+    <string name="status_unrestricted">制限なし</string>
+    <string name="status_restricted">最適化済み（制限あり）</string>
+
+    <string name="permission_write_settings_explanation">Samsung One UIの通知音量およびバイブレーション強度を制御・復元するために必要です。</string>
+    <string name="permission_notification_listener_explanation">バックグラウンドでの優先オーディオ監視および通知バイブ抑制に必要です。</string>
+    <string name="permission_battery_explanation">One UIによるバックグラウンドマイク通知の遅延を防ぐために必要です。</string>
+
+    <!-- V2 Custom In-App Vibration Warning -->
+    <string name="card_title_disclaimer">重要なお知らせ</string>
+    <string name="disclaimer_custom_vibrations">⚠️ 重要なお知らせ: このツールはシステムレベルの通知音とバイブレーションをミュートします。ただし、アプリ独自のバイブレーション設定（LINE、WhatsApp、Telegram内の個別設定など）は制御できません。完全に無音化するには各アプリ内のバイブレーションをオフにしてください。</string>
+
+    <!-- Support / Buy Me a Coffee -->
+    <string name="card_title_support">プロジェクトを支援</string>
+    <string name="support_description">このアプリがお役に立ち、音声メッセージや動画撮影を快適に楽しめているなら、今後の開発継続のためにコーヒーを奢っていただけると励みになります！</string>
+    <string name="button_buy_coffee">コーヒーを奢る ☕</string>
+    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
+    <string name="toast_opening_coffee">支援リンクを開いています…</string>
+
+    <!-- Language Selector -->
+    <string name="title_select_language">言語を選択</string>
+    <string name="toast_language_changed">言語が変更されました</string>
+
+    <!-- Debug UI -->
+    <string name="card_title_debugger">リアルタイムデバッガー</string>
+    <string name="button_copy_logs">ログをコピー</string>
+    <string name="button_clear_logs">消去</string>
+    <string name="button_dump_vib_keys">バイブキー出力</string>
+    <string name="toast_logs_copied">デバッグログをクリップボードにコピーしました</string>
+    <string name="toast_vib_keys_dumped">バイブレーション設定キーをログに出力しました</string>
+
+    <!-- Toasts -->
+    <string name="toast_write_settings_granted">システム設定変更権限が許可されました</string>
+    <string name="toast_write_settings_denied">システム設定変更権限が拒否されました</string>
+    <string name="toast_notification_listener_granted">通知アクセスが有効になりました</string>
+    <string name="toast_notification_listener_denied">通知アクセスが有効になっていません</string>
+    <string name="toast_battery_unrestricted">バッテリー最適化はすでに無効になっています</string>
+    <string name="toast_service_restarted">監視サービスを再起動しました</string>
+    <string name="toast_suppression_applied">通知のミュートを適用しました</string>
+    <string name="toast_suppression_restored">通知音とバイブレーションを復元しました</string>
+    <string name="toast_error_applying_suppression">ミュートの適用に失敗しました</string>
+
+    <!-- Health Status -->
+    <string name="health_audio_controller">オーディオコントローラー</string>
+    <string name="health_vibration_controller">バイブレーションコントローラー</string>
+    <string name="health_write_settings">システム設定</string>
+    <string name="health_notification_listener">通知リスナー</string>
+    <string name="health_service_running">サービス実行中</string>
+    <string name="health_persisted_state">保存された状態</string>
+    <string name="health_active_recordings">アクティブな録音</string>
+
+    <string name="health_status_supported">対応</string>
+    <string name="health_status_not_supported">非対応</string>
+    <string name="health_status_granted">許可済み</string>
+    <string name="health_status_not_granted">未許可</string>
+    <string name="health_status_running">実行中</string>
+    <string name="health_status_stopped">停止</string>
+    <string name="health_status_present">存在</string>
+    <string name="health_status_none">なし</string>
+
+    <!-- Fallback chain info -->
+    <string name="fallback_chain_audio">オーディオ: STREAM_NOTIFICATION → 通知チャンネル</string>
+    <string name="fallback_chain_vibration">バイブレーション: SEM_VIBRATION → NotificationListener → ADB Secure</string>
+
+    <!-- Settings keys -->
+    <string name="pref_key_write_settings_granted">write_settings_granted</string>
+    <string name="pref_key_notification_listener_granted">notification_listener_granted</string>
+</resources>

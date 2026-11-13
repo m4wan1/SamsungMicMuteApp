@@ -1,6 +1,5 @@
 package com.example.suppressor.service
 
-import android.app.Notification
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -24,9 +23,11 @@ import com.example.suppressor.vibration.NotificationListenerVibrationController
  * Runs persistently with system priority. Registers AudioRecordingCallback on a dedicated
  * HandlerThread to guarantee real-time mic detection on Samsung One UI even when the app is minimized.
  *
- * While actively suppressing:
- * Intercepts incoming non-call/non-alarm notifications and snoozes them for 1000ms, completely
- * preventing audible/tactile notification bursts.
+ * In V2:
+ * Notifications are delivered and displayed on screen in real-time without snoozing, delaying,
+ * or blocking. The silent experience relies exclusively on Priority 1 controllers
+ * (OneUI8AudioStreamController setting STREAM_NOTIFICATION to 0, and
+ * OneUI8VibrationSettingsController setting sem_vibration_notification_intensity to 0).
  */
 class SuppressionNotificationListener : NotificationListenerService() {
 
@@ -127,25 +128,9 @@ class SuppressionNotificationListener : NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         super.onNotificationPosted(sbn)
-
-        val isSuppressing = recordingSuppressor?.isCurrentlySuppressing() == true
-        if (isSuppressing && !sbn.isOngoing) {
-            val category = sbn.notification.category
-            val isCallOrAlarm = category == Notification.CATEGORY_CALL ||
-                    category == Notification.CATEGORY_ALARM ||
-                    category == "call"
-            if (!isCallOrAlarm) {
-                try {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        snoozeNotification(sbn.key, 1000L)
-                        DebugLogManager.log(TAG, "Active suppression: snoozed ${sbn.packageName} for 1000ms")
-                    }
-                } catch (e: Exception) {
-                    DebugLogManager.log(TAG, "Active suppression: snooze failed for ${sbn.packageName}: ${e.message}")
-                }
-            }
-        }
-
+        // V2: Notifications are NOT snoozed, delayed, or canceled.
+        // They post and display normally in real-time.
+        // Silent behavior relies exclusively on Priority 1 controllers (volume 0 & vibration intensity 0).
         vibrationController?.onNotificationPosted(sbn)
     }
 

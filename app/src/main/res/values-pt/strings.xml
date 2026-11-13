@@ -1,0 +1,99 @@
+<resources>
+    <string name="app_name">Samsung Mic Mute</string>
+    <string name="notification_listener_label">Supressor de vibração de notificações</string>
+
+    <!-- Main UI -->
+    <string name="title_monitoring_status">Status de monitoramento ao vivo</string>
+    <string name="status_idle">OCIOSO - Monitorando</string>
+    <string name="status_active">ATIVO - Microfone em uso (Silenciado)</string>
+    <string name="status_error">Erro - Verifique as permissões</string>
+
+    <string name="card_title_status">Status de monitoramento ao vivo</string>
+    <string name="card_title_snapshot">Captura de áudio e vibração</string>
+    <string name="card_title_permissions">Permissões necessárias &amp; Bateria</string>
+    <string name="card_title_actions">Ações rápidas</string>
+
+    <string name="label_active_recordings">Gravações ativas</string>
+    <string name="label_no_active_recordings">Nenhuma gravação de microfone ativa detectada</string>
+    <string name="label_microphone_detected">Microfone em uso por: %s</string>
+
+    <string name="label_volume_snapshot">Volume de notificações (STREAM_NOTIFICATION)</string>
+    <string name="label_vibration_snapshot">Vibração de notificações (SEM_VIBRATION)</string>
+
+    <string name="button_request_write_settings">Modificar configurações do sistema</string>
+    <string name="button_request_notification_listener">Acesso a notificações</string>
+    <string name="button_request_battery">Ignorar otimização de bateria (Irrestrito)</string>
+    <string name="button_restart_service">Reiniciar monitor</string>
+    <string name="button_force_restore">Forçar restauração</string>
+    <string name="button_test_suppression">Testar supressão</string>
+
+    <string name="status_granted">Concedido</string>
+    <string name="status_not_granted">Não concedido</string>
+    <string name="button_grant">Conceder</string>
+    <string name="status_unrestricted">Irrestrito</string>
+    <string name="status_restricted">Otimizado (Restrito)</string>
+
+    <string name="permission_write_settings_explanation">Necessário para silenciar e restaurar volume e intensidade de vibração na One UI da Samsung.</string>
+    <string name="permission_notification_listener_explanation">Necessário para monitoramento prioritário de áudio e cancelamento de vibração de notificações.</string>
+    <string name="permission_battery_explanation">Necessário para evitar atrasos da One UI nos callbacks do microfone em segundo plano.</string>
+
+    <!-- V2 Custom In-App Vibration Warning -->
+    <string name="card_title_disclaimer">AVISO IMPORTANTE</string>
+    <string name="disclaimer_custom_vibrations">⚠️ Nota importante: Esta ferramenta silencia sons e vibrações do sistema. Porém, não bloqueia vibrações internas de aplicativos (como configurações de vibração dentro do WhatsApp ou Telegram). Desative as vibrações manualmente nesses apps para silêncio completo.</string>
+
+    <!-- Support / Buy Me a Coffee -->
+    <string name="card_title_support">Apoie o projeto</string>
+    <string name="support_description">Se este app mantém seus áudios e gravações livres de barulho, considere me pagar um café para apoiar atualizações contínuas!</string>
+    <string name="button_buy_coffee">Compre-me um café ☕</string>
+    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
+    <string name="toast_opening_coffee">Abrindo link de apoio…</string>
+
+    <!-- Language Selector -->
+    <string name="title_select_language">Selecionar idioma</string>
+    <string name="toast_language_changed">Idioma atualizado</string>
+
+    <!-- Debug UI -->
+    <string name="card_title_debugger">DEPURADOR AO VIVO</string>
+    <string name="button_copy_logs">Copiar registros</string>
+    <string name="button_clear_logs">Limpar</string>
+    <string name="button_dump_vib_keys">Despejar chaves vib</string>
+    <string name="toast_logs_copied">Registros copiados para a área de transferência</string>
+    <string name="toast_vib_keys_dumped">Chaves de vibração da Samsung despejadas no log</string>
+
+    <!-- Toasts -->
+    <string name="toast_write_settings_granted">Permissão de configurações do sistema concedida</string>
+    <string name="toast_write_settings_denied">Permissão de configurações do sistema negada</string>
+    <string name="toast_notification_listener_granted">Acesso a notificações ativado</string>
+    <string name="toast_notification_listener_denied">Acesso a notificações não ativado</string>
+    <string name="toast_battery_unrestricted">A otimização de bateria já está desativada</string>
+    <string name="toast_service_restarted">Serviço de monitoramento reiniciado</string>
+    <string name="toast_suppression_applied">Supressão de notificações ativada</string>
+    <string name="toast_suppression_restored">Som e vibração de notificações restaurados</string>
+    <string name="toast_error_applying_suppression">Falha ao aplicar supressão</string>
+
+    <!-- Health Status -->
+    <string name="health_audio_controller">Controlador de áudio</string>
+    <string name="health_vibration_controller">Controlador de vibração</string>
+    <string name="health_write_settings">Configurações do sistema</string>
+    <string name="health_notification_listener">Leitor de notificações</string>
+    <string name="health_service_running">Serviço em execução</string>
+    <string name="health_persisted_state">Estado salvo</string>
+    <string name="health_active_recordings">Gravações ativas</string>
+
+    <string name="health_status_supported">Suportado</string>
+    <string name="health_status_not_supported">Não suportado</string>
+    <string name="health_status_granted">Concedido</string>
+    <string name="health_status_not_granted">Não concedido</string>
+    <string name="health_status_running">Em execução</string>
+    <string name="health_status_stopped">Parado</string>
+    <string name="health_status_present">Presente</string>
+    <string name="health_status_none">Nenhum</string>
+
+    <!-- Fallback chain info -->
+    <string name="fallback_chain_audio">Áudio: STREAM_NOTIFICATION → Canais de notificação</string>
+    <string name="fallback_chain_vibration">Vibração: SEM_VIBRATION → NotificationListener → ADB Seguro</string>
+
+    <!-- Settings keys -->
+    <string name="pref_key_write_settings_granted">write_settings_granted</string>
+    <string name="pref_key_notification_listener_granted">notification_listener_granted</string>
+</resources>

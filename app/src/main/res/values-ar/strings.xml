@@ -1,0 +1,99 @@
+<resources>
+    <string name="app_name">كتم إشعارات سامسونج</string>
+    <string name="notification_listener_label">أداة كتم اهتزاز الإشعارات</string>
+
+    <!-- Main UI -->
+    <string name="title_monitoring_status">حالة المراقبة المباشرة</string>
+    <string name="status_idle">خامل - في انتظار التسجيل</string>
+    <string name="status_active">نشط - الميكروفون قيد الاستخدام (مكتوم)</string>
+    <string name="status_error">خطأ - يرجى التحقق من الأذونات</string>
+
+    <string name="card_title_status">حالة المراقبة المباشرة</string>
+    <string name="card_title_snapshot">لقطة إعدادات الصوت والاهتزاز</string>
+    <string name="card_title_permissions">الأذونات المطلوبة وإعدادات البطارية</string>
+    <string name="card_title_actions">إجراءات سريعة</string>
+
+    <string name="label_active_recordings">التسجيلات النشطة</string>
+    <string name="label_no_active_recordings">لا يوجد تسجيل نشط عبر الميكروفون حالياً</string>
+    <string name="label_microphone_detected">الميكروفون قيد الاستخدام بواسطة: %s</string>
+
+    <string name="label_volume_snapshot">صوت الإشعارات (STREAM_NOTIFICATION)</string>
+    <string name="label_vibration_snapshot">اهتزاز الإشعارات (SEM_VIBRATION)</string>
+
+    <string name="button_request_write_settings">تعديل إعدادات النظام</string>
+    <string name="button_request_notification_listener">الوصول للإشعارات</string>
+    <string name="button_request_battery">تعطيل تحسين البطارية (غير مقيد)</string>
+    <string name="button_restart_service">إعادة تشغيل المراقب</string>
+    <string name="button_force_restore">استعادة إجبارية للصوت</string>
+    <string name="button_test_suppression">اختبار الكتم</string>
+
+    <string name="status_granted">ممنوح</string>
+    <string name="status_not_granted">غير ممنوح</string>
+    <string name="button_grant">منح الإذن</string>
+    <string name="status_unrestricted">غير مقيد</string>
+    <string name="status_restricted">مُحسّن (مقيد)</string>
+
+    <string name="permission_write_settings_explanation">مطلوب لتصفير واستعادة شدة اهتزاز سامسونج وصوت الإشعارات في إعدادات النظام.</string>
+    <string name="permission_notification_listener_explanation">مطلوب لمراقبة الصوت بالخلفية بأولوية قصوى واعتراض اهتزاز الإشعارات فوراً.</string>
+    <string name="permission_battery_explanation">مطلوب لمنع نظام One UI من تأخير استجابة إغلاق وفتح الميكروفون بالخلفية.</string>
+
+    <!-- V2 Custom In-App Vibration Warning -->
+    <string name="card_title_disclaimer">تنبيه هام</string>
+    <string name="disclaimer_custom_vibrations">⚠️ ملاحظة هامة: هذه الأداة تكتم أصوات واهتزازات إشعارات النظام. لكنها لا تستطيع إيقاف الاهتزاز الداخلي لبعض التطبيقات (مثل إعدادات الاهتزاز المخصصة داخل واتساب أو تيليجرام). يجب تعطيل خيار الاهتزاز يدوياً من داخل تلك التطبيقات لتجربة صامتة بالكامل.</string>
+
+    <!-- Support / Buy Me a Coffee -->
+    <string name="card_title_support">ادعم المشروع</string>
+    <string name="support_description">إذا كان هذا التطبيق يساعدك في إبقاء تسجيلاتك الصوتية وفيديوهاتك نقية وخالية من الإزعاج، يسعدنا دعمك لاستمرار التطوير والتحديثات!</string>
+    <string name="button_buy_coffee">اشترِ لي قهوة ☕</string>
+    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
+    <string name="toast_opening_coffee">جارٍ فتح صفحة الدعم…</string>
+
+    <!-- Language Selector -->
+    <string name="title_select_language">اختر اللغة</string>
+    <string name="toast_language_changed">تم تغيير اللغة بنجاح</string>
+
+    <!-- Debug UI -->
+    <string name="card_title_debugger">مُشخّص الأخطاء المباشر</string>
+    <string name="button_copy_logs">نسخ السجلات</string>
+    <string name="button_clear_logs">مسح</string>
+    <string name="button_dump_vib_keys">تفريغ مفاتيح الاهتزاز</string>
+    <string name="toast_logs_copied">تم نسخ سجلات التشخيص إلى الحافظة</string>
+    <string name="toast_vib_keys_dumped">تم تفريغ مفاتيح اهتزاز سامسونج في السجل</string>
+
+    <!-- Toasts -->
+    <string name="toast_write_settings_granted">تم منح إذن تعديل إعدادات النظام</string>
+    <string name="toast_write_settings_denied">تم رفض إذن تعديل إعدادات النظام</string>
+    <string name="toast_notification_listener_granted">تم تفعيل خدمة مراقبة الإشعارات</string>
+    <string name="toast_notification_listener_denied">لم يتم تفعيل خدمة مراقبة الإشعارات</string>
+    <string name="toast_battery_unrestricted">تم تعطيل تحسين البطارية بالفعل</string>
+    <string name="toast_service_restarted">تمت إعادة تشغيل خدمة المراقبة بنجاح</string>
+    <string name="toast_suppression_applied">تم تفعيل كتم الإشعارات والاهتزاز</string>
+    <string name="toast_suppression_restored">تمت استعادة إعدادات الصوت والاهتزاز</string>
+    <string name="toast_error_applying_suppression">تعذر تطبيق الكتم</string>
+
+    <!-- Health Status -->
+    <string name="health_audio_controller">متحكم الصوت</string>
+    <string name="health_vibration_controller">متحكم الاهتزاز</string>
+    <string name="health_write_settings">إعدادات النظام</string>
+    <string name="health_notification_listener">قارئ الإشعارات</string>
+    <string name="health_service_running">الخدمة قيد التشغيل</string>
+    <string name="health_persisted_state">الحالة المحفوظة</string>
+    <string name="health_active_recordings">التسجيلات النشطة</string>
+
+    <string name="health_status_supported">مدعوم</string>
+    <string name="health_status_not_supported">غير مدعوم</string>
+    <string name="health_status_granted">ممنوح</string>
+    <string name="health_status_not_granted">غير ممنوح</string>
+    <string name="health_status_running">يعمل</string>
+    <string name="health_status_stopped">متوقف</string>
+    <string name="health_status_present">موجود</string>
+    <string name="health_status_none">لا يوجد</string>
+
+    <!-- Fallback chain info -->
+    <string name="fallback_chain_audio">الصوت: STREAM_NOTIFICATION ← قنوات الإشعارات</string>
+    <string name="fallback_chain_vibration">الاهتزاز: SEM_VIBRATION ← NotificationListener ← أمان ADB</string>
+
+    <!-- Settings keys -->
+    <string name="pref_key_write_settings_granted">write_settings_granted</string>
+    <string name="pref_key_notification_listener_granted">notification_listener_granted</string>
+</resources>

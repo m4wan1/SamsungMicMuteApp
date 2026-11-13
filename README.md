@@ -1,4 +1,4 @@
-# Samsung Mic Mute App 
+# Samsung Mic Mute App (v2.0)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android_11_to_16_(API_30--36)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android Platform" />
@@ -8,7 +8,10 @@
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License MIT" />
 </p>
 
-> **A specialized Android utility for Samsung Galaxy devices that automatically suppresses notification sounds and vibrations during active microphone usage without requiring `RECORD_AUDIO` permission.**
+> **A specialized Android utility for Samsung Galaxy devices that automatically suppresses notification sounds and vibrations during active microphone usage without requiring `RECORD_AUDIO` permission. In V2, notifications arrive and display on screen in real-time completely silently without snoozing or delays.**
+
+> [!WARNING]
+> **⚠️ Important Note:** This tool mutes system-level notification sounds and vibrations. However, it cannot block custom in-app vibrations (e.g., custom vibration settings inside WhatsApp, Telegram, etc.). You must manually disable in-app vibrations inside those specific apps for a completely silent experience.
 
 ---
 
@@ -18,7 +21,7 @@ When recording audio or participating in voice/video calls on Samsung Galaxy dev
 
 Standard Do-Not-Disturb (DND) modes are cumbersome to manually toggle, and standard Android audio stream methods fail to silence Samsung's proprietary vibration engines.
 
-**Samsung Mic Mute App** solves this entirely in the background: it automatically detects microphone activation anywhere in the system, immediately mutes notification volume and Samsung vibration intensity to zero, and instantly restores them to their exact baseline the moment recording ends.
+**Samsung Mic Mute App (V2)** solves this entirely in the background: it automatically detects microphone activation anywhere in the system, immediately mutes notification volume and Samsung vibration intensity to zero, and instantly restores them to their exact baseline the moment recording ends. All notifications continue to arrive and display on your screen in real time without being snoozed, delayed, or flooded later.
 
 ---
 
@@ -40,7 +43,8 @@ Standard Do-Not-Disturb (DND) modes are cumbersome to manually toggle, and stand
     - `vibrate_notification`
     - `notification_vibration_intensity`
     - `vibrate_on` (fallback)
-  - **Active Snoozing:** Snoozes non-call notifications for 1000ms (`snoozeNotification(sbn.key, 1000L)`) during active recordings to intercept bursts at the notification manager level.
+- **📬 Real-Time Silent Delivery (V2):**
+  Unlike earlier designs that snoozed notifications (causing floods when mic released), V2 ensures all notifications arrive and display on screen immediately in real time, completely silenced at the system audio and vibration driver level.
 - **🧠 Snapshot Once Lock & Non-Zero Guard:**
   Snapshots system volume and vibration levels strictly once upon transition from `IDLE` → `SUPPRESSING`. Subsequent triggers never overwrite the user's normal volume with `0`. If values read `0` at snapshot time, the Non-Zero Guard restores a healthy persisted baseline.
 - **⏱️ 400ms Anti-Glitch Debounce:**
@@ -87,10 +91,10 @@ flowchart TD
         SnapshotLock --> Persistence["PersistenceManager<br/>(SharedPreferences + Cloud Backup)"]
     end
 
-    subgraph Muting["3. Guaranteed Dual Suppression"]
-        SnapshotLock --> SoundMute["AudioStreamController:<br/>adjustStreamVolume(ADJUST_MUTE) +<br/>setStreamVolume(0)"]
-        SnapshotLock --> VibMute["VibrationSettingsController:<br/>All SEM_VIB / VIB_MAGNITUDE /<br/>vibrate_notification keys = 0"]
-        SnapshotLock --> NLS["NotificationListenerService:<br/>snoozeNotification(1000ms)<br/>Active Interception"]
+    subgraph Muting["3. Guaranteed Dual Suppression (V2 Real-Time)"]
+        SnapshotLock --> SoundMute["OneUI8AudioStreamController:<br/>adjustStreamVolume(ADJUST_MUTE) +<br/>setStreamVolume(0)"]
+        SnapshotLock --> VibMute["OneUI8VibrationSettingsController:<br/>All SEM_VIB / VIB_MAGNITUDE /<br/>vibrate_notification keys = 0"]
+        SnapshotLock --> NLS["Real-Time Delivery:<br/>Notifications post immediately<br/>without snoozing or delays"]
     end
 
     subgraph Debugger["4. Live In-App Debugger"]
@@ -110,7 +114,7 @@ flowchart TD
   - `NotificationChannelAudioController` (Fallback: individual notification channel sound suppression).
 - **`VibrationSettingsController`:** Pluggable vibration muting interface:
   - `OneUI8VibrationSettingsController` (Primary: Samsung system settings multi-key muting).
-  - `NotificationListenerVibrationController` (Fallback: active notification snooze & cancellation).
+  - `NotificationListenerVibrationController` (Fallback: notification-level vibration pattern cancellation).
   - `AdbSecureSettingsVibrationController` (Development / Enterprise fallback).
 - **`SuppressionForegroundService`:** Sticky foreground service with persistent monitoring notification.
 - **`SuppressionNotificationListener`:** System-priority host ensuring continuous monitoring survives aggressive OS task killing.
@@ -120,7 +124,7 @@ flowchart TD
 ## 🛠️ Installation & Setup Guide
 
 ### Step 1: Install the APK
-Download `SamsungMicMute_v1.0_Working.apk` from the [Releases](https://github.com/) section, or build the APK locally from source:
+Download `SamsungMicMute_V2.apk` from the [Releases](https://github.com/) section, or build the APK locally from source:
 
 ```bash
 git clone https://github.com/m4wan1/SamsungMicMuteApp.git
@@ -142,7 +146,7 @@ Launch the app. Three clean setup cards will guide you through granting the requ
 2. **Notification Listener Access:**
    - Tap **Grant** on Card 3.
    - Enable **Notification Vibration Suppressor** in the device settings.
-   - *Purpose:* Allows active notification interception and snoozing during recordings.
+   - *Purpose:* Provides persistent system priority background monitoring and fallback vibration control.
 3. **Ignore Battery Optimization (Unrestricted):**
    - Tap **Grant** on Card 3.
    - Select **Allow** (Unrestricted).
@@ -185,14 +189,18 @@ Scroll to **Card 5 (LIVE IN-APP DEBUGGER)** at the bottom of the screen:
 
 ---
 
-## 🔒 Security & Privacy Non-Negotiables
+## 🔒 Core Constraints & Security Guarantees
 
-| Guarantee | How It Is Enforced |
+| Constraint / Guarantee | Specification & Enforcement in V2 |
 | :--- | :--- |
-| **No Microphone Eavesdropping** | `<uses-permission android:name="android.permission.RECORD_AUDIO" tools:node="remove" />` is enforced in `AndroidManifest.xml`. The Android OS prevents this app from recording audio. |
+| **Real-Time Silent Notification Delivery** | **Zero Delay / No Snoozing:** Notifications MUST arrive and display on screen immediately in real time. The app strictly avoids `snoozeNotification()`, `cancelNotification()`, or `cancelAllNotifications()`, preventing notification floods when the mic is released. Complete silence relies exclusively on Priority 1 controllers (`OneUI8AudioStreamController` setting `STREAM_NOTIFICATION` to 0, and `OneUI8VibrationSettingsController` setting `sem_vibration_notification_intensity` to 0). |
+| **No Microphone Eavesdropping** | `<uses-permission android:name="android.permission.RECORD_AUDIO" tools:node="remove" />` is enforced in `AndroidManifest.xml`. The Android OS physically prevents this app from capturing audio. |
 | **No Do-Not-Disturb Interference** | Does not alter Android `NotificationManager.setInterruptionFilter()`. Your DND schedules and starred contact exceptions remain untouched. |
 | **No Global Silent Mode** | Does not set `RINGER_MODE_SILENT`. Incoming phone calls and alarms ring at full normal volume. |
 | **Local-Only Processing** | Contains zero analytics, zero network requests, and zero remote tracking. |
+
+### ⚠️ In-App Custom Vibrations Disclaimer
+> **Important Note:** This tool mutes system-level notification sounds and vibrations. However, it cannot block custom in-app vibrations (e.g., custom vibration settings inside WhatsApp, Telegram, etc.). You must manually disable in-app vibrations inside those specific apps for a completely silent experience.
 
 ---
 

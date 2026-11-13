@@ -1,0 +1,99 @@
+<resources>
+    <string name="app_name">Samsung Mic Mute</string>
+    <string name="notification_listener_label">Bildirim Titreşimi Bastırıcı</string>
+
+    <!-- Main UI -->
+    <string name="title_monitoring_status">Canlı İzleme Durumu</string>
+    <string name="status_idle">BOŞTA - İzleniyor</string>
+    <string name="status_active">AKTİF - Mikrofon Kullanımda (Sessize Alındı)</string>
+    <string name="status_error">Hata - İzinleri kontrol edin</string>
+
+    <string name="card_title_status">Canlı İzleme Durumu</string>
+    <string name="card_title_snapshot">Ses ve Titreşim Anlık Görüntüsü</string>
+    <string name="card_title_permissions">Gerekli İzinler &amp; Pil Ayarları</string>
+    <string name="card_title_actions">Hızlı Eylemler</string>
+
+    <string name="label_active_recordings">Aktif Kayıtlar</string>
+    <string name="label_no_active_recordings">Aktif mikrofon kaydı algılanmadı</string>
+    <string name="label_microphone_detected">Mikrofonu kullanan: %s</string>
+
+    <string name="label_volume_snapshot">Bildirim Sesi (STREAM_NOTIFICATION)</string>
+    <string name="label_vibration_snapshot">Bildirim Titreşimi (SEM_VIBRATION)</string>
+
+    <string name="button_request_write_settings">Sistem Ayarlarını Değiştir</string>
+    <string name="button_request_notification_listener">Bildirim Erişimi</string>
+    <string name="button_request_battery">Pil Optimizasyonunu Yoksay (Kısıtlamasız)</string>
+    <string name="button_restart_service">İzlemeyi Yeniden Başlat</string>
+    <string name="button_force_restore">Geri Yüklemeye Zorla</string>
+    <string name="button_test_suppression">Bastırmayı Test Et</string>
+
+    <string name="status_granted">Verildi</string>
+    <string name="status_not_granted">Verilmedi</string>
+    <string name="button_grant">İzin Ver</string>
+    <string name="status_unrestricted">Kısıtlamasız</string>
+    <string name="status_restricted">Optimize Edilmiş (Kısıtlı)</string>
+
+    <string name="permission_write_settings_explanation">Samsung One UI bildirim sesi ve titreşim yoğunluğunu ayarlamak için gereklidir.</string>
+    <string name="permission_notification_listener_explanation">Yüksek öncelikli arka plan ses izleme ve bildirim titreşimini engellemek için gereklidir.</string>
+    <string name="permission_battery_explanation">One UI\'ın arka plan mikrofon geri çağrılarını geciktirmesini önlemek için gereklidir.</string>
+
+    <!-- V2 Custom In-App Vibration Warning -->
+    <string name="card_title_disclaimer">ÖNEMLİ BİLDİRİM</string>
+    <string name="disclaimer_custom_vibrations">⚠️ Önemli Not: Bu araç sistem düzeyindeki bildirim seslerini ve titreşimlerini susturur. Ancak uygulama içi özel titreşimleri (örn. WhatsApp veya Telegram içindeki özel titreşim ayarları) engelleyemez. Tam sessizlik için bu uygulamaların içinden titreşimi kapatmanız gerekir.</string>
+
+    <!-- Support / Buy Me a Coffee -->
+    <string name="card_title_support">Projeyi Destekleyin</string>
+    <string name="support_description">Bu uygulama ses kayıtlarınızın ve videolarınızın sessiz ve parazitsiz kalmasını sağlıyorsa, geliştirmeyi desteklemek için bana bir kahve ısmarlayabilirsiniz!</string>
+    <string name="button_buy_coffee">Bana bir kahve al ☕</string>
+    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
+    <string name="toast_opening_coffee">Destek bağlantısı açılıyor…</string>
+
+    <!-- Language Selector -->
+    <string name="title_select_language">Dil Seçin</string>
+    <string name="toast_language_changed">Dil güncellendi</string>
+
+    <!-- Debug UI -->
+    <string name="card_title_debugger">CANLI HATA AYIKLAYICI</string>
+    <string name="button_copy_logs">Günlükleri Kopyala</string>
+    <string name="button_clear_logs">Temizle</string>
+    <string name="button_dump_vib_keys">Titreşim Anahtarlarını Dök</string>
+    <string name="toast_logs_copied">Günlükler panoya kopyalandı</string>
+    <string name="toast_vib_keys_dumped">Titreşim anahtarları günlüğe kaydedildi</string>
+
+    <!-- Toasts -->
+    <string name="toast_write_settings_granted">Sistem ayarları izni verildi</string>
+    <string name="toast_write_settings_denied">Sistem ayarları izni reddedildi</string>
+    <string name="toast_notification_listener_granted">Bildirim erişimi etkinleştirildi</string>
+    <string name="toast_notification_listener_denied">Bildirim erişimi etkinleştirilmedi</string>
+    <string name="toast_battery_unrestricted">Pil optimizasyonu zaten devre dışı</string>
+    <string name="toast_service_restarted">İzleme hizmeti yeniden başlatıldı</string>
+    <string name="toast_suppression_applied">Bildirim bastırma etkinleştirildi</string>
+    <string name="toast_suppression_restored">Bildirim sesi ve titreşimi geri yüklendi</string>
+    <string name="toast_error_applying_suppression">Bastırma uygulanamadı</string>
+
+    <!-- Health Status -->
+    <string name="health_audio_controller">Ses Denetleyicisi</string>
+    <string name="health_vibration_controller">Titreşim Denetleyicisi</string>
+    <string name="health_write_settings">Sistem Ayarları</string>
+    <string name="health_notification_listener">Bildirim Okuyucu</string>
+    <string name="health_service_running">Hizmet Çalışıyor</string>
+    <string name="health_persisted_state">Kayıtlı Durum</string>
+    <string name="health_active_recordings">Aktif Kayıtlar</string>
+
+    <string name="health_status_supported">Destekleniyor</string>
+    <string name="health_status_not_supported">Desteklenmiyor</string>
+    <string name="health_status_granted">Verildi</string>
+    <string name="health_status_not_granted">Verilmedi</string>
+    <string name="health_status_running">Çalışıyor</string>
+    <string name="health_status_stopped">Durduruldu</string>
+    <string name="health_status_present">Mevcut</string>
+    <string name="health_status_none">Yok</string>
+
+    <!-- Fallback chain info -->
+    <string name="fallback_chain_audio">Ses: STREAM_NOTIFICATION → Bildirim Kanalları</string>
+    <string name="fallback_chain_vibration">Titreşim: SEM_VIBRATION → NotificationListener → Güvenli ADB</string>
+
+    <!-- Settings keys -->
+    <string name="pref_key_write_settings_granted">write_settings_granted</string>
+    <string name="pref_key_notification_listener_granted">notification_listener_granted</string>
+</resources>

@@ -15,30 +15,50 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- App Header -->
+        <!-- App Header with Language Selector -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_marginBottom="16dp">
 
-            <TextView
-                android:id="@+id/tv_app_title"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@color/text_primary" />
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_app_subtitle"
+                <TextView
+                    android:id="@+id/tv_app_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary" />
+
+                <TextView
+                    android:id="@+id/tv_app_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fallback_chain_audio"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginTop="2dp" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_change_language"
+                style="@style/Widget.Material3.Button.TonalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fallback_chain_audio"
-                android:textSize="12sp"
-                android:textColor="@color/text_secondary"
-                android:layout_marginTop="2dp" />
+                android:text="🌐"
+                android:textSize="16sp"
+                app:cornerRadius="20dp"
+                android:minWidth="0dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp" />
         </LinearLayout>
 
         <!-- CARD 1: Live Status Banner -->
@@ -61,7 +81,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LIVE STATUS"
+                    android:text="@string/card_title_status"
                     android:textSize="11sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.08"
@@ -109,6 +129,46 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- WARNING CARD: Custom In-App Vibrations Disclaimer -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_warning_disclaimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/warning_card_stroke"
+            app:cardBackgroundColor="@color/warning_card_bg">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/card_title_disclaimer"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08"
+                    android:textColor="@color/warning_card_title"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_disclaimer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/disclaimer_custom_vibrations"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="3dp"
+                    android:textColor="@color/warning_card_text" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <!-- CARD 2: Saved Audio & Vibration Snapshot -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -129,7 +189,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AUDIO &amp; VIBRATION SNAPSHOT"
+                    android:text="@string/card_title_snapshot"
                     android:textSize="11sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.08"
@@ -214,7 +274,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="REQUIRED PERMISSIONS &amp; BATTERY"
+                    android:text="@string/card_title_permissions"
                     android:textSize="11sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.08"
@@ -408,7 +468,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="QUICK ACTIONS"
+                    android:text="@string/card_title_actions"
                     android:textSize="11sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.08"
@@ -426,7 +486,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Restart Monitor"
+                        android:text="@string/button_restart_service"
                         android:layout_marginEnd="6dp"
                         style="@style/Widget.Material3.Button" />
 
@@ -435,12 +495,75 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Force Restore"
+                        android:text="@string/button_force_restore"
                         android:layout_marginStart="6dp"
                         style="@style/Widget.Material3.Button.OutlinedButton" />
 
                 </LinearLayout>
 
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- CARD: Support / Buy Me a Coffee -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_support_developer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/coffee_card_stroke"
+            app:cardBackgroundColor="@color/coffee_card_bg">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="8dp">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_coffee"
+                        android:contentDescription="Coffee icon"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/card_title_support"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/coffee_title" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/support_description"
+                    android:textSize="13sp"
+                    android:textColor="@color/coffee_text"
+                    android:lineSpacingExtra="2dp"
+                    android:layout_marginBottom="14dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_buy_coffee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_buy_coffee"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    app:backgroundTint="@color/coffee_yellow"
+                    app:cornerRadius="8dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -464,7 +587,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LIVE IN-APP DEBUGGER"
+                    android:text="@string/card_title_debugger"
                     android:textSize="11sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.08"
@@ -496,7 +619,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Copy Logs"
+                        android:text="@string/button_copy_logs"
                         android:textSize="12sp"
                         android:layout_marginEnd="4dp"
                         style="@style/Widget.Material3.Button.OutlinedButton" />
@@ -506,7 +629,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.8"
-                        android:text="Clear"
+                        android:text="@string/button_clear_logs"
                         android:textSize="12sp"
                         android:layout_marginEnd="4dp"
                         style="@style/Widget.Material3.Button.OutlinedButton" />
@@ -516,7 +639,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.2"
-                        android:text="Dump Vib Keys"
+                        android:text="@string/button_dump_vib_keys"
                         android:textSize="12sp"
                         style="@style/Widget.Material3.Button" />
                 </LinearLayout>

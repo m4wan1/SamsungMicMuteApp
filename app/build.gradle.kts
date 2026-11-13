@@ -14,8 +14,8 @@ android {
         applicationId = "com.example.suppressor"
         minSdk = 30 // Android 11 (AudioRecordingCallback added)
         targetSdk = 36
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 3
+        versionName = "3.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
