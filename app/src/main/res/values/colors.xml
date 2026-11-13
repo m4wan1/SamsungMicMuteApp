@@ -34,10 +34,10 @@
     <color name="warning_card_title">#B45309</color>
     <color name="warning_card_text">#78350F</color>
 
-    <!-- Support / Coffee colors -->
-    <color name="coffee_yellow">#FFDD00</color>
-    <color name="coffee_card_bg">#FFFDF0</color>
-    <color name="coffee_card_stroke">#F6C90E</color>
-    <color name="coffee_title">#7A4B00</color>
-    <color name="coffee_text">#4A3728</color>
+    <!-- PayPal Support colors -->
+    <color name="paypal_blue">#0070BA</color>
+    <color name="paypal_dark_blue">#003087</color>
+    <color name="paypal_gold">#FFC439</color>
+    <color name="paypal_card_bg">#F8FBFF</color>
+    <color name="paypal_card_stroke">#CCE4F7</color>
 </resources>

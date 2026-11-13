@@ -41,12 +41,11 @@
     <string name="card_title_disclaimer">重要提示</string>
     <string name="disclaimer_custom_vibrations">⚠️ 重要提示：此工具仅静音系统级通知声音和振动。它无法拦截第三方应用内置的自定义振动（例如微信、WhatsApp、Telegram应用内的振动设置）。如需完全静音，请在相应应用内手动关闭振动。</string>
 
-    <!-- Support / Buy Me a Coffee -->
-    <string name="card_title_support">支持项目开发</string>
-    <string name="support_description">如果此应用帮助您在发送语音和录像时远离噪音干扰，欢迎请我喝杯咖啡以支持后续持续更新！</string>
-    <string name="button_buy_coffee">请我喝杯咖啡 ☕</string>
-    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
-    <string name="toast_opening_coffee">正在打开支持链接…</string>
+    <!-- Support via PayPal -->
+    <string name="card_title_support_paypal">通过 PayPal 支持项目</string>
+    <string name="support_paypal_description">如果此应用帮助您在发送语音和录像时远离噪音干扰，欢迎直接在应用内通过 PayPal 安全支持后续持续更新！</string>
+    <string name="button_paypal_donate">使用 PayPal 支付</string>
+    <string name="paypal_secure_note">应用内安全支付</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">选择语言</string>

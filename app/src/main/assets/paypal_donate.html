@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PayPal Support</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      margin: 0;
+      padding: 20px 16px;
+      background-color: #FAFAFA;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .card {
+      width: 100%;
+      max-width: 380px;
+      background: #FFFFFF;
+      border-radius: 16px;
+      padding: 24px 20px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #EBF4FC;
+      color: #0070BA;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    h2 {
+      margin: 0 0 8px 0;
+      font-size: 20px;
+      color: #003087;
+      font-weight: 700;
+    }
+    p {
+      margin: 0 0 20px 0;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #666;
+    }
+    #loading-spinner {
+      margin: 20px auto;
+      width: 36px;
+      height: 36px;
+      border: 3px solid #E2E8F0;
+      border-top-color: #0070BA;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    #paypal-container-VRY9RHY2F2NUA {
+      width: 100%;
+      min-height: 150px;
+    }
+  </style>
+  <script 
+    src="https://www.paypal.com/sdk/js?client-id=BAAfZ06jxJ04CD_LEMDurqmWfZEnV_5fWN6Xevas3NvVUyCEsgs8hyX0RlWAtw5wh80xq7C4BmHz3RBoeE&components=hosted-buttons&disable-funding=venmo&currency=USD">
+  </script>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#0070BA">
+        <path d="M18.8,6.8c-0.2,-1.4 -0.8,-2.5 -1.8,-3.3C15.9,2.6 14.3,2.2 12.2,2.2H6.5C6,2.2 5.5,2.6 5.4,3.1L3,18.3c-0.1,0.4 0.2,0.8 0.6,0.8h3.8l0.9,-5.8c0.1,-0.5 0.5,-0.9 1.1,-0.9h1.7c3.1,0 5.6,-1.3 6.3,-4.9 0.3,-1.4 0.2,-2.7 -0.4,-3.7z"/>
+      </svg>
+      PayPal Secure Payment
+    </div>
+    <h2>Samsung Mic Mute</h2>
+    <p>Support continuous development and future updates safely with PayPal.</p>
+
+    <div id="loading-spinner"></div>
+    <div id="paypal-container-VRY9RHY2F2NUA"></div>
+  </div>
+
+  <script>
+    if (window.paypal && paypal.HostedButtons) {
+      paypal.HostedButtons({
+        hostedButtonId: "VRY9RHY2F2NUA",
+      }).render("#paypal-container-VRY9RHY2F2NUA").then(function() {
+        var spinner = document.getElementById("loading-spinner");
+        if (spinner) spinner.style.display = "none";
+      }).catch(function(err) {
+        console.error("PayPal render error:", err);
+        var spinner = document.getElementById("loading-spinner");
+        if (spinner) spinner.style.display = "none";
+      });
+    } else {
+      console.warn("PayPal SDK not loaded yet");
+    }
+  </script>
+</body>
+</html>

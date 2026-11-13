@@ -504,7 +504,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- CARD: Support / Buy Me a Coffee -->
+        <!-- CARD: Support via PayPal -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_support_developer"
             android:layout_width="match_parent"
@@ -513,8 +513,8 @@
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
             app:strokeWidth="1dp"
-            app:strokeColor="@color/coffee_card_stroke"
-            app:cardBackgroundColor="@color/coffee_card_bg">
+            app:strokeColor="@color/paypal_card_stroke"
+            app:cardBackgroundColor="@color/paypal_card_bg">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -530,39 +530,42 @@
                     android:layout_marginBottom="8dp">
 
                     <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@drawable/ic_coffee"
-                        android:contentDescription="Coffee icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_paypal"
+                        android:contentDescription="PayPal icon"
                         android:layout_marginEnd="8dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/card_title_support"
-                        android:textSize="14sp"
+                        android:text="@string/card_title_support_paypal"
+                        android:textSize="15sp"
                         android:textStyle="bold"
-                        android:textColor="@color/coffee_title" />
+                        android:textColor="@color/paypal_dark_blue" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/support_description"
+                    android:text="@string/support_paypal_description"
                     android:textSize="13sp"
-                    android:textColor="@color/coffee_text"
+                    android:textColor="@color/text_secondary"
                     android:lineSpacingExtra="2dp"
                     android:layout_marginBottom="14dp" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_buy_coffee"
+                    android:id="@+id/btn_paypal_donate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/button_buy_coffee"
+                    android:text="@string/button_paypal_donate"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:textColor="#000000"
-                    app:backgroundTint="@color/coffee_yellow"
+                    android:textColor="#003087"
+                    app:icon="@drawable/ic_paypal"
+                    app:iconTint="@null"
+                    app:iconGravity="textStart"
+                    app:backgroundTint="@color/paypal_gold"
                     app:cornerRadius="8dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

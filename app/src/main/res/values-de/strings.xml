@@ -41,12 +41,11 @@
     <string name="card_title_disclaimer">WICHTIGER HINWEIS</string>
     <string name="disclaimer_custom_vibrations">⚠️ Wichtiger Hinweis: Dieses Tool schaltet Benachrichtigungstöne und Vibrationen auf Systemebene stumm. Es kann jedoch keine app-internen Vibrationen blockieren (z. B. benutzerdefinierte Vibrationseinstellungen in WhatsApp oder Telegram). Bitte deaktivieren Sie Vibrationen in diesen Apps manuell für vollständige Ruhe.</string>
 
-    <!-- Support / Buy Me a Coffee -->
-    <string name="card_title_support">Projekt unterstützen</string>
-    <string name="support_description">Wenn Ihnen diese App dabei hilft, Ihre Sprachnachrichten und Aufnahmen störungsfrei zu halten, spendieren Sie mir gerne einen Kaffee!</string>
-    <string name="button_buy_coffee">Kauf mir einen Kaffee ☕</string>
-    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
-    <string name="toast_opening_coffee">Unterstützungs-Link wird geöffnet…</string>
+    <!-- Support via PayPal -->
+    <string name="card_title_support_paypal">Über PayPal unterstützen</string>
+    <string name="support_paypal_description">Wenn Ihnen diese App dabei hilft, Ihre Sprachnachrichten und Aufnahmen störungsfrei zu halten, unterstützen Sie die Weiterentwicklung direkt per PayPal!</string>
+    <string name="button_paypal_donate">Mit PayPal bezahlen</string>
+    <string name="paypal_secure_note">Sichere In-App-Zahlung</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">Sprache auswählen</string>

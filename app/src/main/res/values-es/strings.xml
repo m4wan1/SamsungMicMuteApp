@@ -41,12 +41,11 @@
     <string name="card_title_disclaimer">AVISO IMPORTANTE</string>
     <string name="disclaimer_custom_vibrations">⚠️ Nota importante: Esta herramienta silencia sonidos y vibraciones a nivel del sistema. Sin embargo, no puede bloquear vibraciones internas de aplicaciones (como ajustes de vibración dentro de WhatsApp o Telegram). Debe desactivar manualmente las vibraciones dentro de esas apps para una experiencia 100% silenciosa.</string>
 
-    <!-- Support / Buy Me a Coffee -->
-    <string name="card_title_support">Apoya el proyecto</string>
-    <string name="support_description">Si esta aplicación te ayuda a mantener tus audios y grabaciones limpios de ruidos, ¡considera invitarme a un café para apoyar el desarrollo continuo!</string>
-    <string name="button_buy_coffee">Cómprame un café ☕</string>
-    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
-    <string name="toast_opening_coffee">Abriendo enlace de apoyo…</string>
+    <!-- Support via PayPal -->
+    <string name="card_title_support_paypal">Apoyar con PayPal</string>
+    <string name="support_paypal_description">Si esta aplicación te ayuda a mantener tus audios y grabaciones limpios de ruidos, ¡apoya el desarrollo continuo con PayPal directamente!</string>
+    <string name="button_paypal_donate">Pagar con PayPal</string>
+    <string name="paypal_secure_note">Pago seguro dentro de la aplicación</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">Seleccionar idioma</string>

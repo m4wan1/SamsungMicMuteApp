@@ -1,5 +1,7 @@
 package com.example.suppressor.ui
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.ComponentName
@@ -12,10 +14,18 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
+import android.os.Message
 import android.os.PowerManager
 import android.provider.Settings
 import android.view.View
+import android.view.ViewGroup
+import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
+import android.webkit.WebSettings
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -34,6 +44,8 @@ import com.example.suppressor.persistence.PersistenceManager
 import com.example.suppressor.service.SuppressionForegroundService
 import com.example.suppressor.service.SuppressionNotificationListener
 import com.example.suppressor.vibration.OneUI8VibrationSettingsController
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -81,7 +93,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnForceRestore: Button
 
     // Support Developer & Language
-    private lateinit var btnBuyCoffee: Button
+    private lateinit var btnPaypalDonate: Button
     private lateinit var btnChangeLanguage: View
 
     // Card 5: Live In-App Debugger
@@ -184,7 +196,7 @@ class MainActivity : AppCompatActivity() {
         btnForceRestore = findViewById(R.id.btn_force_restore)
 
         // Support Developer & Language
-        btnBuyCoffee = findViewById(R.id.btn_buy_coffee)
+        btnPaypalDonate = findViewById(R.id.btn_paypal_donate)
         btnChangeLanguage = findViewById(R.id.btn_change_language)
 
         // Card 5: Debugger
@@ -207,7 +219,7 @@ class MainActivity : AppCompatActivity() {
         btnRestartService.setOnClickListener { restartMonitorService() }
         btnForceRestore.setOnClickListener { forceRestore() }
 
-        btnBuyCoffee.setOnClickListener { openBuyMeACoffee() }
+        btnPaypalDonate.setOnClickListener { openPayPalDonationBottomSheet() }
         btnChangeLanguage.setOnClickListener { showLanguagePickerDialog() }
 
         btnCopyDebugLogs.setOnClickListener { copyDebugLogsToClipboard() }
@@ -578,21 +590,111 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Opens the developer's Buy Me a Coffee / Support page.
+     * Opens an in-app BottomSheetDialog containing the official PayPal Hosted Button SDK.
+     * Keeps the entire payment process inside the app without opening an external browser.
      */
-    private fun openBuyMeACoffee() {
-        val coffeeUrl = getString(R.string.buy_coffee_url)
-        try {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(coffeeUrl))
-            startActivity(intent)
-            Toast.makeText(this, R.string.toast_opening_coffee, Toast.LENGTH_SHORT).show()
-            DebugLogManager.log(TAG, "Opened support / coffee URL: $coffeeUrl")
-        } catch (e: Exception) {
-            DebugLogManager.log(TAG, "Failed to open URL, copying to clipboard: ${e.message}")
-            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            clipboard.setPrimaryClip(ClipData.newPlainText("Support URL", coffeeUrl))
-            Toast.makeText(this, "$coffeeUrl copied to clipboard", Toast.LENGTH_LONG).show()
+    @SuppressLint("SetJavaScriptEnabled")
+    private fun openPayPalDonationBottomSheet() {
+        val bottomSheet = BottomSheetDialog(this)
+        val sheetView = layoutInflater.inflate(R.layout.bottom_sheet_paypal, null)
+        bottomSheet.setContentView(sheetView)
+
+        val btnClose = sheetView.findViewById<ImageButton>(R.id.btn_close_paypal)
+        val progressBar = sheetView.findViewById<LinearProgressIndicator>(R.id.progress_paypal_loading)
+        val webView = sheetView.findViewById<WebView>(R.id.webview_paypal)
+
+        btnClose.setOnClickListener {
+            bottomSheet.dismiss()
         }
+
+        // Configure WebView settings for PayPal JS SDK
+        webView.settings.apply {
+            javaScriptEnabled = true
+            domStorageEnabled = true
+            databaseEnabled = true
+            javaScriptCanOpenWindowsAutomatically = true
+            setSupportMultipleWindows(true)
+            mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+            userAgentString = userAgentString + " Mobile SamsungMicMuteApp/3.0"
+        }
+
+        webView.webViewClient = object : WebViewClient() {
+            override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
+                progressBar.visibility = View.GONE
+            }
+
+            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                // Keep all PayPal URLs inside this WebView
+                return false
+            }
+        }
+
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                if (newProgress >= 100) {
+                    progressBar.visibility = View.GONE
+                } else {
+                    progressBar.visibility = View.VISIBLE
+                    progressBar.progress = newProgress
+                }
+            }
+
+            override fun onCreateWindow(
+                view: WebView?,
+                isDialog: Boolean,
+                isUserGesture: Boolean,
+                resultMsg: Message?
+            ): Boolean {
+                // Handle popup checkout windows inside an in-app dialog
+                val popupWebView = WebView(this@MainActivity).apply {
+                    settings.javaScriptEnabled = true
+                    settings.domStorageEnabled = true
+                    settings.setSupportMultipleWindows(true)
+                    webViewClient = object : WebViewClient() {
+                        override fun shouldOverrideUrlLoading(v: WebView?, req: WebResourceRequest?): Boolean {
+                            return false
+                        }
+                    }
+                }
+
+                val popupDialog = Dialog(this@MainActivity).apply {
+                    setContentView(popupWebView)
+                    window?.setLayout(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                    )
+                }
+
+                popupWebView.webChromeClient = object : WebChromeClient() {
+                    override fun onCloseWindow(window: WebView?) {
+                        popupDialog.dismiss()
+                    }
+                }
+
+                val transport = resultMsg?.obj as? WebView.WebViewTransport
+                transport?.webView = popupWebView
+                resultMsg?.sendToTarget()
+                popupDialog.show()
+                return true
+            }
+        }
+
+        try {
+            val htmlContent = assets.open("paypal_donate.html").bufferedReader().use { it.readText() }
+            webView.loadDataWithBaseURL("https://www.paypal.com", htmlContent, "text/html", "UTF-8", null)
+            DebugLogManager.log(TAG, "Loaded in-app PayPal donation sheet")
+        } catch (e: Exception) {
+            DebugLogManager.log(TAG, "Failed to load PayPal HTML: ${e.message}")
+            Toast.makeText(this, "Failed to load PayPal: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+
+        bottomSheet.setOnDismissListener {
+            webView.stopLoading()
+            webView.destroy()
+        }
+
+        bottomSheet.show()
     }
 
     /**

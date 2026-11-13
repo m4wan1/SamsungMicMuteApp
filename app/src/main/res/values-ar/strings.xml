@@ -41,12 +41,11 @@
     <string name="card_title_disclaimer">تنبيه هام</string>
     <string name="disclaimer_custom_vibrations">⚠️ ملاحظة هامة: هذه الأداة تكتم أصوات واهتزازات إشعارات النظام. لكنها لا تستطيع إيقاف الاهتزاز الداخلي لبعض التطبيقات (مثل إعدادات الاهتزاز المخصصة داخل واتساب أو تيليجرام). يجب تعطيل خيار الاهتزاز يدوياً من داخل تلك التطبيقات لتجربة صامتة بالكامل.</string>
 
-    <!-- Support / Buy Me a Coffee -->
-    <string name="card_title_support">ادعم المشروع</string>
-    <string name="support_description">إذا كان هذا التطبيق يساعدك في إبقاء تسجيلاتك الصوتية وفيديوهاتك نقية وخالية من الإزعاج، يسعدنا دعمك لاستمرار التطوير والتحديثات!</string>
-    <string name="button_buy_coffee">اشترِ لي قهوة ☕</string>
-    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
-    <string name="toast_opening_coffee">جارٍ فتح صفحة الدعم…</string>
+    <!-- Support via PayPal -->
+    <string name="card_title_support_paypal">دعم عبر PayPal</string>
+    <string name="support_paypal_description">إذا كان هذا التطبيق يساعدك في إبقاء تسجيلاتك الصوتية وفيديوهاتك نقية وخالية من الإزعاج، يسعدنا دعمك لاستمرار التطوير بأمان عبر PayPal دون مغادرة التطبيق!</string>
+    <string name="button_paypal_donate">الدفع عبر PayPal</string>
+    <string name="paypal_secure_note">دفع آمن ومباشر داخل التطبيق</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">اختر اللغة</string>

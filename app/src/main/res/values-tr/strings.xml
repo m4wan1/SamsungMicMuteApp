@@ -41,12 +41,11 @@
     <string name="card_title_disclaimer">ÖNEMLİ BİLDİRİM</string>
     <string name="disclaimer_custom_vibrations">⚠️ Önemli Not: Bu araç sistem düzeyindeki bildirim seslerini ve titreşimlerini susturur. Ancak uygulama içi özel titreşimleri (örn. WhatsApp veya Telegram içindeki özel titreşim ayarları) engelleyemez. Tam sessizlik için bu uygulamaların içinden titreşimi kapatmanız gerekir.</string>
 
-    <!-- Support / Buy Me a Coffee -->
-    <string name="card_title_support">Projeyi Destekleyin</string>
-    <string name="support_description">Bu uygulama ses kayıtlarınızın ve videolarınızın sessiz ve parazitsiz kalmasını sağlıyorsa, geliştirmeyi desteklemek için bana bir kahve ısmarlayabilirsiniz!</string>
-    <string name="button_buy_coffee">Bana bir kahve al ☕</string>
-    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
-    <string name="toast_opening_coffee">Destek bağlantısı açılıyor…</string>
+    <!-- Support via PayPal -->
+    <string name="card_title_support_paypal">PayPal ile Destekleyin</string>
+    <string name="support_paypal_description">Bu uygulama ses kayıtlarınızın ve videolarınızın sessiz ve parazitsiz kalmasını sağlıyorsa, PayPal ile doğrudan güvenle destekleyebilirsiniz!</string>
+    <string name="button_paypal_donate">PayPal ile Öde</string>
+    <string name="paypal_secure_note">Uygulama içi güvenli ödeme</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">Dil Seçin</string>

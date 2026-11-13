@@ -41,12 +41,11 @@
     <string name="card_title_disclaimer">중요 안내</string>
     <string name="disclaimer_custom_vibrations">⚠️ 중요 안내: 이 도구는 시스템 수준의 알림 소리와 진동을 음소거합니다. 단, 앱 자체 내장 진동(예: 카카오톡, 왓츠앱, 텔레그램 내부 진동 설정)은 제어할 수 없습니다. 완벽한 무음을 위해 해당 앱 내에서 알림 진동을 꺼주세요.</string>
 
-    <!-- Support / Buy Me a Coffee -->
-    <string name="card_title_support">프로젝트 후원</string>
-    <string name="support_description">이 앱이 음성 메시지와 녹음을 방해 없이 깔끔하게 유지하는 데 도움이 되었다면, 지속적인 개발을 위해 커피 한 잔을 후원해주세요!</string>
-    <string name="button_buy_coffee">커피 한 잔 후원하기 ☕</string>
-    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
-    <string name="toast_opening_coffee">후원 페이지를 여는 중…</string>
+    <!-- Support via PayPal -->
+    <string name="card_title_support_paypal">PayPal으로 후원하기</string>
+    <string name="support_paypal_description">이 앱이 음성 메시지와 녹음을 방해 없이 깔끔하게 유지하는 데 도움이 되었다면, PayPal을 통해 안전하게 앱 내에서 후원해주세요!</string>
+    <string name="button_paypal_donate">PayPal으로 결제</string>
+    <string name="paypal_secure_note">안전한 앱 내 결제</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">언어 선택</string>

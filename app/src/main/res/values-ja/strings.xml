@@ -41,12 +41,11 @@
     <string name="card_title_disclaimer">重要なお知らせ</string>
     <string name="disclaimer_custom_vibrations">⚠️ 重要なお知らせ: このツールはシステムレベルの通知音とバイブレーションをミュートします。ただし、アプリ独自のバイブレーション設定（LINE、WhatsApp、Telegram内の個別設定など）は制御できません。完全に無音化するには各アプリ内のバイブレーションをオフにしてください。</string>
 
-    <!-- Support / Buy Me a Coffee -->
-    <string name="card_title_support">プロジェクトを支援</string>
-    <string name="support_description">このアプリがお役に立ち、音声メッセージや動画撮影を快適に楽しめているなら、今後の開発継続のためにコーヒーを奢っていただけると励みになります！</string>
-    <string name="button_buy_coffee">コーヒーを奢る ☕</string>
-    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
-    <string name="toast_opening_coffee">支援リンクを開いています…</string>
+    <!-- Support via PayPal -->
+    <string name="card_title_support_paypal">PayPalで支援する</string>
+    <string name="support_paypal_description">このアプリがお役に立ち、音声メッセージや動画撮影を快適に楽しめているなら、PayPalでアプリ内から安全にご支援いただけます！</string>
+    <string name="button_paypal_donate">PayPalでお支払い</string>
+    <string name="paypal_secure_note">アプリ内での安全な決済</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">言語を選択</string>

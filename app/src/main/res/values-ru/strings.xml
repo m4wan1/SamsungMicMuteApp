@@ -41,12 +41,11 @@
     <string name="card_title_disclaimer">ВАЖНОЕ ПРИМЕЧАНИЕ</string>
     <string name="disclaimer_custom_vibrations">⚠️ Важное примечание: Это приложение глушит звуки и вибрацию на уровне системы. Однако оно не может отключить внутреннюю вибрацию приложений (например, настройки вибрации внутри WhatsApp или Telegram). Отключите вибрацию в этих приложениях вручную для полной тишины.</string>
 
-    <!-- Support / Buy Me a Coffee -->
-    <string name="card_title_support">Поддержать проект</string>
-    <string name="support_description">Если приложение помогает записывать чистые голосовые сообщения и видео без помех, угостите меня кофе для поддержки разработки!</string>
-    <string name="button_buy_coffee">Купить мне кофе ☕</string>
-    <string name="buy_coffee_url">https://buymeacoffee.com/marwan</string>
-    <string name="toast_opening_coffee">Открытие страницы поддержки…</string>
+    <!-- Support via PayPal -->
+    <string name="card_title_support_paypal">Поддержать через PayPal</string>
+    <string name="support_paypal_description">Если приложение помогает записывать чистые голосовые сообщения и видео, поддержите дальнейшую разработку безопасно через PayPal!</string>
+    <string name="button_paypal_donate">Оплатить через PayPal</string>
+    <string name="paypal_secure_note">Безопасная оплата внутри приложения</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">Выберите язык</string>
