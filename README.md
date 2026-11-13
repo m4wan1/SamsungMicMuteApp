@@ -1,14 +1,15 @@
-# Samsung Mic Mute App (v2.0)
+# Samsung Mic Mute App (v3.0)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android_11_to_16_(API_30--36)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android Platform" />
   <img src="https://img.shields.io/badge/Samsung_One_UI-v6_%7C_v7_%7C_v8_%7C_v9-1428A0?style=for-the-badge&logo=samsung&logoColor=white" alt="Samsung One UI" />
   <img src="https://img.shields.io/badge/Privacy-Zero_RECORD__AUDIO-brightgreen?style=for-the-badge&logo=shield&logoColor=white" alt="Zero RECORD_AUDIO" />
+  <img src="https://img.shields.io/badge/Languages-11_Global_Locales-purple?style=for-the-badge&logo=google-translate&logoColor=white" alt="11 Languages" />
   <img src="https://img.shields.io/badge/Build-Gradle_8.6_%7C_Kotlin_1.9-blue?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License MIT" />
 </p>
 
-> **A specialized Android utility for Samsung Galaxy devices that automatically suppresses notification sounds and vibrations during active microphone usage without requiring `RECORD_AUDIO` permission. In V2, notifications arrive and display on screen in real-time completely silently without snoozing or delays.**
+> **A specialized Android utility for Samsung Galaxy devices that automatically suppresses notification sounds and vibrations during active microphone usage without requiring `RECORD_AUDIO` permission. In V3, full multi-language support (11 languages), an instant in-app language switcher, and a secure in-app PayPal donation sheet are included.**
 
 > [!WARNING]
 > **⚠️ Important Note:** This tool mutes system-level notification sounds and vibrations. However, it cannot block custom in-app vibrations (e.g., custom vibration settings inside WhatsApp, Telegram, etc.). You must manually disable in-app vibrations inside those specific apps for a completely silent experience.
@@ -21,7 +22,7 @@ When recording audio or participating in voice/video calls on Samsung Galaxy dev
 
 Standard Do-Not-Disturb (DND) modes are cumbersome to manually toggle, and standard Android audio stream methods fail to silence Samsung's proprietary vibration engines.
 
-**Samsung Mic Mute App (V2)** solves this entirely in the background: it automatically detects microphone activation anywhere in the system, immediately mutes notification volume and Samsung vibration intensity to zero, and instantly restores them to their exact baseline the moment recording ends. All notifications continue to arrive and display on your screen in real time without being snoozed, delayed, or flooded later.
+**Samsung Mic Mute App (V3)** solves this entirely in the background: it automatically detects microphone activation anywhere in the system, immediately mutes notification volume and Samsung vibration intensity to zero, and instantly restores them to their exact baseline the moment recording ends. All notifications continue to arrive and display on your screen in real time without being snoozed, delayed, or flooded later.
 
 ---
 
@@ -29,6 +30,10 @@ Standard Do-Not-Disturb (DND) modes are cumbersome to manually toggle, and stand
 
 - **🔒 Zero `RECORD_AUDIO` Permission (100% Private & Safe):**
   Uses Android's system-level `AudioManager.AudioRecordingCallback` (introduced in API 30+). The app **never** records, listens to, or processes microphone audio. It only monitors whether another application has opened a recording stream.
+- **🌐 11 Global Languages & Instant Switcher (V3):**
+  Fully translated into 11 languages: Arabic (العربية), English, Spanish (Español), French (Français), German (Deutsch), Russian (Русский), Portuguese (Português), Turkish (Türkçe), Korean (한국어), Japanese (日本語), and Chinese Simplified (简体中文). Includes an in-app language picker (🌐) and Android 13+ Per-App Language setting integration.
+- **💳 Secure In-App PayPal Support Sheet (V3):**
+  Enables direct support via PayPal's official Hosted Buttons SDK inside a native modal BottomSheet without ever navigating away to an external browser.
 - **🛡️ No Invasive Foreground Microphone Type:**
   Avoids Android 14–16 runtime security restrictions by combining a `FOREGROUND_SERVICE_SPECIAL_USE` foreground service (`audio_recording_detection` property) with a persistent `NotificationListenerService`.
 - **⚡ Universal Zero-Filter Detection Engine:**
@@ -43,11 +48,21 @@ Standard Do-Not-Disturb (DND) modes are cumbersome to manually toggle, and stand
     - `vibrate_notification`
     - `notification_vibration_intensity`
     - `vibrate_on` (fallback)
-- **📬 Real-Time Silent Delivery (V2):**
-  Unlike earlier designs that snoozed notifications (causing floods when mic released), V2 ensures all notifications arrive and display on screen immediately in real time, completely silenced at the system audio and vibration driver level.
+- **📬 Real-Time Silent Delivery:**
+  Ensures all notifications arrive and display on screen immediately in real time, completely silenced at the system audio and vibration driver level.
 - **🧠 Snapshot Once Lock & Non-Zero Guard:**
   Snapshots system volume and vibration levels strictly once upon transition from `IDLE` → `SUPPRESSING`. Subsequent triggers never overwrite the user's normal volume with `0`. If values read `0` at snapshot time, the Non-Zero Guard restores a healthy persisted baseline.
 - **⏱️ 400ms Anti-Glitch Debounce:**
+  Delays restoration by 400ms when mic streams stop, preventing rapid on/off audio glitching during successive voice notes.
+- **📊 Live In-App Debugger & Diagnostic Console:**
+  Features a real-time inspector panel polling every 500ms directly on the dashboard:
+  - Active microphone configs count, audio session IDs, and source types.
+  - Current `AudioManager.mode`.
+  - `STREAM_NOTIFICATION` live volume and mute state.
+  - Live integer values of all Samsung vibration keys directly from `Settings.System`.
+  - Monospace scrolling event log console with one-tap clipboard copy and vibration key dump.
+- **💾 Crash & Reboot Recovery:**
+  Automatically restores cached baseline settings after device reboots via `BootRecoveryReceiver` and cloud-synced `PersistenceManager`.
   Delays restoration by 400ms when mic streams stop, preventing rapid on/off audio glitching during successive voice notes.
 - **📊 Live In-App Debugger & Diagnostic Console:**
   Features a real-time inspector panel polling every 500ms directly on the dashboard:
