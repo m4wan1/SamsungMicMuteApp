@@ -1,15 +1,15 @@
 <p align="center">
   <b>English</b> ·
-  <a href="README.ar.md">العربية</a> ·
-  <a href="README.es.md">Español</a> ·
-  <a href="README.fr.md">Français</a> ·
-  <a href="README.de.md">Deutsch</a> ·
-  <a href="README.ru.md">Русский</a> ·
-  <a href="README.pt-BR.md">Português (Brasil)</a> ·
-  <a href="README.tr.md">Türkçe</a> ·
-  <a href="README.ko.md">한국어</a> ·
-  <a href="README.ja.md">日本語</a> ·
-  <a href="README.zh-CN.md">简体中文</a>
+  <a href="docs/i18n/README.ar.md">العربية</a> ·
+  <a href="docs/i18n/README.es.md">Español</a> ·
+  <a href="docs/i18n/README.fr.md">Français</a> ·
+  <a href="docs/i18n/README.de.md">Deutsch</a> ·
+  <a href="docs/i18n/README.ru.md">Русский</a> ·
+  <a href="docs/i18n/README.pt-BR.md">Português (Brasil)</a> ·
+  <a href="docs/i18n/README.tr.md">Türkçe</a> ·
+  <a href="docs/i18n/README.ko.md">한국어</a> ·
+  <a href="docs/i18n/README.ja.md">日本語</a> ·
+  <a href="docs/i18n/README.zh-CN.md">简体中文</a>
 </p>
 
 # Samsung Mic Mute App (v3.0)
