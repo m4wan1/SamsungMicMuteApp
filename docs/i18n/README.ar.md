@@ -12,13 +12,14 @@
   <a href="README.zh-CN.md">简体中文</a>
 </p>
 
-# Samsung Mic Mute App (v3.0)
+# Samsung Mic Mute App (v3.1.0)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android_11_to_16_(API_30--36)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android Platform" />
   <img src="https://img.shields.io/badge/Samsung_One_UI-v6_%7C_v7_%7C_v8_%7C_v9-1428A0?style=for-the-badge&logo=samsung&logoColor=white" alt="Samsung One UI" />
   <img src="https://img.shields.io/badge/Privacy-Zero_RECORD__AUDIO-brightgreen?style=for-the-badge&logo=shield&logoColor=white" alt="Zero RECORD_AUDIO" />
   <img src="https://img.shields.io/badge/Languages-11_Global_Locales-purple?style=for-the-badge&logo=google-translate&logoColor=white" alt="11 Languages" />
+  <img src="https://img.shields.io/badge/APK-2.5_MB-success?style=for-the-badge&logo=android&logoColor=white" alt="APK Size 2.5 MB" />
   <img src="https://img.shields.io/badge/Build-Gradle_8.6_%7C_Kotlin_1.9-blue?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License MIT" />
 </p>
@@ -27,6 +28,19 @@
 
 > [!WARNING]
 > **⚠️ ملاحظة مهمة:** تكتم هذه الأداة أصوات إشعارات النظام واهتزازاتها على مستوى النظام. ومع ذلك، فهي لا تستطيع حجب الاهتزازات المخصصة داخل التطبيقات (مثل إعدادات الاهتزاز المخصصة داخل WhatsApp وTelegram وغيرهما). عليك تعطيل الاهتزاز داخل تلك التطبيقات يدويًا للحصول على تجربة صامتة تمامًا.
+
+---
+
+## 🆕 الجديد في v3.1.0
+
+- **🎛️ مفتاح تصحيح عند الطلب:** يتيح مفتاح **وضع التصحيح** الجديد (متوقف افتراضيًا) في بطاقة التشخيص تفعيل التتبّع المفصّل فقط عند الحاجة إليه. وبينما يكون معطّلًا، يعود `DebugLogManager` فورًا — بلا أي استهلاك للذاكرة وبلا أي كتابة ملفات في الخلفية — وتواصل خدمة الكتم الأساسية عملها على مدار الساعة دون انقطاع.
+- **🗂️ تدوير السجلات والانتهاء التلقائي بعد 24 ساعة:** تُكتب السجلات في `context.cacheDir/suppressor_debug.log` بحد أقصى **5 MB** (يُحذف أقدم نصف منها تلقائيًا). ويُغلق المفتاح نفسه تلقائيًا بعد **24 ساعة** ويمسح السجل المؤقت.
+- **📤 أدوات إدارة السجلات:** تعرض الواجهة حجم السجل الحالي وتوفّر إجراءي **مسح السجل** و**مشاركة/تصدير السجل** عبر `FileProvider` آمن.
+- **🐞 تقرير خطأ بلمسة واحدة:** يفتح زر **الإبلاغ عن خطأ** المخصص رسالة بريد إلكتروني إلى **M4wan1@gmail.com**، معبّأة مسبقًا بتقرير تشخيصي كامل (طراز الجهاز، وإصدار Android، وإصدار One UI، وإصدار التطبيق، وحالة خدمة الكتم)، ويُرفق ملف السجل عند توفره.
+- **📦 إصدار محسّن:** تصغير R8 وتقليص الموارد (`isMinifyEnabled = true`، `isShrinkResources = true`، `buildConfig = true`) مع قواعد ProGuard دقيقة تحمي الخدمات الأمامية، ومفاتيح انعكاس اهتزاز Samsung One UI، و`DebugLogManager`، و`FileProvider`، و`SuppressionState`.
+- **🚀 ملف APK أصغر بنسبة 82%:** انخفض ملف APK الخاص بالإصدار من **~14.2 MB إلى 2.5 MB** دون أي خسارة في الوظائف — أصبح الآن `versionCode 4`، `versionName 3.1.0`.
+
+**تنزيل:** [SamsungMicMute_v3.1_Release.apk](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.1.0)
 
 ---
 
@@ -153,7 +167,7 @@ flowchart TD
 ## 🛠️ دليل التثبيت والإعداد
 
 ### الخطوة 1: تثبيت ملف APK
-نزّل `SamsungMicMute_V2.apk` من قسم [Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases)، أو ابنِ ملف APK محليًا من المصدر:
+نزّل `SamsungMicMute_v3.1_Release.apk` من قسم [Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.1.0)، أو ابنِ ملف APK محليًا من المصدر:
 
 ```bash
 git clone https://github.com/m4wan1/SamsungMicMuteApp.git

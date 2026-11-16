@@ -12,13 +12,14 @@
   <a href="README.zh-CN.md">简体中文</a>
 </p>
 
-# Samsung Mic Mute App (v3.0)
+# Samsung Mic Mute App (v3.1.0)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android_11_to_16_(API_30--36)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android Platform" />
   <img src="https://img.shields.io/badge/Samsung_One_UI-v6_%7C_v7_%7C_v8_%7C_v9-1428A0?style=for-the-badge&logo=samsung&logoColor=white" alt="Samsung One UI" />
   <img src="https://img.shields.io/badge/Privacy-Zero_RECORD__AUDIO-brightgreen?style=for-the-badge&logo=shield&logoColor=white" alt="Zero RECORD_AUDIO" />
   <img src="https://img.shields.io/badge/Languages-11_Global_Locales-purple?style=for-the-badge&logo=google-translate&logoColor=white" alt="11 Languages" />
+  <img src="https://img.shields.io/badge/APK-2.5_MB-success?style=for-the-badge&logo=android&logoColor=white" alt="APK Size 2.5 MB" />
   <img src="https://img.shields.io/badge/Build-Gradle_8.6_%7C_Kotlin_1.9-blue?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License MIT" />
 </p>
@@ -27,6 +28,19 @@
 
 > [!WARNING]
 > **⚠️ Önemli Not:** Bu araç sistem düzeyindeki bildirim seslerini ve titreşimlerini susturur. Ancak uygulama içi özel titreşimleri (örneğin WhatsApp, Telegram vb. uygulamaların kendi içindeki özel titreşim ayarlarını) engelleyemez. Tamamen sessiz bir deneyim için bu uygulamaların içindeki titreşimleri manuel olarak kapatmanız gerekir.
+
+---
+
+## 🆕 v3.1.0'da Yenilikler
+
+- **🎛️ İsteğe Bağlı Hata Ayıklama Anahtarı:** Tanılama kartındaki yeni **Hata Ayıklama Modu** anahtarı (varsayılan olarak kapalı), ayrıntılı izlemeyi yalnızca ihtiyaç duyduğunuzda etkinleştirir. Devre dışıyken `DebugLogManager` hemen geri döner — sıfır bellek dalgalanması ve sıfır arka plan dosya yazımı — ve çekirdek bastırma hizmeti 24/7 kesintisiz çalışmaya devam eder.
+- **🗂️ Günlük Rotasyonu ve 24 Saatlik Otomatik Sona Erme:** Günlükler `context.cacheDir/suppressor_debug.log` konumuna yazılır ve **5 MB** ile sınırlandırılır (en eski yarı otomatik olarak silinir). Anahtar **24 saat** sonra kendini kapatır ve geçici günlüğü temizler.
+- **📤 Günlük Yönetimi Kontrolleri:** Arayüz mevcut günlük boyutunu gösterir ve güvenli bir `FileProvider` aracılığıyla **Günlüğü Temizle** ve **Günlüğü Paylaş/Dışa Aktar** eylemlerini sunar.
+- **🐞 Tek Dokunuşla Hata Raporu:** Özel bir **Hata Bildir** düğmesi, **M4wan1@gmail.com** adresine tam bir tanılama raporuyla (cihaz modeli, Android sürümü, One UI sürümü, uygulama sürümü, bastırma hizmeti durumu) önceden doldurulmuş bir e-posta açar ve mevcut olduğunda günlük dosyasını ekler.
+- **📦 Optimize Edilmiş Sürüm Derlemesi:** R8 küçültme ve kaynak küçültme (`isMinifyEnabled = true`, `isShrinkResources = true`, `buildConfig = true`) ile birlikte ön plan hizmetlerini, Samsung One UI titreşim yansıma anahtarlarını, `DebugLogManager`, `FileProvider` ve `SuppressionState` bileşenlerini koruyan hassas ProGuard kuralları.
+- **🚀 %82 Daha Küçük APK:** Sürüm APK'sı, işlevsellik kaybı olmadan **~14,2 MB'tan 2,5 MB'a** düştü — artık `versionCode 4`, `versionName 3.1.0`.
+
+**İndir:** [SamsungMicMute_v3.1_Release.apk](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.1.0)
 
 ---
 
@@ -153,7 +167,7 @@ flowchart TD
 ## 🛠️ Kurulum ve Ayar Kılavuzu
 
 ### Adım 1: APK'yı Yükleyin
-`SamsungMicMute_V2.apk` dosyasını [Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases) bölümünden indirin veya APK'yı kaynaktan yerel olarak derleyin:
+`SamsungMicMute_v3.1_Release.apk` dosyasını [Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.1.0) bölümünden indirin veya APK'yı kaynaktan yerel olarak derleyin:
 
 ```bash
 git clone https://github.com/m4wan1/SamsungMicMuteApp.git

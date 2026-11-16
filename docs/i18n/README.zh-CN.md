@@ -12,13 +12,14 @@
   <b>简体中文</b>
 </p>
 
-# Samsung Mic Mute App (v3.0)
+# Samsung Mic Mute App (v3.1.0)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android_11_to_16_(API_30--36)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android Platform" />
   <img src="https://img.shields.io/badge/Samsung_One_UI-v6_%7C_v7_%7C_v8_%7C_v9-1428A0?style=for-the-badge&logo=samsung&logoColor=white" alt="Samsung One UI" />
   <img src="https://img.shields.io/badge/Privacy-Zero_RECORD__AUDIO-brightgreen?style=for-the-badge&logo=shield&logoColor=white" alt="Zero RECORD_AUDIO" />
   <img src="https://img.shields.io/badge/Languages-11_Global_Locales-purple?style=for-the-badge&logo=google-translate&logoColor=white" alt="11 Languages" />
+  <img src="https://img.shields.io/badge/APK-2.5_MB-success?style=for-the-badge&logo=android&logoColor=white" alt="APK Size 2.5 MB" />
   <img src="https://img.shields.io/badge/Build-Gradle_8.6_%7C_Kotlin_1.9-blue?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License MIT" />
 </p>
@@ -27,6 +28,19 @@
 
 > [!WARNING]
 > **⚠️ 重要说明：** 本工具会静音系统级通知声音与振动，但无法阻止应用内自定义振动（例如 WhatsApp、Telegram 等内部的自定义振动设置）。若要获得完全静音的体验，你必须在这些具体应用内手动关闭应用内振动。
+
+---
+
+## 🆕 新功能 v3.1.0
+
+- **🎛️ 按需调试开关：** 诊断卡片中新增了一个 **调试模式** 开关（默认关闭），仅在你需要时启用详细跟踪。关闭时，`DebugLogManager` 会立即返回——零内存抖动、零后台文件写入——核心抑制服务则保持 24/7 不间断运行。
+- **🗂️ 日志轮转与 24 小时自动过期：** 日志写入 `context.cacheDir/suppressor_debug.log`，上限为 **5 MB**（最旧的一半会被自动删除）。开关会在 **24 小时** 后自动关闭并清除临时日志。
+- **📤 日志管理控件：** UI 会显示当前日志大小，并通过安全的 `FileProvider` 提供 **清除日志** 与 **分享/导出日志** 操作。
+- **🐞 一键缺陷报告：** 专用的 **报告缺陷** 按钮会打开一封发往 **M4wan1@gmail.com** 的邮件，预填完整诊断报告（设备型号、Android 版本、One UI 版本、应用版本、抑制服务状态），并在日志文件可用时将其作为附件。
+- **📦 优化的发布构建：** R8 代码缩减与资源压缩（`isMinifyEnabled = true`、`isShrinkResources = true`、`buildConfig = true`），并配有精确的 ProGuard 规则来保护前台服务、三星 One UI 振动反射键、`DebugLogManager`、`FileProvider` 与 `SuppressionState`。
+- **🚀 APK 体积缩小 82%：** 发布版 APK 从 **~14.2 MB 降至 2.5 MB**，功能毫无损失——现为 `versionCode 4`、`versionName 3.1.0`。
+
+**下载：** [SamsungMicMute_v3.1_Release.apk](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.1.0)
 
 ---
 
@@ -153,7 +167,7 @@ flowchart TD
 ## 🛠️ 安装与配置指南
 
 ### 第 1 步：安装 APK
-从 [Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases) 部分下载 `SamsungMicMute_V2.apk`，或在本地从源码构建 APK：
+从 [Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.1.0) 部分下载 `SamsungMicMute_v3.1_Release.apk`，或在本地从源码构建 APK：
 
 ```bash
 git clone https://github.com/m4wan1/SamsungMicMuteApp.git

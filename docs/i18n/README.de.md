@@ -12,13 +12,14 @@
   <a href="README.zh-CN.md">简体中文</a>
 </p>
 
-# Samsung Mic Mute App (v3.0)
+# Samsung Mic Mute App (v3.1.0)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android_11_to_16_(API_30--36)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android Platform" />
   <img src="https://img.shields.io/badge/Samsung_One_UI-v6_%7C_v7_%7C_v8_%7C_v9-1428A0?style=for-the-badge&logo=samsung&logoColor=white" alt="Samsung One UI" />
   <img src="https://img.shields.io/badge/Privacy-Zero_RECORD__AUDIO-brightgreen?style=for-the-badge&logo=shield&logoColor=white" alt="Zero RECORD_AUDIO" />
   <img src="https://img.shields.io/badge/Languages-11_Global_Locales-purple?style=for-the-badge&logo=google-translate&logoColor=white" alt="11 Languages" />
+  <img src="https://img.shields.io/badge/APK-2.5_MB-success?style=for-the-badge&logo=android&logoColor=white" alt="APK Size 2.5 MB" />
   <img src="https://img.shields.io/badge/Build-Gradle_8.6_%7C_Kotlin_1.9-blue?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License MIT" />
 </p>
@@ -27,6 +28,19 @@
 
 > [!WARNING]
 > **⚠️ Wichtiger Hinweis:** Dieses Tool schaltet Benachrichtigungstöne und -vibrationen auf Systemebene stumm. Es kann jedoch keine anwendungsspezifischen Vibrationen blockieren (z. B. eigene Vibrationseinstellungen innerhalb von WhatsApp, Telegram usw.). Für ein vollständig lautloses Erlebnis müssen Sie die Vibrationen in diesen Apps manuell deaktivieren.
+
+---
+
+## 🆕 Neu in v3.1.0
+
+- **🎛️ Debug-Schalter auf Abruf:** Ein neuer **Debug-Modus**-Schalter (standardmäßig aus) in der Diagnosekarte aktiviert die ausführliche Protokollierung nur dann, wenn Sie sie benötigen. Solange er deaktiviert ist, kehrt `DebugLogManager` sofort zurück — kein Speicherverbrauch und keine Hintergrund-Schreibvorgänge in Dateien — und der zentrale Unterdrückungsdienst läuft rund um die Uhr ununterbrochen weiter.
+- **🗂️ Log-Rotation & automatisches Ablaufen nach 24 Stunden:** Protokolle werden in `context.cacheDir/suppressor_debug.log` geschrieben und auf **5 MB** begrenzt (die ältere Hälfte wird automatisch gelöscht). Der Schalter deaktiviert sich nach **24 Stunden** selbst und löscht das temporäre Protokoll.
+- **📤 Steuerung der Protokollverwaltung:** Die UI zeigt die aktuelle Protokollgröße an und bietet die Aktionen **Protokoll löschen** und **Protokoll teilen/exportieren** über einen sicheren `FileProvider`.
+- **🐞 Fehlerbericht mit einem Tippen:** Eine eigene Schaltfläche **Fehler melden** öffnet eine E-Mail an **M4wan1@gmail.com**, vorausgefüllt mit einem vollständigen Diagnosebericht (Gerätemodell, Android-Version, One-UI-Version, App-Version, Status des Unterdrückungsdienstes) und hängt die Protokolldatei an, sofern verfügbar.
+- **📦 Optimierter Release-Build:** R8-Minifizierung und Ressourcenverkleinerung (`isMinifyEnabled = true`, `isShrinkResources = true`, `buildConfig = true`) mit präzisen ProGuard-Regeln, die die Foreground-Services, die Samsung-One-UI-Vibrations-Reflection-Schlüssel, `DebugLogManager`, `FileProvider` und `SuppressionState` schützen.
+- **🚀 82 % kleinere APK:** Die Release-APK wurde von **~14,2 MB auf 2,5 MB** reduziert, ohne Funktionsverlust — jetzt `versionCode 4`, `versionName 3.1.0`.
+
+**Download:** [SamsungMicMute_v3.1_Release.apk](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.1.0)
 
 ---
 
@@ -153,7 +167,7 @@ flowchart TD
 ## 🛠️ Installations- & Einrichtungsanleitung
 
 ### Schritt 1: APK installieren
-Laden Sie `SamsungMicMute_V2.apk` aus dem Bereich [Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases) herunter, oder bauen Sie die APK lokal aus dem Quellcode:
+Laden Sie `SamsungMicMute_v3.1_Release.apk` aus dem Bereich [Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.1.0) herunter, oder bauen Sie die APK lokal aus dem Quellcode:
 
 ```bash
 git clone https://github.com/m4wan1/SamsungMicMuteApp.git

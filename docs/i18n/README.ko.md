@@ -12,13 +12,14 @@
   <a href="README.zh-CN.md">简体中文</a>
 </p>
 
-# Samsung Mic Mute App (v3.0)
+# Samsung Mic Mute App (v3.1.0)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android_11_to_16_(API_30--36)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android Platform" />
   <img src="https://img.shields.io/badge/Samsung_One_UI-v6_%7C_v7_%7C_v8_%7C_v9-1428A0?style=for-the-badge&logo=samsung&logoColor=white" alt="Samsung One UI" />
   <img src="https://img.shields.io/badge/Privacy-Zero_RECORD__AUDIO-brightgreen?style=for-the-badge&logo=shield&logoColor=white" alt="Zero RECORD_AUDIO" />
   <img src="https://img.shields.io/badge/Languages-11_Global_Locales-purple?style=for-the-badge&logo=google-translate&logoColor=white" alt="11 Languages" />
+  <img src="https://img.shields.io/badge/APK-2.5_MB-success?style=for-the-badge&logo=android&logoColor=white" alt="APK Size 2.5 MB" />
   <img src="https://img.shields.io/badge/Build-Gradle_8.6_%7C_Kotlin_1.9-blue?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License MIT" />
 </p>
@@ -27,6 +28,19 @@
 
 > [!WARNING]
 > **⚠️ 중요 참고:** 이 도구는 시스템 수준의 알림음과 진동을 음소거합니다. 다만 앱 내부의 사용자 지정 진동(예: WhatsApp, Telegram 등의 앱 내 진동 설정)은 차단할 수 없습니다. 완전한 무음 환경을 위해서는 해당 앱 내에서 진동을 직접 비활성화해야 합니다.
+
+---
+
+## 🆕 v3.1.0의 새로운 기능
+
+- **🎛️ 필요할 때만 켜는 디버그 스위치:** 진단 카드에 추가된 새로운 **디버그 모드** 스위치(기본값 꺼짐)는 필요할 때만 상세 추적을 활성화합니다. 비활성화 상태에서는 `DebugLogManager`가 즉시 반환되어 — 메모리 낭비도, 백그라운드 파일 쓰기도 전혀 없으며 — 핵심 억제 서비스는 중단 없이 24/7 계속 실행됩니다.
+- **🗂️ 로그 순환 및 24시간 자동 만료:** 로그는 `context.cacheDir/suppressor_debug.log`에 기록되며 최대 **5 MB**로 제한됩니다(가장 오래된 절반은 자동으로 삭제됨). 스위치는 **24시간** 후 스스로 꺼지고 임시 로그를 지웁니다.
+- **📤 로그 관리 컨트롤:** UI에 현재 로그 크기가 표시되며, 안전한 `FileProvider`를 통해 **로그 지우기** 및 **로그 공유/내보내기** 기능을 제공합니다.
+- **🐞 원탭 버그 신고:** 전용 **버그 신고** 버튼은 **M4wan1@gmail.com**으로 이메일을 열고, 전체 진단 리포트(기기 모델, Android 버전, One UI 버전, 앱 버전, 억제 서비스 상태)를 미리 채우며, 가능한 경우 로그 파일을 첨부합니다.
+- **📦 최적화된 릴리스 빌드:** R8 코드 축소 및 리소스 축소(`isMinifyEnabled = true`, `isShrinkResources = true`, `buildConfig = true`)를 적용하고, 포그라운드 서비스, Samsung One UI 진동 리플렉션 키, `DebugLogManager`, `FileProvider`, `SuppressionState`를 보호하는 정교한 ProGuard 규칙을 사용합니다.
+- **🚀 82% 더 작아진 APK:** 릴리스 APK가 기능 손실 없이 **~14.2 MB에서 2.5 MB로** 줄었습니다 — 이제 `versionCode 4`, `versionName 3.1.0`입니다.
+
+**다운로드:** [SamsungMicMute_v3.1_Release.apk](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.1.0)
 
 ---
 
@@ -153,7 +167,7 @@ flowchart TD
 ## 🛠️ 설치 및 설정 가이드
 
 ### 1단계: APK 설치
-[Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases) 섹션에서 `SamsungMicMute_V2.apk`를 다운로드하거나 소스에서 로컬로 APK를 빌드합니다:
+[Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.1.0) 섹션에서 `SamsungMicMute_v3.1_Release.apk`를 다운로드하거나 소스에서 로컬로 APK를 빌드합니다:
 
 ```bash
 git clone https://github.com/m4wan1/SamsungMicMuteApp.git
