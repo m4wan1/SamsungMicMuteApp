@@ -12,21 +12,35 @@
   <a href="docs/i18n/README.zh-CN.md">简体中文</a>
 </p>
 
-# Samsung Mic Mute App (v3.0)
+# Samsung Mic Mute App (v3.1.0)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android_11_to_16_(API_30--36)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android Platform" />
   <img src="https://img.shields.io/badge/Samsung_One_UI-v6_%7C_v7_%7C_v8_%7C_v9-1428A0?style=for-the-badge&logo=samsung&logoColor=white" alt="Samsung One UI" />
   <img src="https://img.shields.io/badge/Privacy-Zero_RECORD__AUDIO-brightgreen?style=for-the-badge&logo=shield&logoColor=white" alt="Zero RECORD_AUDIO" />
   <img src="https://img.shields.io/badge/Languages-11_Global_Locales-purple?style=for-the-badge&logo=google-translate&logoColor=white" alt="11 Languages" />
+  <img src="https://img.shields.io/badge/APK-2.5_MB-success?style=for-the-badge&logo=android&logoColor=white" alt="APK Size 2.5 MB" />
   <img src="https://img.shields.io/badge/Build-Gradle_8.6_%7C_Kotlin_1.9-blue?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License MIT" />
 </p>
 
-> **A specialized Android utility for Samsung Galaxy devices that automatically suppresses notification sounds and vibrations during active microphone usage without requiring `RECORD_AUDIO` permission. In V3, full multi-language support (11 languages), an instant in-app language switcher, and a secure in-app PayPal donation sheet are included.**
+> **A specialized Android utility for Samsung Galaxy devices that automatically suppresses notification sounds and vibrations during active microphone usage without requiring `RECORD_AUDIO` permission. In V3.1, on-demand debug logging, 5 MB log rotation with 24-hour auto-expiry, one-tap bug reporting, and an R8-optimized release build are included — the APK is now 2.5 MB instead of 14.2 MB.**
 
 > [!WARNING]
 > **⚠️ Important Note:** This tool mutes system-level notification sounds and vibrations. However, it cannot block custom in-app vibrations (e.g., custom vibration settings inside WhatsApp, Telegram, etc.). You must manually disable in-app vibrations inside those specific apps for a completely silent experience.
+
+---
+
+## 🆕 What's New in v3.1.0
+
+- **🎛️ On-Demand Debug Switch:** A new **Debug Mode** switch (off by default) in the diagnostics card enables verbose tracking only when you need it. While disabled, `DebugLogManager` returns immediately — zero memory churn and zero background file writes — and the core suppression service keeps running 24/7 uninterrupted.
+- **🗂️ Log Rotation & 24-Hour Auto-Expiry:** Logs are written to `context.cacheDir/suppressor_debug.log` and capped at **5 MB** (the oldest half is deleted automatically). The switch turns itself off after **24 hours** and clears the temporary log.
+- **📤 Log Management Controls:** The UI displays the current log size and provides **Clear Log** and **Share/Export Log** actions through a secure `FileProvider`.
+- **🐞 One-Tap Bug Report:** A dedicated **Report a Bug** button opens an email to **M4wan1@gmail.com**, pre-filled with a full diagnostic report (device model, Android version, One UI version, app version, suppression service state) and attaches the log file when available.
+- **📦 Optimized Release Build:** R8 minification and resource shrinking (`isMinifyEnabled = true`, `isShrinkResources = true`, `buildConfig = true`) with precise ProGuard rules protecting the foreground services, Samsung One UI vibration reflection keys, `DebugLogManager`, `FileProvider`, and `SuppressionState`.
+- **🚀 82% Smaller APK:** The release APK dropped from **~14.2 MB to 2.5 MB** with no loss of functionality — now `versionCode 4`, `versionName 3.1.0`.
+
+**Download:** [SamsungMicMute_v3.1_Release.apk](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.1.0)
 
 ---
 
@@ -48,6 +62,8 @@ Standard Do-Not-Disturb (DND) modes are cumbersome to manually toggle, and stand
   Fully translated into 11 languages: Arabic (العربية), English, Spanish (Español), French (Français), German (Deutsch), Russian (Русский), Portuguese (Português), Turkish (Türkçe), Korean (한국어), Japanese (日本語), and Chinese Simplified (简体中文). Includes an in-app language picker (🌐) and Android 13+ Per-App Language setting integration.
 - **💳 Secure In-App PayPal Support Sheet (V3):**
   Enables direct support via PayPal's official Hosted Buttons SDK inside a native modal BottomSheet without ever navigating away to an external browser.
+- **🎛️ On-Demand Debug Logging (V3.1):**
+  A single Debug Mode switch enables verbose logging only when needed. Logs rotate at 5 MB, auto-expire after 24 hours, and can be shared or cleared from the UI; a one-tap bug report attaches the log automatically.
 - **🛡️ No Invasive Foreground Microphone Type:**
   Avoids Android 14–16 runtime security restrictions by combining a `FOREGROUND_SERVICE_SPECIAL_USE` foreground service (`audio_recording_detection` property) with a persistent `NotificationListenerService`.
 - **⚡ Universal Zero-Filter Detection Engine:**
@@ -153,7 +169,7 @@ flowchart TD
 ## 🛠️ Installation & Setup Guide
 
 ### Step 1: Install the APK
-Download `SamsungMicMute_V2.apk` from the [Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases) section, or build the APK locally from source:
+Download `SamsungMicMute_v3.1_Release.apk` (~2.5 MB) from the [Releases](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.1.0) section, or build the APK locally from source:
 
 ```bash
 git clone https://github.com/m4wan1/SamsungMicMuteApp.git
