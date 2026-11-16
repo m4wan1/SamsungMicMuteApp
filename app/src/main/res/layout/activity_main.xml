@@ -587,83 +587,183 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/card_title_debugger"
-                    android:textSize="11sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.08"
-                    android:textColor="@color/text_secondary"
-                    android:layout_marginBottom="8dp" />
-
-                <!-- Real-Time Inspector Panel -->
-                <TextView
-                    android:id="@+id/tv_debug_inspector"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#1E1E1E"
-                    android:textColor="#A7F3D0"
-                    android:typeface="monospace"
-                    android:textSize="11sp"
-                    android:padding="10dp"
-                    android:text="Polling real-time inspector..."
-                    android:layout_marginBottom="10dp" />
-
-                <!-- Debugger Action Buttons -->
+                <!-- Header with Debug Mode Switch -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="4dp">
 
-                    <Button
-                        android:id="@+id/btn_copy_debug_logs"
+                    <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/button_copy_logs"
-                        android:textSize="12sp"
-                        android:layout_marginEnd="4dp"
-                        style="@style/Widget.Material3.Button.OutlinedButton" />
+                        android:text="@string/card_title_debugger"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.08"
+                        android:textColor="@color/text_secondary" />
 
-                    <Button
-                        android:id="@+id/btn_clear_debug_logs"
-                        android:layout_width="0dp"
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switch_debug_mode"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.8"
-                        android:text="@string/button_clear_logs"
+                        android:text="@string/switch_debug_mode"
                         android:textSize="12sp"
-                        android:layout_marginEnd="4dp"
-                        style="@style/Widget.Material3.Button.OutlinedButton" />
-
-                    <Button
-                        android:id="@+id/btn_dump_vib_keys"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
-                        android:text="@string/button_dump_vib_keys"
-                        android:textSize="12sp"
-                        style="@style/Widget.Material3.Button" />
+                        android:textColor="@color/text_primary"
+                        android:checked="false" />
                 </LinearLayout>
 
-                <!-- Scrollable Monospace Log Console -->
-                <androidx.core.widget.NestedScrollView
-                    android:id="@+id/scroll_debug_console"
+                <TextView
+                    android:id="@+id/tv_debug_mode_desc"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:background="#121212"
-                    android:padding="8dp">
+                    android:layout_height="wrap_content"
+                    android:text="@string/debug_mode_desc"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="10dp" />
 
+                <!-- Active Debugger Area (visible when switch is enabled) -->
+                <LinearLayout
+                    android:id="@+id/layout_debug_active_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <!-- Real-Time Inspector Panel -->
                     <TextView
-                        android:id="@+id/tv_debug_console"
+                        android:id="@+id/tv_debug_inspector"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="#1E1E1E"
+                        android:textColor="#A7F3D0"
                         android:typeface="monospace"
-                        android:textSize="10sp"
-                        android:textColor="#E0E0E0"
-                        android:text="Waiting for events..." />
-                </androidx.core.widget.NestedScrollView>
+                        android:textSize="11sp"
+                        android:padding="10dp"
+                        android:text="Polling real-time inspector..."
+                        android:layout_marginBottom="10dp" />
+
+                    <!-- Debugger Action Buttons -->
+                    <LinearLayout
+                        android:id="@+id/layout_debug_controls"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
+
+                        <Button
+                            android:id="@+id/btn_copy_debug_logs"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/button_copy_logs"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="4dp"
+                            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                        <Button
+                            android:id="@+id/btn_clear_debug_logs"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8"
+                            android:text="@string/button_clear_logs"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="4dp"
+                            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                        <Button
+                            android:id="@+id/btn_dump_vib_keys"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.2"
+                            android:text="@string/button_dump_vib_keys"
+                            android:textSize="12sp"
+                            style="@style/Widget.Material3.Button" />
+                    </LinearLayout>
+
+                    <!-- Scrollable Monospace Log Console -->
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/scroll_debug_console"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="#121212"
+                        android:padding="8dp">
+
+                        <TextView
+                            android:id="@+id/tv_debug_console"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:typeface="monospace"
+                            android:textSize="10sp"
+                            android:textColor="#E0E0E0"
+                            android:text="Waiting for events..." />
+                    </androidx.core.widget.NestedScrollView>
+
+                </LinearLayout>
+
+                <!-- Log File Management Section (visible ONLY when log file exists) -->
+                <LinearLayout
+                    android:id="@+id/layout_log_file_actions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_log_file_size"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/text_secondary"
+                        android:layout_marginBottom="6dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/btn_clear_log_file"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/button_clear_log_file"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="4dp"
+                            app:icon="@android:drawable/ic_menu_delete"
+                            app:iconGravity="textStart"
+                            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+                        <Button
+                            android:id="@+id/btn_share_log_file"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/button_share_log_file"
+                            android:textSize="12sp"
+                            android:layout_marginStart="4dp"
+                            app:icon="@android:drawable/ic_menu_share"
+                            app:iconGravity="textStart"
+                            style="@style/Widget.Material3.Button.OutlinedButton" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Bug Report Button (Always accessible) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_report_bug"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_report_bug"
+                    android:textSize="13sp"
+                    android:layout_marginTop="10dp"
+                    app:icon="@android:drawable/ic_dialog_email"
+                    app:iconGravity="textStart"
+                    app:cornerRadius="8dp"
+                    style="@style/Widget.Material3.Button.TonalButton" />
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

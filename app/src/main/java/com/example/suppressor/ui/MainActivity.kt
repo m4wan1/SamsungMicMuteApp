@@ -17,6 +17,7 @@ import android.os.IBinder
 import android.os.Message
 import android.os.PowerManager
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
@@ -33,9 +34,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.os.LocaleListCompat
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.lifecycleScope
+import com.example.suppressor.BuildConfig
 import com.example.suppressor.R
 import com.example.suppressor.RecordingSuppressor
 import com.example.suppressor.SuppressionApplication
@@ -45,6 +48,7 @@ import com.example.suppressor.service.SuppressionForegroundService
 import com.example.suppressor.service.SuppressionNotificationListener
 import com.example.suppressor.vibration.OneUI8VibrationSettingsController
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.isActive
@@ -96,7 +100,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnPaypalDonate: Button
     private lateinit var btnChangeLanguage: View
 
-    // Card 5: Live In-App Debugger
+    // Card 5: Live In-App Debugger & On-Demand Tracing
+    private lateinit var switchDebugMode: MaterialSwitch
+    private lateinit var layoutDebugActiveArea: View
+    private lateinit var layoutLogFileActions: View
+    private lateinit var tvLogFileSize: TextView
+    private lateinit var btnClearLogFile: Button
+    private lateinit var btnShareLogFile: Button
+    private lateinit var btnReportBug: Button
     private lateinit var tvDebugInspector: TextView
     private lateinit var tvDebugConsole: TextView
     private lateinit var scrollDebugConsole: NestedScrollView
@@ -199,7 +210,15 @@ class MainActivity : AppCompatActivity() {
         btnPaypalDonate = findViewById(R.id.btn_paypal_donate)
         btnChangeLanguage = findViewById(R.id.btn_change_language)
 
-        // Card 5: Debugger
+        // Card 5: Debugger & On-Demand Tracing
+        switchDebugMode = findViewById(R.id.switch_debug_mode)
+        layoutDebugActiveArea = findViewById(R.id.layout_debug_active_area)
+        layoutLogFileActions = findViewById(R.id.layout_log_file_actions)
+        tvLogFileSize = findViewById(R.id.tv_log_file_size)
+        btnClearLogFile = findViewById(R.id.btn_clear_log_file)
+        btnShareLogFile = findViewById(R.id.btn_share_log_file)
+        btnReportBug = findViewById(R.id.btn_report_bug)
+
         tvDebugInspector = findViewById(R.id.tv_debug_inspector)
         tvDebugConsole = findViewById(R.id.tv_debug_console)
         scrollDebugConsole = findViewById(R.id.scroll_debug_console)
@@ -222,8 +241,35 @@ class MainActivity : AppCompatActivity() {
         btnPaypalDonate.setOnClickListener { openPayPalDonationBottomSheet() }
         btnChangeLanguage.setOnClickListener { showLanguagePickerDialog() }
 
+        switchDebugMode.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked != DebugLogManager.isEnabled(this)) {
+                DebugLogManager.setEnabled(isChecked, this)
+                updateDebugUIVisibility()
+                if (isChecked) {
+                    Toast.makeText(this, R.string.toast_debug_enabled, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, R.string.toast_debug_disabled, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        btnClearLogFile.setOnClickListener {
+            DebugLogManager.deleteLogFile(this)
+            DebugLogManager.clear(this)
+            Toast.makeText(this, R.string.toast_log_file_cleared, Toast.LENGTH_SHORT).show()
+            updateDebugUIVisibility()
+        }
+
+        btnShareLogFile.setOnClickListener {
+            shareLogFile()
+        }
+
+        btnReportBug.setOnClickListener {
+            sendBugReportEmail()
+        }
+
         btnCopyDebugLogs.setOnClickListener { copyDebugLogsToClipboard() }
-        btnClearDebugLogs.setOnClickListener { DebugLogManager.clear() }
+        btnClearDebugLogs.setOnClickListener { DebugLogManager.clear(this) }
         btnDumpVibKeys.setOnClickListener { dumpSamsungVibrationKeys() }
     }
 
@@ -294,6 +340,7 @@ class MainActivity : AppCompatActivity() {
         updateCard1Status(suppressor)
         updateCard2Snapshot(suppressor)
         updateCard3Permissions()
+        updateDebugUIVisibility()
     }
 
     /**
@@ -495,6 +542,104 @@ class MainActivity : AppCompatActivity() {
     private fun dumpSamsungVibrationKeys() {
         DebugLogManager.dumpSamsungVibrationKeys(contentResolver)
         Toast.makeText(this, "Samsung vibration keys dumped into log console", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateDebugUIVisibility() {
+        val isDebugOn = DebugLogManager.isEnabled(this)
+        if (switchDebugMode.isChecked != isDebugOn) {
+            switchDebugMode.isChecked = isDebugOn
+        }
+        layoutDebugActiveArea.visibility = if (isDebugOn) View.VISIBLE else View.GONE
+
+        val hasLog = DebugLogManager.hasLogFile(this)
+        layoutLogFileActions.visibility = if (hasLog) View.VISIBLE else View.GONE
+        if (hasLog) {
+            tvLogFileSize.text = getString(R.string.label_log_file_info, DebugLogManager.getLogFileSizeFormatted(this))
+        }
+    }
+
+    private fun shareLogFile() {
+        val logFile = DebugLogManager.getLogFileForExport(this)
+        if (logFile != null && logFile.exists() && logFile.length() > 0) {
+            try {
+                val uri = FileProvider.getUriForFile(
+                    this,
+                    "$packageName.fileprovider",
+                    logFile
+                )
+                val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                    putExtra(Intent.EXTRA_SUBJECT, "Samsung Mic Mute Debug Log")
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
+                startActivity(Intent.createChooser(shareIntent, getString(R.string.button_share_log_file)))
+            } catch (e: Exception) {
+                Toast.makeText(this, "Failed to share log: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "No log file found to share", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun sendBugReportEmail() {
+        val suppressor = getSuppressor()
+        val isSuppressing = suppressor?.isCurrentlySuppressing() == true
+        val activeCount = suppressor?.getActiveRecordingCount() ?: 0
+        val isDebugOn = DebugLogManager.isEnabled(this)
+
+        val oneUiVer = try {
+            val semField = Build.VERSION::class.java.getDeclaredField("SEM_PLATFORM_INT")
+            val semVal = semField.getInt(null)
+            val major = semVal / 10000
+            val minor = (semVal % 10000) / 100
+            "One UI $major.$minor (SEM_PLATFORM_INT: $semVal)"
+        } catch (e: Exception) {
+            "Samsung One UI (standard)"
+        }
+
+        val infoText = buildString {
+            append("=== DEVICE & APP DIAGNOSTICS ===\n")
+            append("Device: ${Build.MANUFACTURER} ${Build.MODEL} (${Build.DEVICE})\n")
+            append("Android: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})\n")
+            append("Samsung One UI: $oneUiVer\n")
+            append("App Version: v${BuildConfig.VERSION_NAME} (code ${BuildConfig.VERSION_CODE})\n")
+            append("Service Running: ${SuppressionForegroundService.isRunning}\n")
+            append("NotificationListener: ${SuppressionNotificationListener.isNotificationListenerEnabled(this@MainActivity)}\n")
+            append("Suppressing / Muted: $isSuppressing\n")
+            append("Active Recordings: $activeCount\n")
+            append("Debug Mode Active: $isDebugOn\n")
+            append("================================\n\n")
+            append("Please describe your issue or what went wrong here:\n\n")
+        }
+
+        val emailIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "message/rfc822"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("M4wan1@gmail.com"))
+            putExtra(Intent.EXTRA_SUBJECT, "Samsung Mic Mute - Bug Report v${BuildConfig.VERSION_NAME}")
+            putExtra(Intent.EXTRA_TEXT, infoText)
+
+            val logFile = DebugLogManager.getLogFileForExport(this@MainActivity)
+            if (logFile != null && logFile.exists() && logFile.length() > 0) {
+                try {
+                    val uri = FileProvider.getUriForFile(
+                        this@MainActivity,
+                        "$packageName.fileprovider",
+                        logFile
+                    )
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Could not attach log file to email: ${e.message}")
+                }
+            }
+        }
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, getString(R.string.button_report_bug)))
+        } catch (e: Exception) {
+            Toast.makeText(this, "No email app found to send report", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun isBatteryOptimizationIgnored(): Boolean {

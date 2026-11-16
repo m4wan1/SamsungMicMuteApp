@@ -51,13 +51,22 @@
     <string name="title_select_language">Select Language</string>
     <string name="toast_language_changed">Language updated</string>
 
-    <!-- Debug UI -->
+    <!-- Debug UI & On-Demand Tracing (v3.1) -->
     <string name="card_title_debugger">LIVE IN-APP DEBUGGER</string>
+    <string name="switch_debug_mode">Debug Mode</string>
+    <string name="debug_mode_desc">Temporary diagnostic logging in cache (auto-turns off after 24h, max 5 MB)</string>
     <string name="button_copy_logs">Copy Logs</string>
     <string name="button_clear_logs">Clear</string>
     <string name="button_dump_vib_keys">Dump Vib Keys</string>
+    <string name="button_clear_log_file">Clear Log</string>
+    <string name="button_share_log_file">Share / Export Log</string>
+    <string name="button_report_bug">Report a Bug</string>
     <string name="toast_logs_copied">Debug logs copied to clipboard</string>
     <string name="toast_vib_keys_dumped">Vibration keys dumped to log</string>
+    <string name="toast_debug_enabled">Debug mode enabled (auto-disables after 24 hours)</string>
+    <string name="toast_debug_disabled">Debug mode disabled</string>
+    <string name="toast_log_file_cleared">Log file deleted successfully</string>
+    <string name="label_log_file_info">Log file: %1$s</string>
 
     <!-- Toasts -->
     <string name="toast_write_settings_granted">Write Settings permission granted</string>

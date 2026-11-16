@@ -51,13 +51,22 @@
     <string name="title_select_language">اختر اللغة</string>
     <string name="toast_language_changed">تم تغيير اللغة بنجاح</string>
 
-    <!-- Debug UI -->
+    <!-- Debug UI & On-Demand Tracing (v3.1) -->
     <string name="card_title_debugger">مُشخّص الأخطاء المباشر</string>
+    <string name="switch_debug_mode">تفعيل وضع التتبع (Debug Mode)</string>
+    <string name="debug_mode_desc">تسجيل تشخيصي مؤقت في الذاكرة المخبأة (ينطفئ تلقائياً بعد ٢٤ ساعة، بحد أقصى ٥ ميجابايت)</string>
     <string name="button_copy_logs">نسخ السجلات</string>
     <string name="button_clear_logs">مسح</string>
     <string name="button_dump_vib_keys">تفريغ مفاتيح الاهتزاز</string>
+    <string name="button_clear_log_file">مسح السجل</string>
+    <string name="button_share_log_file">مشاركة/تصدير السجل</string>
+    <string name="button_report_bug">إبلاغ عن أخطاء</string>
     <string name="toast_logs_copied">تم نسخ سجلات التشخيص إلى الحافظة</string>
     <string name="toast_vib_keys_dumped">تم تفريغ مفاتيح اهتزاز سامسونج في السجل</string>
+    <string name="toast_debug_enabled">تم تفعيل وضع التتبع (سيتم إيقافه تلقائياً بعد ٢٤ ساعة)</string>
+    <string name="toast_debug_disabled">تم إيقاف وضع التتبع وحذف التسجيل المستمر</string>
+    <string name="toast_log_file_cleared">تم مسح ملف السجل بنجاح</string>
+    <string name="label_log_file_info">ملف السجل: %1$s</string>
 
     <!-- Toasts -->
     <string name="toast_write_settings_granted">تم منح إذن تعديل إعدادات النظام</string>

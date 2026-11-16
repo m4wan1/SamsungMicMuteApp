@@ -53,6 +53,7 @@ class SuppressionApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        com.example.suppressor.debug.DebugLogManager.init(this)
         Log.i(TAG, "SuppressionApplication created")
     }
 

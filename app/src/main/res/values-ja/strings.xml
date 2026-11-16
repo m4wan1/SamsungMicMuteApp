@@ -51,13 +51,22 @@
     <string name="title_select_language">言語を選択</string>
     <string name="toast_language_changed">言語が変更されました</string>
 
-    <!-- Debug UI -->
+    <!-- Debug UI & On-Demand Tracing (v3.1) -->
     <string name="card_title_debugger">リアルタイムデバッガー</string>
+    <string name="switch_debug_mode">デバッグモード</string>
+    <string name="debug_mode_desc">キャッシュ内の一時的な診断ログ（24時間後に自動オフ、最大5MB）</string>
     <string name="button_copy_logs">ログをコピー</string>
     <string name="button_clear_logs">消去</string>
     <string name="button_dump_vib_keys">バイブキー出力</string>
+    <string name="button_clear_log_file">ログを消去</string>
+    <string name="button_share_log_file">ログを共有/エクスポート</string>
+    <string name="button_report_bug">バグを報告</string>
     <string name="toast_logs_copied">デバッグログをクリップボードにコピーしました</string>
     <string name="toast_vib_keys_dumped">バイブレーション設定キーをログに出力しました</string>
+    <string name="toast_debug_enabled">デバッグモードが有効になりました（24時間後に自動オフ）</string>
+    <string name="toast_debug_disabled">デバッグモードが無効になりました</string>
+    <string name="toast_log_file_cleared">ログファイルを正常に削除しました</string>
+    <string name="label_log_file_info">ログファイル: %1$s</string>
 
     <!-- Toasts -->
     <string name="toast_write_settings_granted">システム設定変更権限が許可されました</string>

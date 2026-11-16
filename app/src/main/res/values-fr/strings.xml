@@ -51,13 +51,22 @@
     <string name="title_select_language">Sélectionner la langue</string>
     <string name="toast_language_changed">Langue mise à jour</string>
 
-    <!-- Debug UI -->
+    <!-- Debug UI & On-Demand Tracing (v3.1) -->
     <string name="card_title_debugger">DÉBOGUEUR EN DIRECT</string>
+    <string name="switch_debug_mode">Mode débogage</string>
+    <string name="debug_mode_desc">Journalisation temporaire dans le cache (s\'éteint après 24h, max 5 Mo)</string>
     <string name="button_copy_logs">Copier les journaux</string>
     <string name="button_clear_logs">Effacer</string>
     <string name="button_dump_vib_keys">Extraire les clés vib</string>
+    <string name="button_clear_log_file">Effacer le journal</string>
+    <string name="button_share_log_file">Partager / exporter le journal</string>
+    <string name="button_report_bug">Signaler un bug</string>
     <string name="toast_logs_copied">Journaux copiés dans le presse-papiers</string>
     <string name="toast_vib_keys_dumped">Clés de vibration extraites dans les journaux</string>
+    <string name="toast_debug_enabled">Mode débogage activé (désactivation après 24 h)</string>
+    <string name="toast_debug_disabled">Mode débogage désactivé</string>
+    <string name="toast_log_file_cleared">Fichier journal supprimé avec succès</string>
+    <string name="label_log_file_info">Fichier journal : %1$s</string>
 
     <!-- Toasts -->
     <string name="toast_write_settings_granted">Autorisation des paramètres accordée</string>

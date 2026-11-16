@@ -51,13 +51,22 @@
     <string name="title_select_language">Выберите язык</string>
     <string name="toast_language_changed">Язык обновлен</string>
 
-    <!-- Debug UI -->
+    <!-- Debug UI & On-Demand Tracing (v3.1) -->
     <string name="card_title_debugger">ОТЛАДЧИК В РЕАЛЬНОМ ВРЕМЕНИ</string>
+    <string name="switch_debug_mode">Режим отладки</string>
+    <string name="debug_mode_desc">Временный журнал в кэше (автоотключение через 24 ч, макс. 5 МБ)</string>
     <string name="button_copy_logs">Копировать логи</string>
     <string name="button_clear_logs">Очистить</string>
     <string name="button_dump_vib_keys">Дамп ключей вибро</string>
+    <string name="button_clear_log_file">Очистить журнал</string>
+    <string name="button_share_log_file">Поделиться / экспортировать журнал</string>
+    <string name="button_report_bug">Сообщить об ошибке</string>
     <string name="toast_logs_copied">Логи скопированы в буфер обмена</string>
     <string name="toast_vib_keys_dumped">Ключи вибрации выгружены в лог</string>
+    <string name="toast_debug_enabled">Режим отладки включен (отключится через 24 ч)</string>
+    <string name="toast_debug_disabled">Режим отладки отключен</string>
+    <string name="toast_log_file_cleared">Файл журнала успешно удален</string>
+    <string name="label_log_file_info">Файл журнала: %1$s</string>
 
     <!-- Toasts -->
     <string name="toast_write_settings_granted">Разрешение на изменение настроек предоставлено</string>

@@ -45,5 +45,24 @@
 -dontwarn kotlinx.serialization.**
 -dontwarn android.media.AudioManager$AudioRecordingCallback
 
+# Keep Application and BackupAgent
+-keep class com.example.suppressor.SuppressionApplication { *; }
+-keep class com.example.suppressor.SuppressionBackupAgent { *; }
+
+# Keep Debug Manager & FileProvider
+-keep class com.example.suppressor.debug.DebugLogManager { *; }
+-keep class androidx.core.content.FileProvider { *; }
+
+# Keep Samsung One UI reflection vibration keys
+-keepclassmembers class * {
+    public static final java.lang.String SEM_VIBRATION_*;
+    public static final java.lang.String sem_vibration_*;
+}
+
+# Keep JavaScript Interface for WebView
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
 # Keep annotations
--keepattributes *Annotation*,EnclosingMethod,Signature,InnerClasses
+-keepattributes *Annotation*,EnclosingMethod,Signature,InnerClasses,SourceFile,LineNumberTable

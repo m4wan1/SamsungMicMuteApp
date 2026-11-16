@@ -51,13 +51,22 @@
     <string name="title_select_language">Sprache auswählen</string>
     <string name="toast_language_changed">Sprache aktualisiert</string>
 
-    <!-- Debug UI -->
+    <!-- Debug UI & On-Demand Tracing (v3.1) -->
     <string name="card_title_debugger">LIVE-DEBUGGER</string>
+    <string name="switch_debug_mode">Debug-Modus</string>
+    <string name="debug_mode_desc">Temporäre Protokollierung im Cache (schaltet sich nach 24 Std. automatisch aus, max. 5 MB)</string>
     <string name="button_copy_logs">Logs kopieren</string>
     <string name="button_clear_logs">Löschen</string>
     <string name="button_dump_vib_keys">Vib-Keys auslesen</string>
+    <string name="button_clear_log_file">Protokoll löschen</string>
+    <string name="button_share_log_file">Protokoll teilen/exportieren</string>
+    <string name="button_report_bug">Fehler melden</string>
     <string name="toast_logs_copied">Logs in Zwischenablage kopiert</string>
     <string name="toast_vib_keys_dumped">Samsung-Vibrationsschlüssel ins Log übertragen</string>
+    <string name="toast_debug_enabled">Debug-Modus aktiviert (automatische Abschaltung nach 24 Std.)</string>
+    <string name="toast_debug_disabled">Debug-Modus deaktiviert</string>
+    <string name="toast_log_file_cleared">Protokolldatei erfolgreich gelöscht</string>
+    <string name="label_log_file_info">Protokolldatei: %1$s</string>
 
     <!-- Toasts -->
     <string name="toast_write_settings_granted">Berechtigung für Systemeinstellungen erteilt</string>

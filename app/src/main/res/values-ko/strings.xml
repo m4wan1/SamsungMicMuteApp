@@ -51,13 +51,22 @@
     <string name="title_select_language">언어 선택</string>
     <string name="toast_language_changed">언어가 변경되었습니다</string>
 
-    <!-- Debug UI -->
+    <!-- Debug UI & On-Demand Tracing (v3.1) -->
     <string name="card_title_debugger">실시간 디버거</string>
+    <string name="switch_debug_mode">디버그 모드</string>
+    <string name="debug_mode_desc">캐시의 임시 진단 로깅 (24시간 후 자동 꺼짐, 최대 5MB)</string>
     <string name="button_copy_logs">로그 복사</string>
     <string name="button_clear_logs">지우기</string>
     <string name="button_dump_vib_keys">진동 키 덤프</string>
+    <string name="button_clear_log_file">로그 삭제</string>
+    <string name="button_share_log_file">로그 공유 / 내보내기</string>
+    <string name="button_report_bug">버그 신고</string>
     <string name="toast_logs_copied">디버그 로그가 클립보드에 복사되었습니다</string>
     <string name="toast_vib_keys_dumped">진동 설정 키가 로그에 기록되었습니다</string>
+    <string name="toast_debug_enabled">디버그 모드가 활성화되었습니다 (24시간 후 자동 해제)</string>
+    <string name="toast_debug_disabled">디버그 모드가 비활성화되었습니다</string>
+    <string name="toast_log_file_cleared">로그 파일이 성공적으로 삭제되었습니다</string>
+    <string name="label_log_file_info">로그 파일: %1$s</string>
 
     <!-- Toasts -->
     <string name="toast_write_settings_granted">시스템 설정 수정 권한이 허용되었습니다</string>

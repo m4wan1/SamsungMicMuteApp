@@ -44,6 +44,10 @@ class SuppressionForegroundService : Service() {
         const val ACTION_START = "com.example.suppressor.START_SERVICE"
         const val ACTION_STOP = "com.example.suppressor.STOP_SERVICE"
         const val ACTION_FORCE_RESTORE = "com.example.suppressor.FORCE_RESTORE"
+
+        @Volatile
+        var isRunning = false
+            private set
     }
 
     private var recordingSuppressor: RecordingSuppressor? = null
@@ -75,6 +79,7 @@ class SuppressionForegroundService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+        isRunning = true
         DebugLogManager.log(TAG, "SuppressionForegroundService onCreate")
 
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -170,6 +175,7 @@ class SuppressionForegroundService : Service() {
     }
 
     override fun onDestroy() {
+        isRunning = false
         DebugLogManager.log(TAG, "SuppressionForegroundService onDestroy")
 
         monitorHandler?.removeCallbacks(micTickerRunnable)

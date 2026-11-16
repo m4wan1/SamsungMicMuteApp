@@ -51,13 +51,22 @@
     <string name="title_select_language">Selecionar idioma</string>
     <string name="toast_language_changed">Idioma atualizado</string>
 
-    <!-- Debug UI -->
+    <!-- Debug UI & On-Demand Tracing (v3.1) -->
     <string name="card_title_debugger">DEPURADOR AO VIVO</string>
+    <string name="switch_debug_mode">Modo de depuração</string>
+    <string name="debug_mode_desc">Registro temporário no cache (desliga automaticamente após 24h, máx. 5 MB)</string>
     <string name="button_copy_logs">Copiar registros</string>
     <string name="button_clear_logs">Limpar</string>
     <string name="button_dump_vib_keys">Despejar chaves vib</string>
+    <string name="button_clear_log_file">Limpar registro</string>
+    <string name="button_share_log_file">Compartilhar / exportar registro</string>
+    <string name="button_report_bug">Reportar erro</string>
     <string name="toast_logs_copied">Registros copiados para a área de transferência</string>
     <string name="toast_vib_keys_dumped">Chaves de vibração da Samsung despejadas no log</string>
+    <string name="toast_debug_enabled">Modo de depuração ativado (desativação após 24 h)</string>
+    <string name="toast_debug_disabled">Modo de depuração desativado</string>
+    <string name="toast_log_file_cleared">Arquivo de registro excluído com sucesso</string>
+    <string name="label_log_file_info">Arquivo de registro: %1$s</string>
 
     <!-- Toasts -->
     <string name="toast_write_settings_granted">Permissão de configurações do sistema concedida</string>

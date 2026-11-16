@@ -51,13 +51,22 @@
     <string name="title_select_language">Dil Seçin</string>
     <string name="toast_language_changed">Dil güncellendi</string>
 
-    <!-- Debug UI -->
+    <!-- Debug UI & On-Demand Tracing (v3.1) -->
     <string name="card_title_debugger">CANLI HATA AYIKLAYICI</string>
+    <string name="switch_debug_mode">Hata Ayıklama Modu</string>
+    <string name="debug_mode_desc">Önbellekte geçici tanılama günlüğü (24 saat sonra otomatik kapanır, maks. 5 MB)</string>
     <string name="button_copy_logs">Günlükleri Kopyala</string>
     <string name="button_clear_logs">Temizle</string>
     <string name="button_dump_vib_keys">Titreşim Anahtarlarını Dök</string>
+    <string name="button_clear_log_file">Günlüğü Temizle</string>
+    <string name="button_share_log_file">Günlüğü Paylaş / Dışa Aktar</string>
+    <string name="button_report_bug">Hata Bildir</string>
     <string name="toast_logs_copied">Günlükler panoya kopyalandı</string>
     <string name="toast_vib_keys_dumped">Titreşim anahtarları günlüğe kaydedildi</string>
+    <string name="toast_debug_enabled">Hata ayıklama modu etkinleştirildi (24 saat sonra kapanır)</string>
+    <string name="toast_debug_disabled">Hata ayıklama modu devre dışı bırakıldı</string>
+    <string name="toast_log_file_cleared">Günlük dosyası başarıyla silindi</string>
+    <string name="label_log_file_info">Günlük dosyası: %1$s</string>
 
     <!-- Toasts -->
     <string name="toast_write_settings_granted">Sistem ayarları izni verildi</string>

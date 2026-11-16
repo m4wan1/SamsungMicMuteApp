@@ -51,13 +51,22 @@
     <string name="title_select_language">选择语言</string>
     <string name="toast_language_changed">语言已更新</string>
 
-    <!-- Debug UI -->
+    <!-- Debug UI & On-Demand Tracing (v3.1) -->
     <string name="card_title_debugger">实时调试器</string>
+    <string name="switch_debug_mode">调试模式</string>
+    <string name="debug_mode_desc">缓存中的临时诊断日志（24小时后自动关闭，最大5 MB）</string>
     <string name="button_copy_logs">复制日志</string>
     <string name="button_clear_logs">清除</string>
     <string name="button_dump_vib_keys">导出振动键</string>
+    <string name="button_clear_log_file">清除日志</string>
+    <string name="button_share_log_file">分享 / 导出日志</string>
+    <string name="button_report_bug">报告错误</string>
     <string name="toast_logs_copied">调试日志已复制到剪贴板</string>
     <string name="toast_vib_keys_dumped">三星振动配置键已转储至日志</string>
+    <string name="toast_debug_enabled">调试模式已启用（24小时后自动关闭）</string>
+    <string name="toast_debug_disabled">调试模式已停用</string>
+    <string name="toast_log_file_cleared">日志文件已成功删除</string>
+    <string name="label_log_file_info">日志文件: %1$s</string>
 
     <!-- Toasts -->
     <string name="toast_write_settings_granted">已授予修改系统设置权限</string>
