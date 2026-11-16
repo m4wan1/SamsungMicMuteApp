@@ -41,11 +41,32 @@
     <string name="card_title_disclaimer">AVISO IMPORTANTE</string>
     <string name="disclaimer_custom_vibrations">⚠️ Nota importante: Esta herramienta silencia sonidos y vibraciones a nivel del sistema. Sin embargo, no puede bloquear vibraciones internas de aplicaciones (como ajustes de vibración dentro de WhatsApp o Telegram). Debe desactivar manualmente las vibraciones dentro de esas apps para una experiencia 100% silenciosa.</string>
 
-    <!-- Support via PayPal -->
+    <!-- Application Rules & Exceptions (v3.2) -->
+    <string name="card_title_app_filter">REGLAS Y EXCEPCIONES DE APLICACIONES</string>
+    <string name="btn_excluded_apps">Aplicaciones excluidas (No silenciar)</string>
+    <string name="btn_included_apps">Solo en aplicaciones seleccionadas (Lista blanca)</string>
+    <string name="app_filter_default_note">ℹ️ Nota: Si desea que la aplicación funcione automáticamente con todas las aplicaciones, deje estas opciones sin modificar.</string>
+    <string name="apps_selected_count">%d aplicaciones seleccionadas</string>
+    <string name="no_apps_selected">Ninguna app seleccionada (Universal)</string>
+    <string name="dialog_select_apps">Seleccionar aplicaciones</string>
+    <string name="search_apps_hint">Buscar aplicaciones...</string>
+    <string name="btn_save">Guardar</string>
+    <string name="btn_clear_all">Borrar todo</string>
+
+    <!-- Support via PayPal & Buy Me a Coffee -->
     <string name="card_title_support_paypal">Apoyar con PayPal</string>
     <string name="support_paypal_description">Si esta aplicación te ayuda a mantener tus audios y grabaciones limpios de ruidos, ¡apoya el desarrollo continuo con PayPal directamente!</string>
     <string name="button_paypal_donate">Pagar con PayPal</string>
     <string name="paypal_secure_note">Pago seguro dentro de la aplicación</string>
+    <string name="btn_open_in_browser">Abrir en el navegador</string>
+    <string name="fab_buy_me_coffee">Buy me a coffee</string>
+    <string name="support_cancel_confirm_title">¿Cancelar apoyo?</string>
+    <string name="support_cancel_confirm_msg">¿Desea cancelar la pantalla de apoyo?</string>
+    <string name="dialog_yes">Sí</string>
+    <string name="dialog_no">No</string>
+
+    <!-- Developer Credit (v3.2) -->
+    <string name="credit_developed_by">Construido y desarrollado por Marwan Al-Sehli</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">Seleccionar idioma</string>

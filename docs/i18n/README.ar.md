@@ -12,22 +12,46 @@
   <a href="README.zh-CN.md">简体中文</a>
 </p>
 
-# Samsung Mic Mute App (v3.1.0)
+# Samsung Mic Mute App (v3.2.0)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android_11_to_16_(API_30--36)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android Platform" />
   <img src="https://img.shields.io/badge/Samsung_One_UI-v6_%7C_v7_%7C_v8_%7C_v9-1428A0?style=for-the-badge&logo=samsung&logoColor=white" alt="Samsung One UI" />
   <img src="https://img.shields.io/badge/Privacy-Zero_RECORD__AUDIO-brightgreen?style=for-the-badge&logo=shield&logoColor=white" alt="Zero RECORD_AUDIO" />
   <img src="https://img.shields.io/badge/Languages-11_Global_Locales-purple?style=for-the-badge&logo=google-translate&logoColor=white" alt="11 Languages" />
-  <img src="https://img.shields.io/badge/APK-2.5_MB-success?style=for-the-badge&logo=android&logoColor=white" alt="APK Size 2.5 MB" />
-  <img src="https://img.shields.io/badge/Build-Gradle_8.6_%7C_Kotlin_1.9-blue?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
+  <img src="https://img.shields.io/badge/APK-2.6_MB-success?style=for-the-badge&logo=android&logoColor=white" alt="APK Size 2.6 MB" />
+  <img src="https://img.shields.io/badge/Build-Gradle_9.8_%7C_Kotlin_1.9-blue?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License MIT" />
 </p>
 
-> **أداة أندرويد متخصصة لأجهزة Samsung Galaxy، تعمل تلقائيًا على كتم أصوات الإشعارات واهتزازاتها أثناء الاستخدام النشط للميكروفون، دون الحاجة إلى إذن `RECORD_AUDIO`. في الإصدار V3، تتوفر الأداة على دعم كامل لتعدد اللغات (11 لغة)، ومبدّل لغة فوري داخل التطبيق، ونافذة تبرع آمنة عبر PayPal داخل التطبيق.**
+> **أداة أندرويد متخصصة لأجهزة Samsung Galaxy، تعمل تلقائيًا على كتم أصوات الإشعارات واهتزازاتها أثناء الاستخدام النشط للميكروفون، دون الحاجة إلى إذن `RECORD_AUDIO`. في الإصدار V3.2: إضافة قواعد وتصفية التطبيقات (استثناء وتحديد التطبيقات)، وأزرار عائمة لـ "Buy me a coffee" والإبلاغ عن الأخطاء، وحماية صفحة الدعم من الإغلاق بالخطأ، وزر فتح رابط الدعم في المتصفح الخارجي، وتنسيق الألوان، ونسبة الفضل للمطور.**
 
 > [!WARNING]
 > **⚠️ ملاحظة مهمة:** تكتم هذه الأداة أصوات إشعارات النظام واهتزازاتها على مستوى النظام. ومع ذلك، فهي لا تستطيع حجب الاهتزازات المخصصة داخل التطبيقات (مثل إعدادات الاهتزاز المخصصة داخل WhatsApp وTelegram وغيرهما). عليك تعطيل الاهتزاز داخل تلك التطبيقات يدويًا للحصول على تجربة صامتة تمامًا.
+
+---
+
+## 🆕 الجديد في v3.2.0
+
+- **🛡️ قواعد واستثناءات التطبيقات (App Filtering):**
+  - **زر استثناء التطبيقات (القائمة السوداء):** تحديد تطبيقات مستثناة لا يتم كتم الإشعارات عند استخدام الميكروفون بداخلها.
+  - **زر التطبيقات المحددة فقط (القائمة البيضاء):** جعل التطبيق لا يعمل إلا إذا تم الدخول إلى هذه التطبيقات المحددة.
+  - **الحفاظ التام على السلوك الافتراضي:** إذا لم يتم تحديد أي تطبيقات مستثناة أو مخصصة، يستمر التطبيق في العمل مع جميع التطبيقات تلقائياً دون أي تعديل.
+  - **ملاحظة إرشادية:** إيضاح أنه في حال الرغبة بأن يعمل التطبيق مع كافة التطبيقات، يُرجى ترك الخيارات بدون تعديل.
+- **☕ زر عائم لدعم PayPal باسم "Buy me a coffee":**
+  - نقل زر الدعم ليكون أيقونة عائمة صغيرة أنيقة على اليمين بأيقونة فنجان قهوة.
+- **🐞 زر عائم للإبلاغ عن الأخطاء (Report a Bug):**
+  - عائم مباشرة تحت زر القهوة على اليمين لتسهيل إرسال التقارير التشخيصية بلمسة واحدة.
+- **🌐 زر "فتح في المتصفح":**
+  - إضافة زر مباشر أسفل صفحة دعم PayPal يتيح للمستخدم فتح صفحة الدفع في متصفح الإنترنت الخارجي.
+- **🛡️ تأكيد حماية صفحة الدعم من الإغلاق العرضي:**
+  - عند سحب صفحة الدعم للأسفل أو محاولة إغلاقها، تظهر نافذة تأكيد منبثقة تسأل: *"هل تود إلغاء صفحة الدعم؟"*؛ عند الضغط على "لا" تعود الصفحة كما كانت فوراً، وعند الضغط على "نعم" تُقفل الصفحة.
+- **🎨 تنسيق الألوان والتصميم (One UI / Material 3):**
+  - ألوان متناسقة، تباعد مريح، زوايا ناعمة وبطاقات واضحة مع إبراز الإشعارات.
+- **✨ نسبة التطوير وحقوق المطور:**
+  - بطاقة فخرية رسمية أسفل التطبيق: **"تم بناء وتطوير التطبيق من قبل مروان السهلي"**.
+
+**تنزيل:** [SamsungMicMute_v3.2_Release.apk](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.2.0)
 
 ---
 

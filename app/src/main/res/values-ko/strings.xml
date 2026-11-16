@@ -41,11 +41,32 @@
     <string name="card_title_disclaimer">중요 안내</string>
     <string name="disclaimer_custom_vibrations">⚠️ 중요 안내: 이 도구는 시스템 수준의 알림 소리와 진동을 음소거합니다. 단, 앱 자체 내장 진동(예: 카카오톡, 왓츠앱, 텔레그램 내부 진동 설정)은 제어할 수 없습니다. 완벽한 무음을 위해 해당 앱 내에서 알림 진동을 꺼주세요.</string>
 
-    <!-- Support via PayPal -->
+    <!-- Application Rules & Exceptions (v3.2) -->
+    <string name="card_title_app_filter">앱 규칙 및 예외 설정</string>
+    <string name="btn_excluded_apps">제외할 앱 (음소거 안 함)</string>
+    <string name="btn_included_apps">선택한 앱에서만 동작 (화이트리스트)</string>
+    <string name="app_filter_default_note">ℹ️ 알림: 모든 앱에서 자동으로 작동하도록 하려면 이 설정을 변경하지 마세요.</string>
+    <string name="apps_selected_count">%d개 앱 선택됨</string>
+    <string name="no_apps_selected">선택된 앱 없음 (모든 앱에 적용)</string>
+    <string name="dialog_select_apps">앱 선택</string>
+    <string name="search_apps_hint">앱 검색...</string>
+    <string name="btn_save">저장</string>
+    <string name="btn_clear_all">모두 해제</string>
+
+    <!-- Support via PayPal & Buy Me a Coffee -->
     <string name="card_title_support_paypal">PayPal으로 후원하기</string>
     <string name="support_paypal_description">이 앱이 음성 메시지와 녹음을 방해 없이 깔끔하게 유지하는 데 도움이 되었다면, PayPal을 통해 안전하게 앱 내에서 후원해주세요!</string>
     <string name="button_paypal_donate">PayPal으로 결제</string>
     <string name="paypal_secure_note">안전한 앱 내 결제</string>
+    <string name="btn_open_in_browser">브라우저에서 열기</string>
+    <string name="fab_buy_me_coffee">Buy me a coffee</string>
+    <string name="support_cancel_confirm_title">후원을 취소하시겠습니까?</string>
+    <string name="support_cancel_confirm_msg">후원 화면을 닫으시겠습니까?</string>
+    <string name="dialog_yes">예</string>
+    <string name="dialog_no">아니오</string>
+
+    <!-- Developer Credit (v3.2) -->
+    <string name="credit_developed_by">Marwan Al-Sehli에 의해 제작 및 개발됨</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">언어 선택</string>

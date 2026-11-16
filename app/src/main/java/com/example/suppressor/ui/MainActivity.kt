@@ -47,6 +47,7 @@ import com.example.suppressor.persistence.PersistenceManager
 import com.example.suppressor.service.SuppressionForegroundService
 import com.example.suppressor.service.SuppressionNotificationListener
 import com.example.suppressor.vibration.OneUI8VibrationSettingsController
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -80,11 +81,17 @@ class MainActivity : AppCompatActivity() {
     // Warning Card: In-App Vibration Disclaimer
     private lateinit var tvDisclaimer: TextView
 
-    // Card 2: Snapshot
+    // Card 2: Application Rules & Exceptions (v3.2)
+    private lateinit var btnFilterExcludedApps: Button
+    private lateinit var tvExcludedAppsCount: TextView
+    private lateinit var btnFilterIncludedApps: Button
+    private lateinit var tvIncludedAppsCount: TextView
+
+    // Card 3: Snapshot
     private lateinit var tvVolumeSnapshot: TextView
     private lateinit var tvVibrationSnapshot: TextView
 
-    // Card 3: Permissions & Battery
+    // Card 4: Permissions & Battery
     private lateinit var tvStatusWriteSettings: TextView
     private lateinit var btnWriteSettings: Button
     private lateinit var tvStatusNotificationListener: TextView
@@ -92,22 +99,22 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvStatusBatteryOptimization: TextView
     private lateinit var btnBatteryOptimization: Button
 
-    // Card 4: Quick Actions
+    // Card 5: Quick Actions
     private lateinit var btnRestartService: Button
     private lateinit var btnForceRestore: Button
 
-    // Support Developer & Language
-    private lateinit var btnPaypalDonate: Button
+    // Language Selector & Floating Actions (v3.2)
     private lateinit var btnChangeLanguage: View
+    private lateinit var fabBuyMeCoffee: View
+    private lateinit var fabReportBug: View
 
-    // Card 5: Live In-App Debugger & On-Demand Tracing
+    // Card 6: Live In-App Debugger & On-Demand Tracing
     private lateinit var switchDebugMode: MaterialSwitch
     private lateinit var layoutDebugActiveArea: View
     private lateinit var layoutLogFileActions: View
     private lateinit var tvLogFileSize: TextView
     private lateinit var btnClearLogFile: Button
     private lateinit var btnShareLogFile: Button
-    private lateinit var btnReportBug: Button
     private lateinit var tvDebugInspector: TextView
     private lateinit var tvDebugConsole: TextView
     private lateinit var scrollDebugConsole: NestedScrollView
@@ -190,11 +197,17 @@ class MainActivity : AppCompatActivity() {
         tvDisclaimer = findViewById(R.id.tv_disclaimer)
         tvDisclaimer.text = getString(R.string.disclaimer_custom_vibrations)
 
-        // Card 2
+        // Card 2: Application Rules & Exceptions (v3.2)
+        btnFilterExcludedApps = findViewById(R.id.btn_filter_excluded_apps)
+        tvExcludedAppsCount = findViewById(R.id.tv_excluded_apps_count)
+        btnFilterIncludedApps = findViewById(R.id.btn_filter_included_apps)
+        tvIncludedAppsCount = findViewById(R.id.tv_included_apps_count)
+
+        // Card 3: Snapshot
         tvVolumeSnapshot = findViewById(R.id.tv_volume_snapshot)
         tvVibrationSnapshot = findViewById(R.id.tv_vibration_snapshot)
 
-        // Card 3
+        // Card 4: Permissions & Battery
         tvStatusWriteSettings = findViewById(R.id.tv_status_write_settings)
         btnWriteSettings = findViewById(R.id.btn_write_settings)
         tvStatusNotificationListener = findViewById(R.id.tv_status_notification_listener)
@@ -202,22 +215,22 @@ class MainActivity : AppCompatActivity() {
         tvStatusBatteryOptimization = findViewById(R.id.tv_status_battery_optimization)
         btnBatteryOptimization = findViewById(R.id.btn_battery_optimization)
 
-        // Card 4
+        // Card 5: Quick Actions
         btnRestartService = findViewById(R.id.btn_restart_service)
         btnForceRestore = findViewById(R.id.btn_force_restore)
 
-        // Support Developer & Language
-        btnPaypalDonate = findViewById(R.id.btn_paypal_donate)
+        // Language & Floating Actions (v3.2)
         btnChangeLanguage = findViewById(R.id.btn_change_language)
+        fabBuyMeCoffee = findViewById(R.id.fab_buy_me_coffee)
+        fabReportBug = findViewById(R.id.fab_report_bug)
 
-        // Card 5: Debugger & On-Demand Tracing
+        // Card 6: Debugger & On-Demand Tracing
         switchDebugMode = findViewById(R.id.switch_debug_mode)
         layoutDebugActiveArea = findViewById(R.id.layout_debug_active_area)
         layoutLogFileActions = findViewById(R.id.layout_log_file_actions)
         tvLogFileSize = findViewById(R.id.tv_log_file_size)
         btnClearLogFile = findViewById(R.id.btn_clear_log_file)
         btnShareLogFile = findViewById(R.id.btn_share_log_file)
-        btnReportBug = findViewById(R.id.btn_report_bug)
 
         tvDebugInspector = findViewById(R.id.tv_debug_inspector)
         tvDebugConsole = findViewById(R.id.tv_debug_console)
@@ -238,8 +251,38 @@ class MainActivity : AppCompatActivity() {
         btnRestartService.setOnClickListener { restartMonitorService() }
         btnForceRestore.setOnClickListener { forceRestore() }
 
-        btnPaypalDonate.setOnClickListener { openPayPalDonationBottomSheet() }
         btnChangeLanguage.setOnClickListener { showLanguagePickerDialog() }
+
+        // Application Rules Dialogs (v3.2)
+        btnFilterExcludedApps.setOnClickListener {
+            AppPickerDialog(
+                activity = this,
+                title = getString(R.string.btn_excluded_apps),
+                initialSelected = persistenceManager?.getExcludedApps() ?: emptySet()
+            ) { selected ->
+                persistenceManager?.saveExcludedApps(selected)
+                updateAppFilterCards()
+                Toast.makeText(this, getString(R.string.apps_selected_count, selected.size), Toast.LENGTH_SHORT).show()
+                DebugLogManager.log(TAG, "Updated excluded apps: ${selected.size} apps")
+            }.show()
+        }
+
+        btnFilterIncludedApps.setOnClickListener {
+            AppPickerDialog(
+                activity = this,
+                title = getString(R.string.btn_included_apps),
+                initialSelected = persistenceManager?.getIncludedApps() ?: emptySet()
+            ) { selected ->
+                persistenceManager?.saveIncludedApps(selected)
+                updateAppFilterCards()
+                Toast.makeText(this, getString(R.string.apps_selected_count, selected.size), Toast.LENGTH_SHORT).show()
+                DebugLogManager.log(TAG, "Updated included apps: ${selected.size} apps")
+            }.show()
+        }
+
+        // Floating Action Buttons (v3.2)
+        fabBuyMeCoffee.setOnClickListener { openPayPalDonationBottomSheet() }
+        fabReportBug.setOnClickListener { sendBugReportEmail() }
 
         switchDebugMode.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked != DebugLogManager.isEnabled(this)) {
@@ -262,10 +305,6 @@ class MainActivity : AppCompatActivity() {
 
         btnShareLogFile.setOnClickListener {
             shareLogFile()
-        }
-
-        btnReportBug.setOnClickListener {
-            sendBugReportEmail()
         }
 
         btnCopyDebugLogs.setOnClickListener { copyDebugLogsToClipboard() }
@@ -338,9 +377,31 @@ class MainActivity : AppCompatActivity() {
     private fun updateUI() {
         val suppressor = getSuppressor()
         updateCard1Status(suppressor)
+        updateAppFilterCards()
         updateCard2Snapshot(suppressor)
         updateCard3Permissions()
         updateDebugUIVisibility()
+    }
+
+    /**
+     * Application Rules & Exceptions Card (v3.2)
+     */
+    private fun updateAppFilterCards() {
+        val pm = persistenceManager ?: return
+        val excluded = pm.getExcludedApps()
+        val included = pm.getIncludedApps()
+
+        if (excluded.isEmpty()) {
+            tvExcludedAppsCount.text = getString(R.string.no_apps_selected)
+        } else {
+            tvExcludedAppsCount.text = getString(R.string.apps_selected_count, excluded.size)
+        }
+
+        if (included.isEmpty()) {
+            tvIncludedAppsCount.text = getString(R.string.no_apps_selected)
+        } else {
+            tvIncludedAppsCount.text = getString(R.string.apps_selected_count, included.size)
+        }
     }
 
     /**
@@ -736,20 +797,77 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * Opens an in-app BottomSheetDialog containing the official PayPal Hosted Button SDK.
-     * Keeps the entire payment process inside the app without opening an external browser.
+     * Features:
+     * - Open in External Browser button (v3.2)
+     * - Drag-down / Cancel confirmation protection (v3.2)
      */
     @SuppressLint("SetJavaScriptEnabled")
     private fun openPayPalDonationBottomSheet() {
-        val bottomSheet = BottomSheetDialog(this)
+        var isConfirmedDismiss = false
+        lateinit var bottomSheet: BottomSheetDialog
+
+        fun showCancelConfirmationDialog() {
+            AlertDialog.Builder(this)
+                .setTitle(R.string.support_cancel_confirm_title)
+                .setMessage(R.string.support_cancel_confirm_msg)
+                .setPositiveButton(R.string.dialog_yes) { _, _ ->
+                    isConfirmedDismiss = true
+                    bottomSheet.dismiss()
+                }
+                .setNegativeButton(R.string.dialog_no) { dialog, _ ->
+                    dialog.dismiss()
+                    bottomSheet.behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                }
+                .setCancelable(false)
+                .show()
+        }
+
+        bottomSheet = object : BottomSheetDialog(this) {
+            override fun cancel() {
+                if (!isConfirmedDismiss) {
+                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                    showCancelConfirmationDialog()
+                } else {
+                    super.cancel()
+                }
+            }
+
+            override fun dismiss() {
+                if (!isConfirmedDismiss) {
+                    behavior.state = BottomSheetBehavior.STATE_EXPANDED
+                    showCancelConfirmationDialog()
+                } else {
+                    super.dismiss()
+                }
+            }
+        }
+
         val sheetView = layoutInflater.inflate(R.layout.bottom_sheet_paypal, null)
         bottomSheet.setContentView(sheetView)
 
+        bottomSheet.behavior.apply {
+            skipCollapsed = true
+            state = BottomSheetBehavior.STATE_EXPANDED
+        }
+
+        bottomSheet.setCanceledOnTouchOutside(false)
+
         val btnClose = sheetView.findViewById<ImageButton>(R.id.btn_close_paypal)
+        val btnOpenInBrowser = sheetView.findViewById<Button>(R.id.btn_open_in_browser)
         val progressBar = sheetView.findViewById<LinearProgressIndicator>(R.id.progress_paypal_loading)
         val webView = sheetView.findViewById<WebView>(R.id.webview_paypal)
 
         btnClose.setOnClickListener {
-            bottomSheet.dismiss()
+            showCancelConfirmationDialog()
+        }
+
+        btnOpenInBrowser.setOnClickListener {
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.com/ncp/payment/VRY9RHY2F2NUA"))
+                startActivity(intent)
+            } catch (e: Exception) {
+                Toast.makeText(this, "Could not open browser: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // Configure WebView settings for PayPal JS SDK
@@ -760,7 +878,7 @@ class MainActivity : AppCompatActivity() {
             javaScriptCanOpenWindowsAutomatically = true
             setSupportMultipleWindows(true)
             mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-            userAgentString = userAgentString + " Mobile SamsungMicMuteApp/3.0"
+            userAgentString = userAgentString + " Mobile SamsungMicMuteApp/3.2"
         }
 
         webView.webViewClient = object : WebViewClient() {

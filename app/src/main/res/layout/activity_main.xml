@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:background="@color/screen_bg"
     tools:context=".ui.MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        android:paddingBottom="120dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -169,7 +175,97 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- CARD 2: Saved Audio & Vibration Snapshot -->
+        <!-- CARD 2: Application Rules & Exceptions (v3.2) -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/card_stroke"
+            app:cardBackgroundColor="@color/card_bg">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/card_title_app_filter"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Exclude Apps Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_filter_excluded_apps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_excluded_apps"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:icon="@android:drawable/ic_menu_close_clear_cancel"
+                    app:iconGravity="textStart"
+                    app:cornerRadius="8dp"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/tv_excluded_apps_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_apps_selected"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Include Apps Button (Whitelist) -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_filter_included_apps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btn_included_apps"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:icon="@android:drawable/checkbox_on_background"
+                    app:iconGravity="textStart"
+                    app:cornerRadius="8dp"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/tv_included_apps_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_apps_selected"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginBottom="14dp" />
+
+                <!-- Explanatory Note -->
+                <TextView
+                    android:id="@+id/tv_app_filter_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_filter_default_note"
+                    android:textSize="12sp"
+                    android:lineSpacingExtra="3dp"
+                    android:textColor="@color/note_text"
+                    android:background="@drawable/bg_note_rounded"
+                    android:padding="12dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- CARD 3: Saved Audio & Vibration Snapshot -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -504,72 +600,6 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- CARD: Support via PayPal -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_support_developer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            app:strokeWidth="1dp"
-            app:strokeColor="@color/paypal_card_stroke"
-            app:cardBackgroundColor="@color/paypal_card_bg">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/ic_paypal"
-                        android:contentDescription="PayPal icon"
-                        android:layout_marginEnd="8dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/card_title_support_paypal"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/paypal_dark_blue" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/support_paypal_description"
-                    android:textSize="13sp"
-                    android:textColor="@color/text_secondary"
-                    android:lineSpacingExtra="2dp"
-                    android:layout_marginBottom="14dp" />
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_paypal_donate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_paypal_donate"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="#003087"
-                    app:icon="@drawable/ic_paypal"
-                    app:iconTint="@null"
-                    app:iconGravity="textStart"
-                    app:backgroundTint="@color/paypal_gold"
-                    app:cornerRadius="8dp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
         <!-- CARD 5: Live In-App Debugger Console -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
@@ -752,21 +782,110 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Bug Report Button (Always accessible) -->
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_report_bug"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_report_bug"
-                    android:textSize="13sp"
-                    android:layout_marginTop="10dp"
-                    app:icon="@android:drawable/ic_dialog_email"
-                    app:iconGravity="textStart"
-                    app:cornerRadius="8dp"
-                    style="@style/Widget.Material3.Button.TonalButton" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
+        <!-- DEVELOPER CREDIT CARD (v3.2) -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="28dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="@color/credit_stroke"
+            app:cardBackgroundColor="@color/credit_bg">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="✨"
+                    android:textSize="22sp"
+                    android:layout_marginBottom="6dp" />
+
+                <TextView
+                    android:id="@+id/tv_credit_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/credit_developed_by"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/credit_text"
+                    android:gravity="center"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Samsung Mic Mute • v3.2.0"
+                    android:textSize="12sp"
+                    android:textColor="@color/credit_subtext"
+                    android:gravity="center" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>
+
+    <!-- FLOATING ACTIONS CONTAINER: Buy Me a Coffee + Report a Bug -->
+    <LinearLayout
+        android:id="@+id/container_floating_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:orientation="vertical"
+        android:gravity="end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="24dp">
+
+        <!-- 1. Floating Buy Me a Coffee Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fab_buy_me_coffee"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/fab_buy_me_coffee"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/coffee_dark"
+            app:icon="@drawable/ic_coffee"
+            app:iconTint="@color/coffee_dark"
+            app:iconSize="20dp"
+            app:iconGravity="textStart"
+            app:backgroundTint="@color/coffee_yellow"
+            app:cornerRadius="24dp"
+            app:elevation="6dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="18dp"
+            android:layout_marginBottom="10dp" />
+
+        <!-- 2. Floating Report a Bug Button (below Buy Me a Coffee) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fab_report_bug"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:text="@string/button_report_bug"
+            android:textSize="12sp"
+            android:textColor="@color/text_primary"
+            app:icon="@android:drawable/ic_dialog_email"
+            app:iconTint="@color/text_primary"
+            app:iconSize="18dp"
+            app:iconGravity="textStart"
+            app:backgroundTint="@color/card_bg"
+            app:strokeColor="@color/card_stroke"
+            app:strokeWidth="1dp"
+            app:cornerRadius="22dp"
+            app:elevation="4dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="16dp" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

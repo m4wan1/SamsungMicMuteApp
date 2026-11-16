@@ -41,11 +41,32 @@
     <string name="card_title_disclaimer">重要なお知らせ</string>
     <string name="disclaimer_custom_vibrations">⚠️ 重要なお知らせ: このツールはシステムレベルの通知音とバイブレーションをミュートします。ただし、アプリ独自のバイブレーション設定（LINE、WhatsApp、Telegram内の個別設定など）は制御できません。完全に無音化するには各アプリ内のバイブレーションをオフにしてください。</string>
 
-    <!-- Support via PayPal -->
+    <!-- Application Rules & Exceptions (v3.2) -->
+    <string name="card_title_app_filter">アプリのルールと例外設定</string>
+    <string name="btn_excluded_apps">除外するアプリ（ミュートしない）</string>
+    <string name="btn_included_apps">指定アプリのみで動作（ホワイトリスト）</string>
+    <string name="app_filter_default_note">ℹ️ 注意: すべてのアプリで自動的に動作させたい場合は、この設定を変更せずそのままにしてください。</string>
+    <string name="apps_selected_count">%d個のアプリを選択中</string>
+    <string name="no_apps_selected">アプリ未選択（すべてのアプリで有効）</string>
+    <string name="dialog_select_apps">アプリを選択</string>
+    <string name="search_apps_hint">アプリを検索...</string>
+    <string name="btn_save">保存</string>
+    <string name="btn_clear_all">すべて解除</string>
+
+    <!-- Support via PayPal & Buy Me a Coffee -->
     <string name="card_title_support_paypal">PayPalで支援する</string>
     <string name="support_paypal_description">このアプリがお役に立ち、音声メッセージや動画撮影を快適に楽しめているなら、PayPalでアプリ内から安全にご支援いただけます！</string>
     <string name="button_paypal_donate">PayPalでお支払い</string>
     <string name="paypal_secure_note">アプリ内での安全な決済</string>
+    <string name="btn_open_in_browser">ブラウザで開く</string>
+    <string name="fab_buy_me_coffee">Buy me a coffee</string>
+    <string name="support_cancel_confirm_title">支援をキャンセルしますか？</string>
+    <string name="support_cancel_confirm_msg">支援画面を閉じてもよろしいですか？</string>
+    <string name="dialog_yes">はい</string>
+    <string name="dialog_no">いいえ</string>
+
+    <!-- Developer Credit (v3.2) -->
+    <string name="credit_developed_by">Marwan Al-Sehli によって構築・開発されました</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">言語を選択</string>

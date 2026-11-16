@@ -12,22 +12,45 @@
   <a href="docs/i18n/README.zh-CN.md">简体中文</a>
 </p>
 
-# Samsung Mic Mute App (v3.1.0)
+# Samsung Mic Mute App (v3.2.0)
 
 <p align="center">
   <img src="https://img.shields.io/badge/Platform-Android_11_to_16_(API_30--36)-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Android Platform" />
   <img src="https://img.shields.io/badge/Samsung_One_UI-v6_%7C_v7_%7C_v8_%7C_v9-1428A0?style=for-the-badge&logo=samsung&logoColor=white" alt="Samsung One UI" />
   <img src="https://img.shields.io/badge/Privacy-Zero_RECORD__AUDIO-brightgreen?style=for-the-badge&logo=shield&logoColor=white" alt="Zero RECORD_AUDIO" />
   <img src="https://img.shields.io/badge/Languages-11_Global_Locales-purple?style=for-the-badge&logo=google-translate&logoColor=white" alt="11 Languages" />
-  <img src="https://img.shields.io/badge/APK-2.5_MB-success?style=for-the-badge&logo=android&logoColor=white" alt="APK Size 2.5 MB" />
-  <img src="https://img.shields.io/badge/Build-Gradle_8.6_%7C_Kotlin_1.9-blue?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
+  <img src="https://img.shields.io/badge/APK-2.6_MB-success?style=for-the-badge&logo=android&logoColor=white" alt="APK Size 2.6 MB" />
+  <img src="https://img.shields.io/badge/Build-Gradle_9.8_%7C_Kotlin_1.9-blue?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/License-MIT-orange?style=for-the-badge" alt="License MIT" />
 </p>
 
-> **A specialized Android utility for Samsung Galaxy devices that automatically suppresses notification sounds and vibrations during active microphone usage without requiring `RECORD_AUDIO` permission. In V3.1, on-demand debug logging, 5 MB log rotation with 24-hour auto-expiry, one-tap bug reporting, and an R8-optimized release build are included — the APK is now 2.5 MB instead of 14.2 MB.**
+> **A specialized Android utility for Samsung Galaxy devices that automatically suppresses notification sounds and vibrations during active microphone usage without requiring `RECORD_AUDIO` permission. In V3.2: Custom Application Rules (Excluded & Whitelisted apps), Floating Buy Me a Coffee & Bug Report actions, BottomSheet dismissal confirmation protection, External Browser support button, and Developer Credit attribution.**
 
 > [!WARNING]
 > **⚠️ Important Note:** This tool mutes system-level notification sounds and vibrations. However, it cannot block custom in-app vibrations (e.g., custom vibration settings inside WhatsApp, Telegram, etc.). You must manually disable in-app vibrations inside those specific apps for a completely silent experience.
+
+---
+
+## 🆕 What's New in v3.2.0
+
+- **🛡️ Custom Application Rules (Exclusions & Whitelist):**
+  - **Excluded Apps (Blacklist):** Designate specific apps where microphone usage should *never* trigger notification muting.
+  - **Whitelisted Apps (Only In These Apps):** Restrict suppression to activate exclusively when specified apps are using the microphone.
+  - **Universal Default Unchanged:** If neither list is configured, the application functions universally with all apps without modification.
+- **☕ Floating "Buy me a coffee" Action Button:**
+  - Compact, stylish floating action button on the bottom right with coffee icon opening the seamless in-app PayPal support sheet.
+- **🐞 Floating "Report a Bug" Action Button:**
+  - Pinned directly below the coffee button on the right for quick, one-tap access to diagnostic bug reporting.
+- **🌐 "Open in Browser" Support Action:**
+  - An instant button on the support sheet allowing users to open PayPal checkout directly in their preferred external web browser.
+- **🛡️ BottomSheet Accidental Close Protection:**
+  - Prevents accidental dismissal when dragging down or pressing back in the support sheet. Displays a confirmation alert: *"Do you want to cancel the support checkout?"* with one-tap restore.
+- **🎨 Polished UI & Harmonious Color Palette:**
+  - Unified Material 3 / Samsung One UI typography, clean cards, rounded note banners, and fluid elevation.
+- **✨ Official Developer Credit:**
+  - Prominent in-app credit: **"Built and developed by Marwan Al-Sehli"** (تم بناء وتطوير التطبيق من قبل مروان السهلي).
+
+**Download:** [SamsungMicMute_v3.2_Release.apk](https://github.com/m4wan1/SamsungMicMuteApp/releases/tag/v3.2.0)
 
 ---
 

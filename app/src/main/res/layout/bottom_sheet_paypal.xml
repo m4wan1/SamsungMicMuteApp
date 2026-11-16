@@ -76,7 +76,26 @@
     <WebView
         android:id="@+id/webview_paypal"
         android:layout_width="match_parent"
-        android:layout_height="520dp"
+        android:layout_height="480dp"
         android:background="#FAFAFA" />
+
+    <!-- Open in External Browser Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_open_in_browser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_open_in_browser"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="@color/paypal_dark_blue"
+        app:icon="@android:drawable/ic_menu_view"
+        app:iconTint="@color/paypal_dark_blue"
+        app:iconGravity="textStart"
+        app:backgroundTint="#EBF4FC"
+        app:strokeColor="#CCE4F7"
+        app:strokeWidth="1dp"
+        app:cornerRadius="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="4dp" />
 
 </LinearLayout>

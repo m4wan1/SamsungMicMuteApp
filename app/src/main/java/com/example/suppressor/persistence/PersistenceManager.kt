@@ -152,4 +152,44 @@ open class PersistenceManager(private val context: Context) {
         val state = loadState()
         return state?.timestamp ?: 0
     }
+
+    /**
+     * Get the set of excluded app packages (blacklist).
+     */
+    open fun getExcludedApps(): Set<String> {
+        return prefs.getStringSet(SuppressionState.KEY_EXCLUDED_APPS, emptySet()) ?: emptySet()
+    }
+
+    /**
+     * Save the set of excluded app packages.
+     */
+    open fun saveExcludedApps(apps: Set<String>) {
+        try {
+            prefs.edit().putStringSet(SuppressionState.KEY_EXCLUDED_APPS, apps).apply()
+            backupManager.dataChanged()
+            Log.d(TAG, "Saved excluded apps: count=${apps.size}")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to save excluded apps", e)
+        }
+    }
+
+    /**
+     * Get the set of included app packages (whitelist).
+     */
+    open fun getIncludedApps(): Set<String> {
+        return prefs.getStringSet(SuppressionState.KEY_INCLUDED_APPS, emptySet()) ?: emptySet()
+    }
+
+    /**
+     * Save the set of included app packages.
+     */
+    open fun saveIncludedApps(apps: Set<String>) {
+        try {
+            prefs.edit().putStringSet(SuppressionState.KEY_INCLUDED_APPS, apps).apply()
+            backupManager.dataChanged()
+            Log.d(TAG, "Saved included apps: count=${apps.size}")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to save included apps", e)
+        }
+    }
 }

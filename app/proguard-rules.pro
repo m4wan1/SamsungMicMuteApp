@@ -38,8 +38,9 @@
 # Keep data classes for serialization
 -keep class com.example.suppressor.persistence.SuppressionState { *; }
 
-# Keep MainActivity
--keep class com.example.suppressor.ui.MainActivity { *; }
+# Keep UI & Utilities
+-keep class com.example.suppressor.ui.** { *; }
+-keep class com.example.suppressor.util.** { *; }
 
 # Suppress warnings for reflection usage
 -dontwarn kotlinx.serialization.**

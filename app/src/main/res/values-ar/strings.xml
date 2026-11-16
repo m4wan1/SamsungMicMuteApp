@@ -41,11 +41,32 @@
     <string name="card_title_disclaimer">تنبيه هام</string>
     <string name="disclaimer_custom_vibrations">⚠️ ملاحظة هامة: هذه الأداة تكتم أصوات واهتزازات إشعارات النظام. لكنها لا تستطيع إيقاف الاهتزاز الداخلي لبعض التطبيقات (مثل إعدادات الاهتزاز المخصصة داخل واتساب أو تيليجرام). يجب تعطيل خيار الاهتزاز يدوياً من داخل تلك التطبيقات لتجربة صامتة بالكامل.</string>
 
-    <!-- Support via PayPal -->
+    <!-- Application Rules & Exceptions (v3.2) -->
+    <string name="card_title_app_filter">قواعد واستثناءات التطبيقات</string>
+    <string name="btn_excluded_apps">تطبيقات مستثناة (عدم الكتم)</string>
+    <string name="btn_included_apps">تطبيقات محددة فقط (العمل معها حصراً)</string>
+    <string name="app_filter_default_note">ℹ️ ملاحظة: إذا أردت أن يعمل البرنامج تلقائياً مع كل التطبيقات، يُرجى ترك هذه الخيارات بدون تعديل.</string>
+    <string name="apps_selected_count">%d تطبيق محدد</string>
+    <string name="no_apps_selected">لم يتم تحديد أي تطبيق (يعمل مع كل التطبيقات)</string>
+    <string name="dialog_select_apps">تحديد التطبيقات</string>
+    <string name="search_apps_hint">البحث في التطبيقات...</string>
+    <string name="btn_save">حفظ</string>
+    <string name="btn_clear_all">مسح الكل</string>
+
+    <!-- Support via PayPal & Buy Me a Coffee -->
     <string name="card_title_support_paypal">دعم عبر PayPal</string>
     <string name="support_paypal_description">إذا كان هذا التطبيق يساعدك في إبقاء تسجيلاتك الصوتية وفيديوهاتك نقية وخالية من الإزعاج، يسعدنا دعمك لاستمرار التطوير بأمان عبر PayPal دون مغادرة التطبيق!</string>
     <string name="button_paypal_donate">الدفع عبر PayPal</string>
     <string name="paypal_secure_note">دفع آمن ومباشر داخل التطبيق</string>
+    <string name="btn_open_in_browser">فتح في المتصفح</string>
+    <string name="fab_buy_me_coffee">Buy me a coffee</string>
+    <string name="support_cancel_confirm_title">إلغاء الدعم؟</string>
+    <string name="support_cancel_confirm_msg">هل تود إلغاء صفحة الدعم؟</string>
+    <string name="dialog_yes">نعم</string>
+    <string name="dialog_no">لا</string>
+
+    <!-- Developer Credit (v3.2) -->
+    <string name="credit_developed_by">تم بناء وتطوير التطبيق من قبل مروان السهلي</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">اختر اللغة</string>

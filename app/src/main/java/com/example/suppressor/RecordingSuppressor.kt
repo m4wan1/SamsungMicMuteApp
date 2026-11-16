@@ -115,6 +115,16 @@ class RecordingSuppressor(
             val currentCount = activeRecordings.size
 
             if (isMicActive) {
+                // Evaluate user application rules (Exclusions & Inclusions)
+                val allowSuppression = shouldSuppressRecordings(configs)
+                if (!allowSuppression) {
+                    if (isSuppressing && state == State.SUPPRESSING) {
+                        DebugLogManager.log(TAG, "App rule matched exception: restoring baseline audio/vibration")
+                        scheduleDebouncedRestoration()
+                    }
+                    return
+                }
+
                 // Cancel any pending debounced restore
                 if (pendingRestoreRunnable != null) {
                     DebugLogManager.log(TAG, "Canceling pending restore debounce (mic active via $source)")
@@ -458,6 +468,77 @@ class RecordingSuppressor(
             MediaRecorder.AudioSource.VOICE_PERFORMANCE -> "VOICE_PERF"
             MediaRecorder.AudioSource.REMOTE_SUBMIX -> "REMOTE_SUBMIX"
             else -> "SRC_$source"
+        }
+    }
+
+    /**
+     * Evaluates user application rules (Exclusions & Inclusions):
+     * - Universal default: If neither list is set, suppress for ALL apps unconditionally.
+     * - Whitelist: If includedApps is set, ONLY suppress if active app matches includedApps.
+     * - Blacklist: If excludedApps is set, DO NOT suppress if active app matches excludedApps.
+     */
+    internal fun shouldSuppressRecordings(configs: List<AudioRecordingConfiguration>?): Boolean {
+        val excludedApps = persistenceManager.getExcludedApps()
+        val includedApps = persistenceManager.getIncludedApps()
+
+        // Default behavior: If both sets are empty, suppress universally for all apps!
+        if (excludedApps.isEmpty() && includedApps.isEmpty()) {
+            return true
+        }
+
+        val candidates = mutableSetOf<String>()
+
+        // 1. Direct package names from configs
+        configs?.forEach { config ->
+            val pkg = extractRawPackageName(config)
+            if (!pkg.isNullOrBlank() && !pkg.startsWith("session_")) {
+                candidates.add(pkg)
+            }
+        }
+
+        // 2. Active recording keys
+        activeRecordings.keys.forEach { key ->
+            if (!key.startsWith("session_")) {
+                candidates.add(key)
+            }
+        }
+
+        // 3. Foreground app detector
+        val fgApp = com.example.suppressor.util.AppForegroundDetector.getForegroundApp(context)
+        if (!fgApp.isNullOrBlank()) {
+            candidates.add(fgApp)
+        }
+
+        DebugLogManager.log(TAG, "Evaluating app rules: candidates=$candidates, excluded=${excludedApps.size}, included=${includedApps.size}")
+
+        // Whitelist check: Only active when inside these apps
+        if (includedApps.isNotEmpty()) {
+            val matchesIncluded = candidates.any { it in includedApps }
+            if (!matchesIncluded) {
+                DebugLogManager.log(TAG, "Suppression skipped: app not in whitelist (includedApps)")
+                return false
+            }
+        }
+
+        // Blacklist check: Excluded apps
+        if (excludedApps.isNotEmpty()) {
+            val matchesExcluded = candidates.any { it in excludedApps }
+            if (matchesExcluded) {
+                DebugLogManager.log(TAG, "Suppression skipped: app in blacklist (excludedApps)")
+                return false
+            }
+        }
+
+        return true
+    }
+
+    private fun extractRawPackageName(config: AudioRecordingConfiguration): String? {
+        packageNameResolver?.let { return it(config) }
+        return try {
+            val method = config.javaClass.getMethod("getClientPackageName")
+            (method.invoke(config) as? String)?.takeIf { it.isNotBlank() }
+        } catch (e: Exception) {
+            null
         }
     }
 }

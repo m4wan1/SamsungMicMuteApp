@@ -41,11 +41,32 @@
     <string name="card_title_disclaimer">IMPORTANT NOTICE</string>
     <string name="disclaimer_custom_vibrations">⚠️ Important Note: This tool mutes system-level notification sounds and vibrations. However, it cannot block custom in-app vibrations (e.g., custom vibration settings inside WhatsApp, Telegram, etc.). You must manually disable in-app vibrations inside those specific apps for a completely silent experience.</string>
 
-    <!-- Support via PayPal -->
+    <!-- Application Rules & Exceptions (v3.2) -->
+    <string name="card_title_app_filter">APPLICATION RULES &amp; EXCEPTIONS</string>
+    <string name="btn_excluded_apps">Excluded Apps (Do Not Mute)</string>
+    <string name="btn_included_apps">Only In Selected Apps (Whitelist)</string>
+    <string name="app_filter_default_note">ℹ️ Note: If you want the app to work automatically with all applications, please leave these options unmodified.</string>
+    <string name="apps_selected_count">%d apps selected</string>
+    <string name="no_apps_selected">No apps selected (Works with all apps)</string>
+    <string name="dialog_select_apps">Select Applications</string>
+    <string name="search_apps_hint">Search apps...</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_clear_all">Clear All</string>
+
+    <!-- Support via PayPal & Buy Me a Coffee -->
     <string name="card_title_support_paypal">Support via PayPal</string>
     <string name="support_paypal_description">If this app helps keep your voice notes and recordings silent and clear, support continued development safely via PayPal!</string>
     <string name="button_paypal_donate">Pay with PayPal</string>
     <string name="paypal_secure_note">Secure In-App Checkout</string>
+    <string name="btn_open_in_browser">Open in Browser</string>
+    <string name="fab_buy_me_coffee">Buy me a coffee</string>
+    <string name="support_cancel_confirm_title">Cancel Support?</string>
+    <string name="support_cancel_confirm_msg">Do you want to cancel the support checkout?</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+
+    <!-- Developer Credit (v3.2) -->
+    <string name="credit_developed_by">Built and developed by Marwan Al-Sehli</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">Select Language</string>

@@ -45,6 +45,14 @@
     <!-- Required for requesting exemption from battery optimization on Samsung One UI -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
+    <!-- Required to query installed apps for app exclusions and inclusions (Android 11+) -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <!-- Optional permission for detecting active foreground app for application rules -->
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
     <!--
         EXPLICITLY NOT REQUESTING RECORD_AUDIO - This is a core constraint.
         AudioRecordingCallback works without it since Android 11 (API 30).

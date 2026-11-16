@@ -199,4 +199,44 @@ class RecordingSuppressorTest {
 
         verify(persistenceManager).clearSuppressionState()
     }
+
+    @Test
+    fun `excluded app skips suppression when active package matches blacklist`() {
+        val excludedPackage = "com.whatsapp"
+        `when`(persistenceManager.getExcludedApps()).thenReturn(setOf(excludedPackage))
+        `when`(persistenceManager.getIncludedApps()).thenReturn(emptySet())
+
+        val config = createMockConfig(excludedPackage)
+        suppressor.onRecordingConfigChanged(listOf(config))
+
+        assertFalse("Suppression should be skipped for excluded app", suppressor.isCurrentlySuppressing())
+        verify(audioController, never()).setVolume(context, 0, 0)
+    }
+
+    @Test
+    fun `included app triggers suppression when active package matches whitelist`() {
+        val allowedPackage = "com.telegram.messenger"
+        `when`(persistenceManager.getIncludedApps()).thenReturn(setOf(allowedPackage))
+        `when`(persistenceManager.getExcludedApps()).thenReturn(emptySet())
+
+        val config = createMockConfig(allowedPackage)
+        suppressor.onRecordingConfigChanged(listOf(config))
+
+        assertTrue("Suppression should activate for whitelisted app", suppressor.isCurrentlySuppressing())
+        verify(audioController).setVolume(context, 0, 0)
+    }
+
+    @Test
+    fun `non-whitelisted app skips suppression when whitelist is active`() {
+        val allowedPackage = "com.telegram.messenger"
+        val otherPackage = "com.whatsapp"
+        `when`(persistenceManager.getIncludedApps()).thenReturn(setOf(allowedPackage))
+        `when`(persistenceManager.getExcludedApps()).thenReturn(emptySet())
+
+        val config = createMockConfig(otherPackage)
+        suppressor.onRecordingConfigChanged(listOf(config))
+
+        assertFalse("Suppression should be skipped for app not in whitelist", suppressor.isCurrentlySuppressing())
+        verify(audioController, never()).setVolume(context, 0, 0)
+    }
 }

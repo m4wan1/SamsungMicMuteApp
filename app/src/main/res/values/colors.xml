@@ -40,4 +40,20 @@
     <color name="paypal_gold">#FFC439</color>
     <color name="paypal_card_bg">#F8FBFF</color>
     <color name="paypal_card_stroke">#CCE4F7</color>
+
+    <!-- Coffee FAB colors -->
+    <color name="coffee_yellow">#FFDD00</color>
+    <color name="coffee_dark">#3D2000</color>
+    <color name="coffee_bg">#FFFBEB</color>
+
+    <!-- Credit card colors -->
+    <color name="credit_bg">#F8FAFC</color>
+    <color name="credit_stroke">#E2E8F0</color>
+    <color name="credit_text">#0F172A</color>
+    <color name="credit_subtext">#64748B</color>
+
+    <!-- Note banner colors -->
+    <color name="note_bg">#F8FAFC</color>
+    <color name="note_stroke">#E2E8F0</color>
+    <color name="note_text">#475569</color>
 </resources>

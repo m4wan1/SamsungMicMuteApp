@@ -41,11 +41,32 @@
     <string name="card_title_disclaimer">重要提示</string>
     <string name="disclaimer_custom_vibrations">⚠️ 重要提示：此工具仅静音系统级通知声音和振动。它无法拦截第三方应用内置的自定义振动（例如微信、WhatsApp、Telegram应用内的振动设置）。如需完全静音，请在相应应用内手动关闭振动。</string>
 
-    <!-- Support via PayPal -->
+    <!-- Application Rules & Exceptions (v3.2) -->
+    <string name="card_title_app_filter">应用规则与例外设置</string>
+    <string name="btn_excluded_apps">排除的应用（不静音）</string>
+    <string name="btn_included_apps">仅在选定应用中生效（白名单）</string>
+    <string name="app_filter_default_note">ℹ️ 提示：如果您希望应用自动对所有应用程序生效，请保持此设置不修改。</string>
+    <string name="apps_selected_count">已选择 %d 个应用</string>
+    <string name="no_apps_selected">未选择应用（默认全局生效）</string>
+    <string name="dialog_select_apps">选择应用程序</string>
+    <string name="search_apps_hint">搜索应用...</string>
+    <string name="btn_save">保存</string>
+    <string name="btn_clear_all">清空全部</string>
+
+    <!-- Support via PayPal & Buy Me a Coffee -->
     <string name="card_title_support_paypal">通过 PayPal 支持项目</string>
     <string name="support_paypal_description">如果此应用帮助您在发送语音和录像时远离噪音干扰，欢迎直接在应用内通过 PayPal 安全支持后续持续更新！</string>
     <string name="button_paypal_donate">使用 PayPal 支付</string>
     <string name="paypal_secure_note">应用内安全支付</string>
+    <string name="btn_open_in_browser">在浏览器中打开</string>
+    <string name="fab_buy_me_coffee">Buy me a coffee</string>
+    <string name="support_cancel_confirm_title">取消支持？</string>
+    <string name="support_cancel_confirm_msg">您要关闭支持页面吗？</string>
+    <string name="dialog_yes">是</string>
+    <string name="dialog_no">否</string>
+
+    <!-- Developer Credit (v3.2) -->
+    <string name="credit_developed_by">由 Marwan Al-Sehli 设计与开发</string>
 
     <!-- Language Selector -->
     <string name="title_select_language">选择语言</string>
