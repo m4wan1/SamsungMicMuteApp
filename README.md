@@ -37,10 +37,15 @@
   - **Excluded Apps (Blacklist):** Designate specific apps where microphone usage should *never* trigger notification muting.
   - **Whitelisted Apps (Only In These Apps):** Restrict suppression to activate exclusively when specified apps are using the microphone.
   - **Universal Default Unchanged:** If neither list is configured, the application functions universally with all apps without modification.
-- **☕ Floating "Buy me a coffee" Action Button:**
-  - Compact, stylish floating action button on the bottom right with coffee icon opening the seamless in-app PayPal support sheet.
-- **🐞 Floating "Report a Bug" Action Button:**
-  - Pinned directly below the coffee button on the right for quick, one-tap access to diagnostic bug reporting.
+- **❄️ Temporary Freeze / Pause Mode:**
+  - Instantly pause the suppression engine with a dedicated toggle switch without stopping the foreground service.
+  - Immediately restores baseline volume and vibration when paused, with an animated rotating frost icon (`❄️`) and cyan status badge.
+- **☕ Scroll-Responsive Floating "Buy me a coffee" & "Report a Bug" Actions:**
+  - Start as compact, circular floating icons at the top of the screen to keep the view clean.
+  - Dynamically expand / pop out with full text labels upon scrolling down, and smoothly collapse back when scrolling back to the top.
+- **✨ Tactile Micro-Interactions & Fluid Animations:**
+  - Staggered cascade entrance transitions for dashboard cards.
+  - Spring-scale touch feedback on interactive buttons and actions.
 - **🌐 "Open in Browser" Support Action:**
   - An instant button on the support sheet allowing users to open PayPal checkout directly in their preferred external web browser.
 - **🛡️ BottomSheet Accidental Close Protection:**

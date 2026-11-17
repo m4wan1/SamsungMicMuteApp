@@ -19,6 +19,9 @@
     <color name="status_idle_bg">#FFE3F2FD</color>      <!-- Light blue badge background -->
     <color name="status_error">#FFC62828</color>        <!-- Dark red - error/permission issue -->
     <color name="status_error_bg">#FFFFEBEE</color>     <!-- Light red badge background -->
+    <color name="status_paused">#0284C7</color>        <!-- Frost cyan - temporarily paused -->
+    <color name="status_paused_bg">#F0F9FF</color>     <!-- Frost cyan badge background -->
+    <color name="status_paused_stroke">#BAE6FD</color>
 
     <!-- Card and UI elements -->
     <color name="card_bg">#FFFFFFFF</color>

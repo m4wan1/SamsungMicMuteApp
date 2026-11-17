@@ -239,4 +239,28 @@ class RecordingSuppressorTest {
         assertFalse("Suppression should be skipped for app not in whitelist", suppressor.isCurrentlySuppressing())
         verify(audioController, never()).setVolume(context, 0, 0)
     }
+
+    @Test
+    fun `paused suppressor skips muting on active recording`() {
+        `when`(persistenceManager.isPaused()).thenReturn(true)
+
+        val config = createMockConfig("com.whatsapp")
+        suppressor.onRecordingConfigChanged(listOf(config))
+
+        assertFalse("Suppression must be skipped when paused", suppressor.isCurrentlySuppressing())
+        verify(audioController, never()).setVolume(context, 0, 0)
+    }
+
+    @Test
+    fun `setting paused while suppressing immediately restores baseline`() {
+        val config = createMockConfig("com.whatsapp")
+        suppressor.onRecordingConfigChanged(listOf(config))
+        assertTrue(suppressor.isCurrentlySuppressing())
+
+        suppressor.setPaused(true)
+
+        assertFalse("Suppression must be terminated when paused", suppressor.isCurrentlySuppressing())
+        verify(audioController).restoreVolume(context, originalAudioVolume)
+        verify(vibrationController).restoreIntensity(context, originalVibrationIntensity)
+    }
 }

@@ -37,5 +37,6 @@ data class SuppressionState(
         const val KEY_BASELINE_VIBRATION = "baseline_vibration_intensity"
         const val KEY_EXCLUDED_APPS = "excluded_apps"
         const val KEY_INCLUDED_APPS = "included_apps"
+        const val KEY_IS_PAUSED = "is_paused"
     }
 }

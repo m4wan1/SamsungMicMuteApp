@@ -7,6 +7,11 @@
     <string name="status_idle">خامل - في انتظار التسجيل</string>
     <string name="status_active">نشط - الميكروفون قيد الاستخدام (مكتوم)</string>
     <string name="status_error">خطأ - يرجى التحقق من الأذونات</string>
+    <string name="status_paused">مجمّد مؤقتاً (إيقاف)</string>
+    <string name="label_pause_freeze_title">تجميد مؤقت للمراقب</string>
+    <string name="desc_pause_freeze">إيقاف كتم الإشعارات مؤقتاً دون إيقاف خدمة المراقبة</string>
+    <string name="toast_app_paused">تم تجميد عمل التطبيق مؤقتاً ❄️</string>
+    <string name="toast_app_resumed">تم استئناف مراقبة وكتم الإشعارات ▶️</string>
 
     <string name="card_title_status">حالة المراقبة المباشرة</string>
     <string name="card_title_snapshot">لقطة إعدادات الصوت والاهتزاز</string>

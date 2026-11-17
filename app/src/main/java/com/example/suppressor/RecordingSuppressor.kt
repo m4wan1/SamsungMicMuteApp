@@ -115,6 +115,15 @@ class RecordingSuppressor(
             val currentCount = activeRecordings.size
 
             if (isMicActive) {
+                // Check if suppressor is temporarily paused / frozen by user
+                if (persistenceManager.isPaused()) {
+                    if (isSuppressing && state == State.SUPPRESSING) {
+                        DebugLogManager.log(TAG, "Suppression skipped: App is PAUSED / FROZEN -> restoring baseline")
+                        scheduleDebouncedRestoration()
+                    }
+                    return
+                }
+
                 // Evaluate user application rules (Exclusions & Inclusions)
                 val allowSuppression = shouldSuppressRecordings(configs)
                 if (!allowSuppression) {
@@ -392,6 +401,25 @@ class RecordingSuppressor(
         }
     }
 
+    /**
+     * Check if suppression is temporarily paused / frozen.
+     */
+    fun isPaused(): Boolean = persistenceManager.isPaused()
+
+    /**
+     * Set temporary pause / freeze state. Restores audio & vibration immediately if frozen while suppressing.
+     */
+    fun setPaused(paused: Boolean) {
+        lock.withLock {
+            persistenceManager.setPaused(paused)
+            DebugLogManager.log(TAG, "Suppression pause state changed: paused=$paused")
+            if (paused && isSuppressing) {
+                DebugLogManager.log(TAG, "App frozen while suppressing -> restoring baseline")
+                forceRestore()
+            }
+        }
+    }
+
     fun getActiveRecordingCount(): Int {
         lock.lock()
         try {
@@ -478,6 +506,10 @@ class RecordingSuppressor(
      * - Blacklist: If excludedApps is set, DO NOT suppress if active app matches excludedApps.
      */
     internal fun shouldSuppressRecordings(configs: List<AudioRecordingConfiguration>?): Boolean {
+        if (persistenceManager.isPaused()) {
+            return false
+        }
+
         val excludedApps = persistenceManager.getExcludedApps()
         val includedApps = persistenceManager.getIncludedApps()
 

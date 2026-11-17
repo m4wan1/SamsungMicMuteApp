@@ -7,6 +7,11 @@
     <string name="status_idle">IDLE - Monitoring</string>
     <string name="status_active">ACTIVE - Mic in Use (Muted)</string>
     <string name="status_error">Error - Check permissions</string>
+    <string name="status_paused">PAUSED - Temporary Freeze</string>
+    <string name="label_pause_freeze_title">Pause Suppressor (Freeze)</string>
+    <string name="desc_pause_freeze">Temporarily pause mic muting without stopping background service</string>
+    <string name="toast_app_paused">Suppression paused temporarily ❄️</string>
+    <string name="toast_app_resumed">Suppression monitoring resumed ▶️</string>
 
     <string name="card_title_status">Live Monitoring Status</string>
     <string name="card_title_snapshot">Audio &amp; Vibration Snapshot</string>

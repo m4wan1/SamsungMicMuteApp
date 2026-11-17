@@ -18,8 +18,11 @@ import android.os.Message
 import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.OvershootInterpolator
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
@@ -28,6 +31,7 @@ import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -49,6 +53,7 @@ import com.example.suppressor.service.SuppressionNotificationListener
 import com.example.suppressor.vibration.OneUI8VibrationSettingsController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import kotlinx.coroutines.Job
@@ -72,11 +77,16 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_WRITE_SETTINGS = 1001
     }
 
-    // Card 1: Live Status Banner
+    // Scroll container (for floating actions auto-collapse/expand)
+    private lateinit var scrollViewMain: ScrollView
+
+    // Card 1: Live Status Banner & Freeze Mode
     private lateinit var containerStatusBadge: LinearLayout
     private lateinit var tvStatusBadge: TextView
     private lateinit var tvActiveRecordings: TextView
     private lateinit var tvActivePackages: TextView
+    private lateinit var switchPauseFreeze: MaterialSwitch
+    private lateinit var tvFreezeIcon: TextView
 
     // Warning Card: In-App Vibration Disclaimer
     private lateinit var tvDisclaimer: TextView
@@ -105,8 +115,8 @@ class MainActivity : AppCompatActivity() {
 
     // Language Selector & Floating Actions (v3.2)
     private lateinit var btnChangeLanguage: View
-    private lateinit var fabBuyMeCoffee: View
-    private lateinit var fabReportBug: View
+    private lateinit var fabBuyMeCoffee: ExtendedFloatingActionButton
+    private lateinit var fabReportBug: ExtendedFloatingActionButton
 
     // Card 6: Live In-App Debugger & On-Demand Tracing
     private lateinit var switchDebugMode: MaterialSwitch
@@ -139,6 +149,7 @@ class MainActivity : AppCompatActivity() {
         initViews()
         initPersistenceManager()
         setupClickListeners()
+        playCardEntranceAnimations()
 
         DebugLogManager.log(TAG, "MainActivity created")
         startAndBindForegroundService()
@@ -187,11 +198,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
+        scrollViewMain = findViewById(R.id.scroll_main)
+
         // Card 1
         containerStatusBadge = findViewById(R.id.container_status_badge)
         tvStatusBadge = findViewById(R.id.tv_status_badge)
         tvActiveRecordings = findViewById(R.id.tv_active_recordings)
         tvActivePackages = findViewById(R.id.tv_active_packages)
+        switchPauseFreeze = findViewById(R.id.switch_pause_freeze)
+        tvFreezeIcon = findViewById(R.id.tv_freeze_icon)
 
         // Warning Card: In-App Vibration Disclaimer
         tvDisclaimer = findViewById(R.id.tv_disclaimer)
@@ -223,6 +238,35 @@ class MainActivity : AppCompatActivity() {
         btnChangeLanguage = findViewById(R.id.btn_change_language)
         fabBuyMeCoffee = findViewById(R.id.fab_buy_me_coffee)
         fabReportBug = findViewById(R.id.fab_report_bug)
+
+        // Initialize FABs as small circular icons
+        fabBuyMeCoffee.shrink()
+        fabReportBug.shrink()
+
+        // Auto-expand on scroll down, collapse on scroll back to top
+        scrollViewMain.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            val threshold = 90
+            if (scrollY > threshold) {
+                if (!fabBuyMeCoffee.isExtended) {
+                    fabBuyMeCoffee.extend()
+                    fabReportBug.extend()
+                }
+            } else {
+                if (fabBuyMeCoffee.isExtended) {
+                    fabBuyMeCoffee.shrink()
+                    fabReportBug.shrink()
+                }
+            }
+        }
+
+        // Add tactile spring touch feedback to buttons
+        btnRestartService.addSpringTouchFeedback()
+        btnForceRestore.addSpringTouchFeedback()
+        btnFilterExcludedApps.addSpringTouchFeedback()
+        btnFilterIncludedApps.addSpringTouchFeedback()
+        btnChangeLanguage.addSpringTouchFeedback()
+        fabBuyMeCoffee.addSpringTouchFeedback()
+        fabReportBug.addSpringTouchFeedback()
 
         // Card 6: Debugger & On-Demand Tracing
         switchDebugMode = findViewById(R.id.switch_debug_mode)
@@ -283,6 +327,36 @@ class MainActivity : AppCompatActivity() {
         // Floating Action Buttons (v3.2)
         fabBuyMeCoffee.setOnClickListener { openPayPalDonationBottomSheet() }
         fabReportBug.setOnClickListener { sendBugReportEmail() }
+
+        // Pause / Freeze Switch (v3.2)
+        switchPauseFreeze.isChecked = persistenceManager?.isPaused() == true
+        switchPauseFreeze.setOnCheckedChangeListener { _, isChecked ->
+            val suppressor = getSuppressor()
+            suppressor?.setPaused(isChecked)
+            persistenceManager?.setPaused(isChecked)
+
+            // Playful 360 rotation animation on the freeze icon
+            tvFreezeIcon.animate()
+                .rotationBy(360f)
+                .setDuration(450)
+                .setInterpolator(OvershootInterpolator(1.8f))
+                .start()
+
+            // Soft bounce on the status badge
+            containerStatusBadge.animate()
+                .scaleX(1.03f).scaleY(1.03f)
+                .setDuration(120)
+                .withEndAction {
+                    containerStatusBadge.animate().scaleX(1.0f).scaleY(1.0f).setDuration(150).start()
+                }.start()
+
+            if (isChecked) {
+                Toast.makeText(this, R.string.toast_app_paused, Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, R.string.toast_app_resumed, Toast.LENGTH_SHORT).show()
+            }
+            updateUI()
+        }
 
         switchDebugMode.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked != DebugLogManager.isEnabled(this)) {
@@ -405,14 +479,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Card 1: Live Status Banner
+     * Card 1: Live Status Banner & Freeze Mode (v3.2)
      */
     private fun updateCard1Status(suppressor: RecordingSuppressor?) {
+        val isPaused = persistenceManager?.isPaused() == true || suppressor?.isPaused() == true
         val isSuppressing = suppressor?.isCurrentlySuppressing() == true
         val activeCount = suppressor?.getActiveRecordingCount() ?: 0
         val activePackages = suppressor?.getActivePackages() ?: emptySet()
 
-        if (isSuppressing) {
+        if (switchPauseFreeze.isChecked != isPaused) {
+            switchPauseFreeze.isChecked = isPaused
+        }
+
+        if (isPaused) {
+            containerStatusBadge.setBackgroundResource(R.drawable.bg_status_badge_paused)
+            tvStatusBadge.text = getString(R.string.status_paused)
+            tvStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.status_paused))
+            tvActiveRecordings.text = getString(R.string.desc_pause_freeze)
+        } else if (isSuppressing) {
             containerStatusBadge.setBackgroundResource(R.drawable.bg_status_badge_active)
             tvStatusBadge.text = getString(R.string.status_active)
             tvStatusBadge.setTextColor(ContextCompat.getColor(this, R.color.status_active))
@@ -428,11 +512,57 @@ class MainActivity : AppCompatActivity() {
             tvActiveRecordings.text = getString(R.string.label_no_active_recordings)
         }
 
-        if (activePackages.isNotEmpty()) {
+        if (activePackages.isNotEmpty() && !isPaused) {
             tvActivePackages.visibility = View.VISIBLE
             tvActivePackages.text = getString(R.string.label_microphone_detected, activePackages.joinToString(", "))
         } else {
             tvActivePackages.visibility = View.GONE
+        }
+    }
+
+    /**
+     * Staggered fluid entrance cascade animation for cards on launch (v3.2)
+     */
+    private fun playCardEntranceAnimations() {
+        val viewsToAnimate = listOf(
+            containerStatusBadge,
+            findViewById<View>(R.id.card_warning_disclaimer),
+            btnFilterExcludedApps,
+            btnFilterIncludedApps,
+            tvVolumeSnapshot.parent?.parent as? View,
+            tvStatusWriteSettings.parent?.parent as? View,
+            btnRestartService.parent?.parent as? View
+        ).filterNotNull()
+
+        viewsToAnimate.forEachIndexed { index, view ->
+            view.alpha = 0f
+            view.translationY = 35f
+            view.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setDuration(350)
+                .setStartDelay((index * 45).toLong())
+                .setInterpolator(DecelerateInterpolator())
+                .start()
+        }
+    }
+
+    /**
+     * Adds tactile spring bounce touch micro-interaction to interactive buttons (v3.2)
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    private fun View.addSpringTouchFeedback() {
+        setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    v.animate().scaleX(0.93f).scaleY(0.93f).setDuration(100).start()
+                }
+                MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
+                    v.animate().scaleX(1.0f).scaleY(1.0f).setDuration(160)
+                        .setInterpolator(OvershootInterpolator(2.2f)).start()
+                }
+            }
+            false
         }
     }
 

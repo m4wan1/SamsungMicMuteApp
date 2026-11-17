@@ -192,4 +192,24 @@ open class PersistenceManager(private val context: Context) {
             Log.e(TAG, "Failed to save included apps", e)
         }
     }
+
+    /**
+     * Check if the suppressor is temporarily paused / frozen.
+     */
+    open fun isPaused(): Boolean {
+        return prefs.getBoolean(SuppressionState.KEY_IS_PAUSED, false)
+    }
+
+    /**
+     * Set temporary pause / freeze state.
+     */
+    open fun setPaused(paused: Boolean) {
+        try {
+            prefs.edit().putBoolean(SuppressionState.KEY_IS_PAUSED, paused).apply()
+            backupManager.dataChanged()
+            Log.d(TAG, "Set suppressor paused=$paused")
+        } catch (e: Exception) {
+            Log.e(TAG, "Failed to set paused state", e)
+        }
+    }
 }
